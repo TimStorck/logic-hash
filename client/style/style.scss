@@ -1,0 +1,8 @@
+@import '../../imports/ui/home/_home.scss';
+
+@import './_mixins.scss';
+
+body {
+	background-color: $body-bg-color;
+	@include flexbox-hor();
+}

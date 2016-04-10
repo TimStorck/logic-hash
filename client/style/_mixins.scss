@@ -1,0 +1,34 @@
+@import '../../../client/style/_variables.scss';
+
+@mixin test_outline() {
+	border: 1px solid rgba(0,0,0,0.2);
+}
+
+@mixin flexbox() {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+
+@mixin flexbox-hor() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin wordbox() {
+	display: inline-block;
+	box-shadow: 1px 1px 1px $drop-shadow-color;
+	border: 1px solid $wordbox-border-color-outter;
+	border-radius: 2px;
+	background-color: $wordbox-bg-color;
+	padding: 2px 7px 3px 7px;
+	padding:2px;
+
+	> div {
+		padding: 3px;
+		border: 1px solid $wordbox-border-color-inner;
+		border-radius: 2px;
+	}
+}

@@ -1,0 +1,5 @@
+@import '../../../client/style/_mixins.scss';
+
+.outter {
+	@include wordbox();
+}
