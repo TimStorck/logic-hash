@@ -23,7 +23,6 @@
 	border: 1px solid $wordbox-border-color-outter;
 	border-radius: 2px;
 	background-color: $wordbox-bg-color;
-	padding: 2px 7px 3px 7px;
 	padding:2px;
 
 	> div {
@@ -31,4 +30,16 @@
 		border: 1px solid $wordbox-border-color-inner;
 		border-radius: 2px;
 	}
+}
+
+@mixin panel() {
+  box-shadow: 1px 1px 1px $drop-shadow-color;
+  border: 1px solid $wordbox-border-color-outter;
+  border-radius: 2px;
+  background-color: $wordbox-bg-color;
+  padding:2px;
+}
+
+@mixin panel-margin() {
+  margin: 5px;
 }

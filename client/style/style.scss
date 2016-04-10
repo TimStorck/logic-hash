@@ -6,3 +6,8 @@ body {
 	background-color: $body-bg-color;
 	@include flexbox-hor();
 }
+
+.raised {
+  @include panel-margin();
+  @include panel();
+}
