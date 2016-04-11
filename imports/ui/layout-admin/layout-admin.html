@@ -1,11 +1,49 @@
 <template name="layoutAdmin">
-  <div class="raised">
-    layout admin header
-  </div>
-  <main>
-    {{>Template.dynamic template=content}}
-  </main>
-  <div class="raised">
-    footer
+  <div class="layout-admin">
+
+    <div class="left">
+      <div class="invisible row1">
+      </div>
+      <div class="invisible">
+        <div class="raised left-panel">
+          filler
+          <br> 
+          filler
+        </div>
+      </div>
+    </div>
+
+    <div class="center">
+
+      <div class="invisible row1">
+        <div class="raised">
+          layout admin header
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="center-right">
+
+      <main>
+        <div class="invisible">
+          {{>Template.dynamic template=content}}
+        </div>
+      </main>
+
+    </div>
+
+    <div class="footer">
+      <div class="left height">
+      </div>
+      <div class="center">
+        <div class="invisible">
+          <div class="raised">
+            footer
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>

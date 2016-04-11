@@ -37,7 +37,7 @@
   border: 1px solid $wordbox-border-color-outter;
   border-radius: 2px;
   background-color: $wordbox-bg-color;
-  padding:2px;
+  padding:2px 7px 4px 7px;
 }
 
 @mixin panel-margin() {
