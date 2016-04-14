@@ -5,7 +5,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { home } from '../../ui/home/home.js';
 import { layoutAdmin } from '../../ui/layout-admin/layout-admin.js';
 import { adminHome } from '../../ui/admin-home/admin-home.js';
-import { layoutDev } from '../../ui/layout-dev/layout-dev.js';
+import { layoutDev } from '../../ui/dev-layout/layout-dev.js';
 import { devHome } from '../../ui/dev-home/dev-home.js';
 
 FlowRouter.route('/', {
