@@ -28,6 +28,9 @@
   .center-right {
     width: 1050px;
   }
+  .bottom.left {
+    clear: left;
+  }
   .inner {
     @include dev-panel();
     @include fill();
