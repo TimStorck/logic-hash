@@ -1,5 +1,6 @@
 .dev-home {
   .table {
+    display: inline-block;
     @include dev-panel();
   }
 }

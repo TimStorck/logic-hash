@@ -8,7 +8,6 @@ import './layout-dev.html';
 Template.layoutDev.events ({
   "click #btn-test-temp": function() {
     
-    event.preventDefault();
     console.log("btn-test-flow clicked");
     
     console.log(Template);

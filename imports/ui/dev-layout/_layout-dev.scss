@@ -30,6 +30,7 @@
   }
   .inner {
     @include dev-panel();
+    @include fill();
   }
   .header {
     text-align: center;
