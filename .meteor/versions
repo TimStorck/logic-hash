@@ -1,6 +1,5 @@
 aldeed:tabular@1.6.1
 allow-deny@1.0.3
-autopublish@1.0.6
 autoupdate@1.2.7
 babel-compiler@6.6.1
 babel-runtime@0.1.7
@@ -60,6 +59,7 @@ reactive-var@1.0.8
 reload@1.1.7
 retry@1.0.6
 routepolicy@1.0.9
+session@1.1.4
 spacebars@1.0.10
 spacebars-compiler@1.0.10
 standard-minifier-css@1.0.5
