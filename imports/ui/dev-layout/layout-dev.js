@@ -1,7 +1,4 @@
 import { Template } from 'meteor/templating';
-import { Mongo } from 'meteor/mongo';
-
-import { Posts } from '../../../lib/collections.js';
 
 import './layout-dev.html';
 
@@ -17,14 +14,4 @@ Template.layoutDev.events ({
     Meteor.call('posts.insert', {content: "test content", author: "test author"});
   }
 
-});
-
-Template.layoutDev.helpers({
-  posts() {
-    return Posts.find({});
-  },
-});
-
-Template.layoutDev.onCreated(function (){
-  Meteor.subscribe('hackers');
 });
