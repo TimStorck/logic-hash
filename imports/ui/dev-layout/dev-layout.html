@@ -3,46 +3,52 @@
     
     <div class="top left invisible">
     </div>
+
     <div class="top center invisible outline">
       <div class="inner header">
         dev
       </div>
     </div>
+
     <div class="top right invisible">
     </div>
+
     <div class="mid left invisible outline">
       <div class="inner">
-
-
-        <div id="btn-add" class="butn">
-          add doc form
-        </div>
-        <div id="btn-tbl" class="butn">
-          table
-        </div>
-        <br>
-        <br>
-        <div id="btn-add-doc" class="butn">
-          add doc
-        </div>
-        <div id="btn-rem-all" class="butn">
-          remove all docs
-        </div>
-
-
+        {{> devNav }}
       </div>
     </div>
+
     <div class="mid center-right invisible outline">
-      {{>Template.dynamic template=content}}
+      {{> Template.dynamic template=content }}
     </div>
+
     <div class="bottom left invisible">
     </div>
+
     <div class="bottom center invisible outline">
       <div class="inner">
       </div>
     </div>
     <div class="bottom right invisible">
     </div>
+
   </div>
 </template>
 
+<template name="devNav">
+  <div id="btn-add" class="butn">
+    add doc form
+  </div>
+  <div id="btn-tbl" class="butn">
+    table
+  </div>
+  <br>
+  <br>
+  <div id="btn-add-doc" class="butn">
+    add doc
+  </div>
+  <div id="btn-rem-all" class="butn">
+    remove all docs
+  </div>
+</template>
