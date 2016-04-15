@@ -1,8 +1,8 @@
 import { Template } from 'meteor/templating';
 
-import './layout-dev.html';
+import './dev-layout.html';
 
-Template.layoutDev.events ({
+Template.devLayout.events ({
   "click #btn-tbl": function() {
     FlowRouter.go("dev");
   },
@@ -12,6 +12,10 @@ Template.layoutDev.events ({
   "click #btn-add-doc": function() {
     console.log("btn-add-doc clicked");
     Meteor.call('posts.insert', {content: "test content", author: "test author"});
+  },
+  "click #btn-rem-all": function() {
+    console.log("btn-rem-all clicked");
+    Meteor.call('posts.removeAll');
   }
 
 });
