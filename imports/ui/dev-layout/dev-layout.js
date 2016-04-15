@@ -16,6 +16,10 @@ Template.devLayout.events ({
   "click #btn-rem-all": function() {
     console.log("btn-rem-all clicked");
     Meteor.call('posts.removeAll');
+  },
+  "click #btn-tst": function() {
+    console.log("btn-tst clicked");
+    FlowRouter.go("dev_test");
   }
 
 });
