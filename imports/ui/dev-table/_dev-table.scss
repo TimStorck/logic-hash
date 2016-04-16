@@ -1,7 +1,17 @@
+
+
+
 table.dataTable td {
   overflow: hidden;
+  padding-left: 10px;
+  border: 1px rgb(200,200,200) solid;
 }
 
 table.dataTable {
   table-layout: fixed;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination li {
+  display: inline-block;
+  margin: 5px;
 }
