@@ -20,6 +20,6 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 insecure                # Allow all DB writes from clients (for prototyping)
 kadira:flow-router
 kadira:blaze-layout
-fourseven:scss
 aldeed:tabular
 session
+fourseven:scss

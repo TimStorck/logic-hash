@@ -1,2 +1,6 @@
 @import '../../../client/style/_mixins.scss';
 
+.word-box {
+  @include wordbox();
+  @include panel-margin();
+}
