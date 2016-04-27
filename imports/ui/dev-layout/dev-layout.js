@@ -1,6 +1,8 @@
 import { Template } from 'meteor/templating';
 
 import './dev-layout.html';
+import '../../api/collections/methods.js';
+import '../../api/tabular/tbl-posts.js';
 
 Template.devLayout.events ({
   "click #btn-tbl": function() {
@@ -27,5 +29,4 @@ Template.devLayout.events ({
     console.log("btn-tst clicked");
     FlowRouter.go("dev_test");
   }
-
 });
