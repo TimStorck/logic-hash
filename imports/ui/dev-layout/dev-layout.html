@@ -16,6 +16,7 @@
     <div class="mid left invisible outline">
       <div class="inner">
         {{> devNav }}
+
       </div>
     </div>
 
@@ -36,6 +37,8 @@
   </div>
 </template>
 
+
+
 <template name="devNav">
 
   <div id="btn-add" class="butn">
@@ -50,6 +53,16 @@
     test zone
   </div>
 
+  <div id="btn-cvs" class="butn">
+    canvas
+  </div>
+
+  <br>
+  <br>
+
+  {{> sandNav }}
+        
+  <br>
   <br>
   <br>
 
@@ -66,3 +79,24 @@
   </div>
 
 </template>
+
+
+
+
+
+<template name="sandNav">
+  <div class="sand-nav">
+    <div class="indent">
+
+      <div id="btn-pts" class="butn">
+        show points
+      </div>
+
+      <div id="btn-line" class="butn">
+        draw line
+      </div>
+
+    </div>
+  </div>
+</template>
+
