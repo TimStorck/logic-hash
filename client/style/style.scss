@@ -3,6 +3,7 @@
 @import '../../imports/ui/dev-table/_dev-table.scss';
 @import '../../imports/ui/dev-add/_dev-add.scss';
 @import '../../imports/ui/dev-test/_dev-test.scss';
+@import '../../imports/ui/dev-sandbox/_dev-sandbox.scss';
 @import '../../imports/ui/_dev-styles.scss';
 @import './_mixins.scss';
 
@@ -15,4 +16,8 @@ body {
 .raised {
   @include panel-margin();
   @include panel();
+}
+
+.TTTTTTT {
+  box-shadow: 0 0 2px rgba(0,0,0,0.5) inset, 0 0 2px rgba(255,255,255,0.5);
 }

@@ -1,0 +1,8 @@
+.sandbox {
+  .outmost {
+    @include flexbox();
+  }
+  .whole-shell {
+    padding: 50px;
+  }
+}

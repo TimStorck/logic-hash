@@ -8,6 +8,7 @@ import { devLayout } from '../../ui/dev-layout/dev-layout.js';
 import { devTable } from '../../ui/dev-table/dev-table.js';
 import { devAdd } from '../../ui/dev-add/dev-add.js';
 import { devTest } from '../../ui/dev-test/dev-test.js';
+import { sandbox } from '../../ui/dev-sandbox/dev-sandbox.js';
 
 FlowRouter.route('/', {
     name: 'home',
@@ -34,5 +35,12 @@ FlowRouter.route('/dev/test', {
     name: 'dev_test',
     action: function() {
         BlazeLayout.render("devLayout", {content: "devTest"});
+    }
+});
+
+FlowRouter.route('/sandbox', {
+    name: 'sandbox',
+    action: function() {
+        BlazeLayout.render("sandbox");
     }
 });
