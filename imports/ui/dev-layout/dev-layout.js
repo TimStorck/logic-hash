@@ -36,11 +36,17 @@ Template.devLayout.events ({
   "click #btn-line": function() {
     const c = document.getElementById("canvas");
     const ctx = c.getContext("2d");
-    const points = [[10,10],[20,20],[10,20],[30,20]];
+    const points = [[450,300],[450,100],[450,500],[450,300],[800,300],[100,300]];
     for (var i = 1; i < points.length; i++) {
       ctx.moveTo(points[i-1][0],points[i-1][1]);
       ctx.lineTo(points[i][0],points[i][1]);
       ctx.stroke();
     }
+  },
+  "click #btn-fill": function() {
+    const c = document.getElementById("canvas");
+    var ctx = c.getContext("2d");
+    ctx.fillStyle = "rgb(210,210,210)";
+    ctx.fillRect(0,0,899,599);
   }
 });
