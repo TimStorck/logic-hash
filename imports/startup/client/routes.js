@@ -41,6 +41,6 @@ FlowRouter.route('/dev/test', {
 FlowRouter.route('/sandbox', {
     name: 'sandbox',
     action: function() {
-        BlazeLayout.render("sandbox");
+        BlazeLayout.render("devLayout", {content: "sandbox"});
     }
 });

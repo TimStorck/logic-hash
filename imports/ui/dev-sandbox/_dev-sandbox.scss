@@ -1,8 +1,12 @@
 .sandbox {
   .outmost {
-    @include flexbox();
+    @include flexbox-hor();
   }
   .whole-shell {
     padding: 50px;
+    margin: 20px
+  }
+  #canvas {
+    background: lighten($body-bg-color, 10);
   }
 }
