@@ -3,7 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import {Posts} from '../collections/posts.js';
 
 if (Meteor.isClient) {
-  Meteor.subscribe('posts');  
+  if (FlowRouter.subsReady()) {
+    Meteor.subscribe('posts');  
+  }
 }
 
 
