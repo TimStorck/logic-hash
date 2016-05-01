@@ -9,7 +9,7 @@ import { devTable } from '../../ui/dev-table/dev-table.js';
 import { devAdd } from '../../ui/dev-add/dev-add.js';
 import { devTest } from '../../ui/dev-test/dev-test.js';
 import { sandbox } from '../../ui/dev-sandbox/dev-sandbox.js';
-import { canvas } from '../../ui/canvas/canvas.js';
+import { debate } from '../../ui/debate/debate.js';
 
 FlowRouter.route('/', {
     name: 'home',
@@ -21,7 +21,7 @@ FlowRouter.route('/', {
 FlowRouter.route('/debate', {
     name: 'debate',
     action: function() {
-        BlazeLayout.render("canvas");
+        BlazeLayout.render("debate");
     }
 });
 
