@@ -41,20 +41,8 @@
 
 <template name="devNav">
 
-  <div id="btn-add" class="butn">
-    add doc form
-  </div>
-
-  <div id="btn-tbl" class="butn">
-    table
-  </div>
-
   <div id="btn-tst" class="butn">
     test zone
-  </div>
-
-  <div id="btn-cvs" class="butn">
-    canvas
   </div>
 
   <br>
@@ -66,17 +54,7 @@
   <br>
   <br>
 
-  <div id="btn-add-doc" class="butn">
-    add doc
-  </div>
-
-  <div id="btn-add-100" class="butn">
-    add 100 docs
-  </div>
-
-  <div id="btn-rem-all" class="butn">
-    remove all docs
-  </div>
+  {{> tableNav }}
 
 </template>
 
@@ -85,22 +63,50 @@
 
 
 <template name="sandNav">
-  <div class="sand-nav">
-    <div class="indent">
+  <div class="sub-nav">
 
+    <div id="btn-cvs" class="butn">
+      sandbox
+    </div>
+
+    <div class="indent">
       <div id="btn-pts" class="butn">
         show points
       </div>
-
       <div id="btn-line" class="butn">
         draw line
       </div>
-
       <div id="btn-fill" class="butn">
         fill
       </div>
-
     </div>
+
+  </div>
+</template>
+
+
+<template name="tableNav">
+  <div class="sub-nav">
+
+    <div id="btn-tbl" class="butn">
+      table
+    </div>
+
+    <div class="indent">
+      <div id="btn-add-doc" class="butn">
+        add doc
+      </div>
+      <div id="btn-add" class="butn">
+        add doc form
+      </div>
+      <div id="btn-add-100" class="butn">
+        add 100 docs
+      </div>
+      <div id="btn-rem-all" class="butn">
+        remove all docs
+      </div>
+    </div>
+
   </div>
 </template>
 

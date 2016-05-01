@@ -5,6 +5,11 @@ import '../../api/collections/methods.js';
 import '../../api/tabular/tbl-posts.js';
 
 Template.devLayout.events ({
+  "click #btn-tst": function() {
+    console.log("btn-tst clicked");
+    FlowRouter.go("dev_test");
+  },
+  /* table events begin */
   "click #btn-tbl": function() {
     FlowRouter.go("dev");
   },
@@ -25,10 +30,8 @@ Template.devLayout.events ({
     console.log("btn-rem-all clicked");
     Meteor.call('posts.removeAll');
   },
-  "click #btn-tst": function() {
-    console.log("btn-tst clicked");
-    FlowRouter.go("dev_test");
-  },
+  /* table events end */
+  /* sandbox events begin */
   "click #btn-cvs": function() {
     console.log("btn-cvs clicked");
     FlowRouter.go("sandbox");
@@ -49,4 +52,5 @@ Template.devLayout.events ({
     ctx.fillStyle = "rgb(210,210,210)";
     ctx.fillRect(0,0,899,599);
   }
+  /* sandbox events end */
 });
