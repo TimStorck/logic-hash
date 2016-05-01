@@ -34,7 +34,7 @@ Template.devLayout.events ({
     FlowRouter.go("sandbox");
   },
   "click #btn-line": function() {
-    const c = document.getElementById("canvas");
+    const c = document.getElementById("devCanvas");
     const ctx = c.getContext("2d");
     const points = [[450,300],[450,100],[450,500],[450,300],[800,300],[100,300]];
     for (var i = 1; i < points.length; i++) {
@@ -44,7 +44,7 @@ Template.devLayout.events ({
     }
   },
   "click #btn-fill": function() {
-    const c = document.getElementById("canvas");
+    const c = document.getElementById("devCanvas");
     var ctx = c.getContext("2d");
     ctx.fillStyle = "rgb(210,210,210)";
     ctx.fillRect(0,0,899,599);
