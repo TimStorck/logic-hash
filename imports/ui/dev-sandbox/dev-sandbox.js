@@ -8,5 +8,6 @@ export let sandCtx = new Object;
 Template.sandbox.onRendered( function() {
   sandCanObj = document.getElementById("devCanvas");
   sandCtx = sandCanObj.getContext("2d");
+  sandCtx.translate(450,300);
 });
 
