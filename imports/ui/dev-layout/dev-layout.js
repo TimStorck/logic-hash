@@ -39,29 +39,16 @@ Template.devLayout.events ({
   "click #btn-zero": function() {
     const line1 = [[0,-1000],[0,1000]];
     const line2 = [[-1000,0],[1000,0]];
+    sandCtx.beginPath();
     sandCtx.strokeStyle = "red";
     sandCtx.moveTo(line1[0][0],line1[0][1]);
     sandCtx.lineTo(line1[1][0],line1[1][1]);
-    sandCtx.stroke();
     sandCtx.moveTo(line2[0][0],line2[0][1]);
     sandCtx.lineTo(line2[1][0],line2[1][1]);
     sandCtx.stroke();
+    sandCtx.closePath();
   },
-  "click #btn-line": function() {
-    const points = [[450,300],[450,100],[450,500],[450,300],[800,300],[100,300]];
-    for (var i = 1; i < points.length; i++) {
-      sandCtx.moveTo(points[i-1][0],points[i-1][1]);
-      sandCtx.lineTo(points[i][0],points[i][1]);
-      sandCtx.stroke();
-    }
-  },
-  "click #btn-lin2": function() {
-    const points = [[450,300],[450,1000]];
-    sandCtx.moveTo(points[0][0],points[0][1]);
-    sandCtx.lineTo(points[1][0],points[1][1]);
-    sandCtx.stroke();
-  },
-  "click #btn-fill": function() {
+  "click #btn-clr": function() {
     sandCtx.fillStyle = "rgb(210,210,210)";
     sandCtx.fillRect(-1000,-1000,2000,2000);
   }
