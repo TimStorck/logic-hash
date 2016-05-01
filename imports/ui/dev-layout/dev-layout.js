@@ -4,10 +4,12 @@ import './dev-layout.html';
 import '../../api/collections/methods.js';
 import '../../api/tabular/tbl-posts.js';
 
+import { sandCanObj } from '../dev-sandbox/dev-sandbox.js';
+import { sandCtx } from '../dev-sandbox/dev-sandbox.js';
+
 Template.devLayout.events ({
   "click #btn-tst": function() {
-    console.log("btn-tst clicked");
-    FlowRouter.go("dev_test");
+    console.log(sandCanObj);
   },
   /* table events begin */
   "click #btn-tbl": function() {
@@ -31,26 +33,23 @@ Template.devLayout.events ({
     Meteor.call('posts.removeAll');
   },
   /* table events end */
+  
   /* sandbox events begin */
   "click #btn-cvs": function() {
     console.log("btn-cvs clicked");
     FlowRouter.go("sandbox");
   },
   "click #btn-line": function() {
-    const c = document.getElementById("devCanvas");
-    const ctx = c.getContext("2d");
     const points = [[450,300],[450,100],[450,500],[450,300],[800,300],[100,300]];
     for (var i = 1; i < points.length; i++) {
-      ctx.moveTo(points[i-1][0],points[i-1][1]);
-      ctx.lineTo(points[i][0],points[i][1]);
-      ctx.stroke();
+      sandCtx.moveTo(points[i-1][0],points[i-1][1]);
+      sandCtx.lineTo(points[i][0],points[i][1]);
+      sandCtx.stroke();
     }
   },
   "click #btn-fill": function() {
-    const c = document.getElementById("devCanvas");
-    var ctx = c.getContext("2d");
-    ctx.fillStyle = "rgb(210,210,210)";
-    ctx.fillRect(0,0,899,599);
+    sandCtx.fillStyle = "rgb(210,210,210)";
+    sandCtx.fillRect(0,0,899,599);
   }
   /* sandbox events end */
 });
