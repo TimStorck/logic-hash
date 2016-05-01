@@ -9,11 +9,19 @@ import { devTable } from '../../ui/dev-table/dev-table.js';
 import { devAdd } from '../../ui/dev-add/dev-add.js';
 import { devTest } from '../../ui/dev-test/dev-test.js';
 import { sandbox } from '../../ui/dev-sandbox/dev-sandbox.js';
+import { canvas } from '../../ui/canvas/canvas.js';
 
 FlowRouter.route('/', {
     name: 'home',
     action: function() {
         BlazeLayout.render("home");
+    }
+});
+
+FlowRouter.route('/debate', {
+    name: 'debate',
+    action: function() {
+        BlazeLayout.render("canvas");
     }
 });
 
