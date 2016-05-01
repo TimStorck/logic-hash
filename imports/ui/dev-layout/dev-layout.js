@@ -4,7 +4,7 @@ import './dev-layout.html';
 import '../../api/collections/methods.js';
 import '../../api/tabular/tbl-posts.js';
 
-import { sandCanObj } from '../dev-sandbox/dev-sandbox.js';
+// import { sandCanObj } from '../dev-sandbox/dev-sandbox.js';
 import { sandCtx } from '../dev-sandbox/dev-sandbox.js';
 
 Template.devLayout.events ({
@@ -66,7 +66,7 @@ Template.devLayout.events ({
   },
   "click #btn-fill": function() {
     sandCtx.fillStyle = "rgb(210,210,210)";
-    sandCtx.fillRect(0,0,899,599);
+    sandCtx.fillRect(-1000,-1000,2000,2000);
   }
   /* sandbox events end */
 });

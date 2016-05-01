@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 
 import './dev-sandbox.html';
 
-export let sandCanObj = new Object;
+// export let sandCanObj = new Object;
 export let sandCtx = new Object;
 
 Template.sandbox.onRendered( function() {
