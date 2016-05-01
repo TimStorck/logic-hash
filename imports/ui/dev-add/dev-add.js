@@ -11,12 +11,15 @@ Template.devAdd.events({
 
     const content = template.find('#content').value;
     const author = template.find('#author').value;
+    const responseTo = template.find('#responseTo').value;
 
     const newPost = {
       content: content,
-      author: author
+      author: author,
+      responseTo: responseTo,
     }
 
     Meteor.call('posts.insert', newPost);
+    FlowRouter.go("dev");
   }
 });

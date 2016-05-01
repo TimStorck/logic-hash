@@ -16,6 +16,8 @@ TabularTables.Posts = new Tabular.Table({
   name: "Posts",
   collection: Posts,
   columns: [
+    {width: "100px", data: "_id", title: "_id"},
+    {width: "100px", data: "responseTo", title: "Response To"},
     {width: "100px", data: "author", title: "Author"},
     {width: "450px", data: "content", title: "Content"}
   ]
