@@ -22,11 +22,8 @@ Template.devLayout.events ({
     console.log("btn-add-doc clicked");
     Meteor.call('posts.insert', {content: "test content", author: "test author"});
   },
-  "click #btn-add-100": function() {
-    console.log("btn-add-100 clicked");
-    for (var i = 0; i < 100; i++) {
-      Meteor.call('posts.insert', {content: "test content", author: "test author"});
-    }
+  "click #btn-add-10": function() {
+    FlowRouter.go("dev_add_ten");
   },
   "click #btn-rem-all": function() {
     console.log("btn-rem-all clicked");

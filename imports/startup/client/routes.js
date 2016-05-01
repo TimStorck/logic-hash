@@ -7,6 +7,7 @@ import { home } from '../../ui/home/home.js';
 import { devLayout } from '../../ui/dev-layout/dev-layout.js';
 import { devTable } from '../../ui/dev-table/dev-table.js';
 import { devAdd } from '../../ui/dev-add/dev-add.js';
+import { devAddTen } from '../../ui/dev-add/dev-add.js';
 import { devTest } from '../../ui/dev-test/dev-test.js';
 import { sandbox } from '../../ui/dev-sandbox/dev-sandbox.js';
 import { debate } from '../../ui/debate/debate.js';
@@ -36,6 +37,13 @@ FlowRouter.route('/dev/add', {
     name: 'dev_add',
     action: function() {
         BlazeLayout.render("devLayout", {content: "devAdd"});
+    }
+});
+
+FlowRouter.route('/dev/add-ten', {
+    name: 'dev_add_ten',
+    action: function() {
+        BlazeLayout.render("devLayout", {content: "devAddTen"});
     }
 });
 
