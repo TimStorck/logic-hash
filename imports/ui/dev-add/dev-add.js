@@ -11,12 +11,12 @@ Template.devAdd.events({
 
     const content = template.find('#content').value;
     const author = template.find('#author').value;
-    const responseTo = template.find('#responseTo').value;
+    const elicitor = template.find('#elicitor').value;
 
     const newPost = {
       content: content,
       author: author,
-      responseTo: responseTo,
+      elicitor: elicitor,
     }
 
     Meteor.call('posts.insert', newPost);
@@ -31,14 +31,14 @@ Template.devAddTen.events({
     event.preventDefault();
     console.log("submit pressed");
 
-    const content = "Add Ten Content";
-    const author = "Add Ten Author";
-    const responseTo = template.find('#responseTo').value;
+    const content = "add-ten content";
+    const author = "add-ten author";
+    const elicitor = template.find('#elicitor').value;
 
     const newPost = {
       content: content,
       author: author,
-      responseTo: responseTo,
+      elicitor: elicitor,
     }
     
     for (var i = 0; i < 10; i++) {
