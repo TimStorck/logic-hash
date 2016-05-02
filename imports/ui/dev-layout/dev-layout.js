@@ -3,15 +3,12 @@ import { Template } from 'meteor/templating';
 import './dev-layout.html';
 import '../../api/collections/methods.js';
 import '../../api/tabular/tbl-posts.js';
-import {thing} from '../../api/reactive/reactive-thing.js';
-import { ReactiveDict } from 'meteor/reactive-dict';
+import {responseCount} from '../../api/reactive/reactive.js';
 
 // import { sandCanObj } from '../dev-sandbox/dev-sandbox.js';
 import { sandCtx } from '../dev-sandbox/dev-sandbox.js';
 
-const dict = new ReactiveDict();
-dict.set("thing", thing("qFFbm4wRNPnqMfBQG"));
-Tracker.autorun(function () { console.log(thing("qFFbm4wRNPnqMfBQG")); });
+Tracker.autorun(function () { console.log("responses to qFFbm4wRNPnqMfBQG: " + responseCount("qFFbm4wRNPnqMfBQG")); });
 
 Template.devLayout.events ({
   "click #btn-tst": function() {
