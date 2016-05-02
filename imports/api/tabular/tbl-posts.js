@@ -11,9 +11,9 @@ if (Meteor.isClient) {
 
 TabularTables = {};
 
-TabularTables.Posts = new Tabular.Table({
+TabularTables.PostsTbl = new Tabular.Table({
   bFilter: false,
-  name: "Posts",
+  name: "PostsTbl",
   collection: Posts,
   columns: [
     {width: "190px", data: "_id", title: "_id"},
