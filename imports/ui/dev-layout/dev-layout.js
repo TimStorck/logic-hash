@@ -12,7 +12,6 @@ Tracker.autorun(function () { console.log("responses to qFFbm4wRNPnqMfBQG: " + r
 
 Template.devLayout.events ({
   "click #btn-tst": function() {
-    console.log(sandCanObj);
   },
   /* table events begin */
   "click #btn-tbl": function() {
@@ -22,21 +21,18 @@ Template.devLayout.events ({
     FlowRouter.go("dev_add");
   },
   "click #btn-add-doc": function() {
-    console.log("btn-add-doc clicked");
     Meteor.call('posts.insert', {content: "test content", author: "test author"});
   },
   "click #btn-add-10": function() {
     FlowRouter.go("dev_add_ten");
   },
   "click #btn-rem-all": function() {
-    console.log("btn-rem-all clicked");
     Meteor.call('posts.removeAll');
   },
   /* table events end */
 
   /* sandbox events begin */
   "click #btn-cvs": function() {
-    console.log("btn-cvs clicked");
     FlowRouter.go("sandbox");
   },
   "click #btn-zero": function() {
