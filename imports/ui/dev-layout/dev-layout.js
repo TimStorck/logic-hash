@@ -10,9 +10,8 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { sandCtx } from '../dev-sandbox/dev-sandbox.js';
 
 const dict = new ReactiveDict();
-dict.set("thing", thing());
-Tracker.autorun(function () { console.log(thing()); });
-
+dict.set("thing", thing("qFFbm4wRNPnqMfBQG"));
+Tracker.autorun(function () { console.log(thing("qFFbm4wRNPnqMfBQG")); });
 
 Template.devLayout.events ({
   "click #btn-tst": function() {
