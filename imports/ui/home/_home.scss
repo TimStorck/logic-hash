@@ -44,6 +44,11 @@
               list-style-type: none;
             }
           }
+
+          .list-panel-spacer {
+            float: left;
+            width: 30px;
+          }
         }
       }
     }
@@ -68,6 +73,9 @@
                 display: inline-block;
                 width: 90%;
               }
+            }
+            .list-panel-spacer {
+              display: none;
             }
           }
         }
