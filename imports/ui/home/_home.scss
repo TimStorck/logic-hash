@@ -18,16 +18,18 @@
       background-color: $panel-color;
       border-radius: 5px;
       padding: 11px;
-      box-shadow: 0 0 3px $panel-border inset, -2px 2px 15px $shadow-color;
+      box-shadow: 0 0 3px $panel-border inset, -2px 2px 25px $shadow-color;
 
       .inner-panel {
         box-shadow: 0 0 3px $panel-border;
+        background-color: lighten($panel-color,6);
         padding: 11px;
         border-radius: 3px;
         overflow: hidden;
         text-align: center;
 
         .list-shell {
+          background-color: darken($panel-color, 8);
           border-radius: 3px;
           box-shadow: 0 0 3px $panel-border inset;
           display: inline-block;
@@ -39,6 +41,7 @@
           }
 
           .list-panel {
+            background-color: lighten($panel-color,6);
             border-radius: 3px;
             box-shadow: 0 0 3px $panel-border inset;
             width: 400px;
@@ -48,24 +51,35 @@
             }
 
             .list-header-box {
+              background-color: lighten($panel-color,10);
               border-radius: 3px;
               box-shadow: 0 0 3px $panel-border inset;
               margin:11px;
             }
 
-            ul {
-              margin-left: -41px;
-              list-style-type: none;
+            .list-box {
+              border-radius: 3px;
+              box-shadow: 0 0 3px $panel-border inset;
+              background-color: lighten($panel-color,10);
+              margin: 0px 11px 0px 11px;
 
-              li {
-                padding: 0 10px 0 10px;
+              ul {
+                padding-top: 5px;
+                margin-left: -41px;
+                list-style-type: none;
+                overflow: hidden;
+
+                li {
+                  padding: 0 10px 0 10px;
+                }
               }
+
             }
           }
 
           .list-panel-spacer {
             float: left;
-            width: 30px;
+            width: 11px;
           }
         }
       }

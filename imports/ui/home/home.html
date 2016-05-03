@@ -10,12 +10,13 @@
               <div class="list-header-box ">
                 <h1>Recently Active Debates</h1>
               </div>
-              <hr>
-              <ul>
-                {{#each recentlyAdded}}
-                  {{>listItem}}
-                {{/each}}
-              </ul>
+              <div class="list-box">
+                <ul>
+                  {{#each recentlyAdded}}
+                    {{>listItem}}
+                  {{/each}}
+                </ul>
+              </div>
             </div>
 
             <div class="list-panel-spacer">&nbsp;
@@ -25,12 +26,13 @@
               <div class="list-header-box ">
                 <h1>Recently Added Debates</h1>
               </div>
-              <hr>
-              <ul>
-                {{#each recentlyActive}}
-                  {{>listItem}}
-                {{/each}}
-              </ul>
+              <div class="list-box">
+                <ul>
+                  {{#each recentlyActive}}
+                    {{>listItem}}
+                  {{/each}}
+                </ul>
+              </div>
             </div>
 
           </div>
