@@ -1,28 +1,33 @@
 <template name="home">
   <div class="home">
-    <div id="outmost">
-      <div class="clear-shell TTTTTTT">
-        <div class="header"></div>
-        <div class="panel TTTTTTT">
-          <div class="inner-panel TTTTTTT">
-            <div class="list-shell TTTTTTT">
-              <div class="list-box TTTTTTT">
+    <div class="clear-shell TTTTTTT">
+      <div class="header"></div>
+      <div class="panel TTTTTTT">
+        <div class="inner-panel TTTTTTT">
+          <div class="list-shell TTTTTTT">
+
+            <div class="list-panel TTTTTTT">
+              <div class="list-header-box TTTTTTT">
                 <h1>Recently Active Debates</h1>
-                <ul>
-                  {{#each recentlyAdded}}
-                    {{>listItem}}
-                  {{/each}}
-                </ul>
               </div>
-              <div class="list-box TTTTTTT">
-                <h1>Recently Added Debates</h1>
-                <ul>
-                  {{#each recentlyActive}}
-                    {{>listItem}}
-                  {{/each}}
-                </ul>
-              </div>
+              <ul>
+                {{#each recentlyAdded}}
+                  {{>listItem}}
+                {{/each}}
+              </ul>
             </div>
+
+            <div class="list-panel TTTTTTT">
+              <div class="list-header-box TTTTTTT">
+                <h1>Recently Added Debates</h1>
+              </div>
+              <ul>
+                {{#each recentlyActive}}
+                  {{>listItem}}
+                {{/each}}
+              </ul>
+            </div>
+
           </div>
         </div>
       </div>
