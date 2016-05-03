@@ -1,6 +1,8 @@
 @import '../../../client/style/_mixins.scss';
 
 .home {
+  width: 100vw;
+
   .clear-shell {
     width: 1000px;
     margin: 0 auto;
@@ -48,20 +50,22 @@
   }
   @media screen and (max-width: 1000px) {
     .clear-shell {
-      width: 95%;
-      display: inline-block;
+      width: 90%;
 
       .panel {
-        display: inline-block;
 
         .inner-panel {
-          display: inline-block;
 
           .list-shell {
-            display: inline-block;
-            margin: 0 auto;
+
             .list-panel {
+              width: 700px;
               float: none;
+
+              .list-header-box {
+                display: inline-block;
+                width: 90%;
+              }
             }
           }
         }
