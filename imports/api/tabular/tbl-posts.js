@@ -21,6 +21,6 @@ TabularTables.PostsTbl = new Tabular.Table({
     {width: "60px", data: "author", title: "Author"},
     {width: "130px", data: "content", title: "Content"},
     {width: "180px", data: "dateDiscussed", title: "Last Discussed"},
-    {width: "180px", data: "dateMade", title: "Last Discussed"}
+    {width: "180px", data: "dateMade", title: "Motion Made"}
   ]
 });

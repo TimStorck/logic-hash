@@ -8,7 +8,7 @@ Meteor.methods({
       postParam.dateMade = Date();
     } else {
       //TODO make below coniditonal update recursive
-      Posts.update({_id: postParam.elicitor}, {dateDiscussed: Date()});
+      Posts.update({_id: postParam.elicitor}, {$set: {dateDiscussed: Date()} } );
     }
     Posts.insert(postParam);
   },
