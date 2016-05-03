@@ -14,6 +14,20 @@
       height: 205px;
     }
 
+    .login {
+      float: right;
+      margin-top: 4px;
+
+      .login-related {
+        float: right;
+        margin-top: 7px;
+
+        #signup-span {
+          margin-right: 13px;
+        }
+      }
+    }
+
     .panel {
       background-color: $the-red;
       border-radius: 5px;

@@ -1,7 +1,27 @@
 <template name="home">
   <div class="home ">
     <div class="clear-shell ">
-      <div class="header"></div>
+      <div class="header">
+
+        <div class="login ">
+          <form id="login">
+            <span id="msg" class=""></span>
+            <input id="username" size="14" type="text" placeholder="Username">
+            <input id="password" size="10" type="password" placeholder="Password">
+            <button>Login</button>
+          </form>
+          <div class="login-related">
+            <span id="signup-span">
+              Sign Up
+            </span>
+            <span>
+              Forgot Password
+            </span>
+          </div>
+        </div>
+
+      </div>
+
       <div class="panel ">
         <div class="inner-panel ">
           <div class="list-shell ">
@@ -38,6 +58,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
