@@ -46,6 +46,7 @@
             box-shadow: 0 0 3px $panel-border inset;
             width: 400px;
             float: left;
+            overflow: hidden;
             hr {
               width: 80%
             }
@@ -100,6 +101,7 @@
             .list-panel {
               width: 700px;
               float: none;
+              clear: left;
 
               .list-header-box {
                 display: inline-block;
@@ -107,7 +109,7 @@
               }
             }
             .list-panel-spacer {
-              display: none;
+              clear: both;
             }
           }
         }
