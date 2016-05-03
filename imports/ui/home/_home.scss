@@ -15,7 +15,7 @@
     }
 
     .panel {
-      background-color: $panel-color;
+      background-color: $the-red;
       border-radius: 5px;
       padding: 11px;
       box-shadow: 0 0 3px $panel-border inset, -2px 2px 25px $shadow-color;
@@ -41,7 +41,7 @@
           }
 
           .list-panel {
-            background-color: lighten($panel-color,6);
+            background-color: $the-blue;
             border-radius: 3px;
             box-shadow: 0 0 3px $panel-border inset;
             width: 400px;
