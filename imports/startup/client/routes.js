@@ -10,6 +10,7 @@ import { devAdd } from '../../ui/dev-add/dev-add.js';
 import { devAddTen } from '../../ui/dev-add/dev-add.js';
 import { devTest } from '../../ui/dev-test/dev-test.js';
 import { sandbox } from '../../ui/dev-sandbox/dev-sandbox.js';
+import { signUp } from '../../ui/signup/signup.js';
 import { debate } from '../../ui/debate/debate.js';
 
 FlowRouter.route('/', {
@@ -23,6 +24,13 @@ FlowRouter.route('/debate', {
     name: 'debate',
     action: function() {
         BlazeLayout.render("debate");
+    }
+});
+
+FlowRouter.route('/signup', {
+    name: 'sign_up',
+    action: function() {
+        BlazeLayout.render("signUp");
     }
 });
 

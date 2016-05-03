@@ -23,7 +23,7 @@ export function insertPosts() {
     },
     {
       author: "Jennifer",
-      content: "Nasa should receive 10x more funding in order to protect Earth from asteroids."
+      content: "NASA should receive 10x more funding in order to protect Earth from asteroids."
     },
     {
       author: "Melissa",
@@ -43,7 +43,7 @@ export function insertPosts() {
     },
     {
       author: "Bethany",
-      content: "Internet piracy should be policed by a Federal agency."
+      content: "The alternative energy movement is a conspiracy."
     },
     {
       author: "Fred",
