@@ -34,6 +34,10 @@
           .list-box {
             width: 400px;
             float: left;
+
+            ul {
+              list-style-type: none;
+            }
           }
         }
       }
