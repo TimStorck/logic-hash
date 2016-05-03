@@ -4,12 +4,13 @@
       <div class="header"></div>
       <div class="panel ">
         <div class="inner-panel ">
-          <div class="list-shell TTTTTTT">
+          <div class="list-shell ">
 
-            <div class="list-panel TTTTTTT">
-              <div class="list-header-box TTTTTTT">
+            <div class="list-panel ">
+              <div class="list-header-box ">
                 <h1>Recently Active Debates</h1>
               </div>
+              <hr>
               <ul>
                 {{#each recentlyAdded}}
                   {{>listItem}}
@@ -20,10 +21,11 @@
             <div class="list-panel-spacer">&nbsp;
             </div>
 
-            <div class="list-panel TTTTTTT">
-              <div class="list-header-box TTTTTTT">
+            <div class="list-panel ">
+              <div class="list-header-box ">
                 <h1>Recently Added Debates</h1>
               </div>
+              <hr>
               <ul>
                 {{#each recentlyActive}}
                   {{>listItem}}
@@ -41,5 +43,6 @@
 <template name="listItem">
   <li>
     {{content}}
+    <hr>
   </li>
 </template>

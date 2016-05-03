@@ -28,6 +28,8 @@
         text-align: center;
 
         .list-shell {
+          border-radius: 3px;
+          box-shadow: 0 0 3px $panel-border inset;
           display: inline-block;
           overflow: hidden;
           padding: 11px;
@@ -37,15 +39,27 @@
           }
 
           .list-panel {
+            border-radius: 3px;
+            box-shadow: 0 0 3px $panel-border inset;
             width: 400px;
             float: left;
+            hr {
+              width: 80%
+            }
 
             .list-header-box {
+              border-radius: 3px;
+              box-shadow: 0 0 3px $panel-border inset;
               margin:11px;
             }
 
             ul {
+              margin-left: -41px;
               list-style-type: none;
+
+              li {
+                padding: 0 10px 0 10px;
+              }
             }
           }
 
