@@ -8,7 +8,7 @@ import {responseCount} from '../../api/reactive/reactive.js';
 // import { sandCanObj } from '../dev-sandbox/dev-sandbox.js';
 import { sandCtx } from '../dev-sandbox/dev-sandbox.js';
 
-Tracker.autorun(function () { console.log("responses to qFFbm4wRNPnqMfBQG: " + responseCount("qFFbm4wRNPnqMfBQG")); });
+Tracker.autorun(function () {responseCount("qFFbm4wRNPnqMfBQG"); });
 
 Template.devLayout.events ({
   "click #btn-tst": function() {
@@ -54,3 +54,7 @@ Template.devLayout.events ({
   }
   /* sandbox events end */
 });
+
+var testtt = {content: "test content", author: "test author"};
+console.log(typeof {content: "test content", author: "test author"}.date == null);
+console.log(typeof testtt.date == null);
