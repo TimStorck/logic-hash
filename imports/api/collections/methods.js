@@ -3,9 +3,12 @@ import { Meteor } from 'meteor/meteor';
 
 Meteor.methods({
   'posts.insert': function(postParam) {
-    //TODO make below coniditonal update recursive
-    if (postParam.elicitor != null) {
-      Posts.update({_id: postParam.elicitor}, {date: Date()});
+    if (postParam.elicitor == null || postParam.elicitor == "") {
+      postParam.dateDiscussed = Date();
+      postParam.dateMade = Date();
+    } else {
+      //TODO make below coniditonal update recursive
+      Posts.update({_id: postParam.elicitor}, {dateDiscussed: Date()});
     }
     Posts.insert(postParam);
   },
