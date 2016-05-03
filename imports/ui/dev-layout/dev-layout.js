@@ -4,6 +4,7 @@ import './dev-layout.html';
 import '../../api/collections/methods.js';
 import '../../api/tabular/tbl-posts.js';
 import {responseCount} from '../../api/reactive/reactive.js';
+import {insertPosts} from '../../api/data/dummy-posts.js';
 
 // import { sandCanObj } from '../dev-sandbox/dev-sandbox.js';
 import { sandCtx } from '../dev-sandbox/dev-sandbox.js';
@@ -29,6 +30,9 @@ Template.devLayout.events ({
   },
   "click #btn-rem-all": function() {
     Meteor.call('posts.removeAll');
+  },
+  "click #btn-dum": function() {
+    insertPosts();
   },
   /* table events end */
 
