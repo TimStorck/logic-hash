@@ -54,7 +54,3 @@ Template.devLayout.events ({
   }
   /* sandbox events end */
 });
-
-var testtt = {content: "test content", author: "test author"};
-console.log(typeof {content: "test content", author: "test author"}.date == null);
-console.log(typeof testtt.date == null);
