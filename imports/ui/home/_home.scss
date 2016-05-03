@@ -1,6 +1,44 @@
 @import '../../../client/style/_mixins.scss';
 
-.word-box {
-  @include wordbox();
-  @include panel-margin();
+.home {
+  #outmost {
+    height: 100vh;
+    width: 100vw;
+    background-color: white;
+    @include flexbox();
+  }
+
+  .clear-shell {
+    width: 40%;
+    min-height: 80%;
+    background-image: url(/img/logo50.png);
+    background-repeat: no-repeat;
+
+    .solid-shell {
+      margin: 0 auto;
+      margin-top: 205px;
+      width: 400px;
+      padding: 11px;
+      border-radius: 5px;
+
+      .inner-shell-border {
+        width: 100%;
+        border-radius: 3px;
+      }
+    }
+  }
+  @media screen and (max-width: 1000px) {
+    .clear-shell {
+      width: 400px;
+
+      .solid-shell {
+        width: 100%;
+      }
+    }
+  }
+  @media screen and (max-width: 400px) {
+    .clear-shell {
+      width: 100%;
+    }
+  }
 }
