@@ -12,6 +12,7 @@ Tracker.autorun(function () { console.log("responses to qFFbm4wRNPnqMfBQG: " + r
 
 Template.devLayout.events ({
   "click #btn-tst": function() {
+      console.log(Date());
   },
   /* table events begin */
   "click #btn-tbl": function() {
@@ -21,7 +22,7 @@ Template.devLayout.events ({
     FlowRouter.go("dev_add");
   },
   "click #btn-add-doc": function() {
-    Meteor.call('posts.insert', {content: "test content", author: "test author"});
+    Meteor.call('posts.insert', {content: "test content", author: "test author", date: Date()});
   },
   "click #btn-add-10": function() {
     FlowRouter.go("dev_add_ten");

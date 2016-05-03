@@ -19,6 +19,7 @@ TabularTables.PostsTbl = new Tabular.Table({
     {width: "190px", data: "_id", title: "_id"},
     {width: "190px", data: "elicitor", title: "Response To"},
     {width: "100px", data: "author", title: "Author"},
-    {width: "450px", data: "content", title: "Content"}
+    {width: "200px", data: "content", title: "Content"},
+    {width: "250px", data: "date", title: "Last Discussed"}
   ]
 });
