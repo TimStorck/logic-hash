@@ -21,6 +21,11 @@ Template.home.events({
   "click #signup-span": function() {
     FlowRouter.go("sign_up");
   },
+  "click #logout": function() {
+    Meteor.logout(function(err) {
+      console.log(err);
+    });
+  },
   'submit #login' : function(event, template) {
 
     event.preventDefault();
