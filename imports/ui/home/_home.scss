@@ -25,6 +25,10 @@
         #signup-span {
           margin-right: 13px;
         }
+
+        #signup-span, #forgotP {
+          cursor: pointer;
+        }
       }
     }
 
@@ -43,16 +47,12 @@
         text-align: center;
 
         .list-shell {
-          background-color: darken($panel-color, 8);
+          background-color: darken($panel-color, 3);
           border-radius: 3px;
           box-shadow: 0 0 3px $panel-border inset;
           display: inline-block;
           overflow: hidden;
-          padding: 11px;
-
-          .second {
-
-          }
+          padding: 7px;
 
           .list-panel {
             background-color: $the-blue;
@@ -61,6 +61,7 @@
             width: 400px;
             float: left;
             overflow: hidden;
+
             hr {
               width: 80%
             }
@@ -94,7 +95,7 @@
 
           .list-panel-spacer {
             float: left;
-            width: 11px;
+            width: 7px;
           }
         }
       }
@@ -124,6 +125,7 @@
             }
             .list-panel-spacer {
               clear: both;
+              height: 4px;
             }
           }
         }
@@ -157,6 +159,30 @@
 @media screen and (max-width: 750px) {
   .home {
     .clear-shell {
+
+      .login {
+
+        #login > * {
+          display: block;
+          float: right;
+          clear: both;
+          margin-top: 1px;
+        }
+
+        .login-related {
+          margin-top: 0;
+
+          > * {
+            display: block;
+            float: right;
+            clear: both;
+          }
+
+          #signup-span {
+            margin-right: 0;
+          }
+        }
+      }
 
       .panel {
 
