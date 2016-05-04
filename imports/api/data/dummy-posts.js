@@ -50,10 +50,6 @@ export function insertPosts() {
       content: "Wikipedia is as reliable as anything else."
     },
     {
-      author: "Zeb",
-      content: "Dinosaur fossils could be a trick."
-    },
-    {
       author: "Debby",
       content: "Old trees should be protected by local governments."
     }

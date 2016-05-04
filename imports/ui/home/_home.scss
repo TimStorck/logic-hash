@@ -17,6 +17,15 @@
         float: right;
         margin-top: 4px;
 
+        #login {
+
+          button {
+            background:none;
+            border: 1px $the-blue solid;
+            color: black;
+          }
+        }
+
         .login-related {
           float: right;
           margin-top: 7px;
@@ -27,6 +36,7 @@
 
           #signup-span, #forgotP {
             cursor: pointer;
+            color: $the-blue;
           }
         }
       }
