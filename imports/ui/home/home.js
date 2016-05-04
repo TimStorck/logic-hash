@@ -15,3 +15,9 @@ Template.home.helpers({
     return Posts.find();
   }
 });
+
+Template.home.events({
+  "click #signup-span": function() {
+    FlowRouter.go("sign_up");
+  }
+});

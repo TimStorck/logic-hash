@@ -3,12 +3,17 @@
     <div class="clear-shell ">
       <div class="header">
 
+        {{#if currentUser}}
+        <div class="login ">
+          <button>Log Out</button>
+        </div>
+        {{else}}
         <div class="login ">
           <form id="login">
             <span id="msg" class=""></span>
             <input id="username" size="14" type="text" placeholder="Username">
             <input id="password" size="10" type="password" placeholder="Password">
-            <button>Login</button>
+            <button>Log In</button>
           </form>
           <div class="login-related">
             <span id="signup-span">
@@ -19,7 +24,8 @@
             </span>
           </div>
         </div>
-
+        {{/if}}
+        
       </div>
 
       <div class="panel ">

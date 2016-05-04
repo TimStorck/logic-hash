@@ -17,13 +17,10 @@
         float: right;
         margin-top: 4px;
 
-        #login {
-
-          button {
-            background:none;
-            border: 1px $the-blue solid;
-            color: black;
-          }
+        button {
+          background:none;
+          border: 1px $the-blue solid;
+          color: black;
         }
 
         .login-related {
