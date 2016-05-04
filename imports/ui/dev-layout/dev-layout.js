@@ -11,6 +11,10 @@ import { sandCtx } from '../dev-sandbox/dev-sandbox.js';
 
 Tracker.autorun(function () {responseCount("qFFbm4wRNPnqMfBQG"); });
 
+Template.devLayout.onRendered(function() {
+  document.body.style.backgroundColor = "rgb(200,200,200)";
+});
+
 Template.devLayout.events ({
   "click #btn-tst": function() {
       console.log(Date());
