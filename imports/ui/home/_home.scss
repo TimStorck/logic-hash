@@ -70,7 +70,7 @@
             background-color: $the-blue;
             border-radius: 3px;
             box-shadow: 0 0 3px $panel-border inset;
-            width: 400px;
+            width: 595px;
             float: left;
             overflow: hidden;
 
@@ -81,13 +81,13 @@
             .list-header-box {
               background-color: lighten($panel-color,10);
               border-radius: 3px;
-              box-shadow: 0 0 3px $panel-border inset;
+              box-shadow: 0 0 3px $panel-border;
               margin:11px;
             }
 
             .list-box {
               border-radius: 3px;
-              box-shadow: 0 0 3px $panel-border inset;
+              box-shadow: 0 0 3px $panel-border;
               background-color: lighten($panel-color,10);
               margin: 0px 11px 0px 11px;
 
@@ -114,6 +114,30 @@
     }
   }
 }
+@media screen and (max-width: 1300px) {
+  .home {
+    .clear-shell {
+
+      .panel {
+
+        .inner-panel {
+
+          .list-shell {
+
+            .list-panel {
+              width: 445px;
+
+              .list-header-box {
+              }
+            }
+            .list-panel-spacer {
+            }
+          }
+        }
+      }
+    }
+  }
+}
 @media screen and (max-width: 1000px) {
   .home {
     .clear-shell {
@@ -125,7 +149,7 @@
           .list-shell {
 
             .list-panel {
-              width: 700px;
+              width: 825px;
               float: none;
               clear: left;
 
@@ -155,7 +179,7 @@
           .list-shell {
 
             .list-panel {
-              width: 600px;
+              width: 670px;
 
               .list-header-box {
 
@@ -207,7 +231,7 @@
           .list-shell {
 
             .list-panel {
-              width: 400px;
+              width: 470px;
 
               .list-header-box {
 
@@ -233,10 +257,11 @@
             padding: 3px;
 
             .list-panel {
-              width: 255px;
+              width: 285px;
 
               .list-header-box {
-                margin: 3px;
+                margin: 7px 0 0 0;
+                padding: 0 10px 0 10px;
                 width: 70%;
 
               }
