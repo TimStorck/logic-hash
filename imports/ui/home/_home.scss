@@ -12,22 +12,22 @@
       background-image: url(/img/logo50.png);
       background-repeat: no-repeat;
       height: 205px;
-    }
 
-    .login {
-      float: right;
-      margin-top: 4px;
-
-      .login-related {
+      .login {
         float: right;
-        margin-top: 7px;
+        margin-top: 4px;
 
-        #signup-span {
-          margin-right: 13px;
-        }
+        .login-related {
+          float: right;
+          margin-top: 7px;
 
-        #signup-span, #forgotP {
-          cursor: pointer;
+          #signup-span {
+            margin-right: 13px;
+          }
+
+          #signup-span, #forgotP {
+            cursor: pointer;
+          }
         }
       }
     }
@@ -160,26 +160,31 @@
   .home {
     .clear-shell {
 
-      .login {
+      .header {
+        background-size: 120px;;
+        height: 125px;
 
-        #login > * {
-          display: block;
-          float: right;
-          clear: both;
-          margin-top: 1px;
-        }
+        .login {
 
-        .login-related {
-          margin-top: 0;
-
-          > * {
+          #login > * {
             display: block;
             float: right;
             clear: both;
+            margin-top: 1px;
           }
 
-          #signup-span {
-            margin-right: 0;
+          .login-related {
+            margin-top: 0;
+
+            > * {
+              display: block;
+              float: right;
+              clear: both;
+            }
+
+            #signup-span {
+              margin-right: 0;
+            }
           }
         }
       }
@@ -217,7 +222,7 @@
             padding: 3px;
 
             .list-panel {
-              width: 300px;
+              width: 255px;
 
               .list-header-box {
                 margin: 3px;
