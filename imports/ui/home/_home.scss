@@ -13,6 +13,7 @@
       background-image: url(/img/logo2darker200.png);
       background-repeat: no-repeat;
       height: 205px;
+      overflow: hidden;
 
       .login {
         float: right;
@@ -197,7 +198,7 @@
 
       .header {
         background-size: 120px;;
-        height: 125px;
+        height: 135px;
 
         .login {
 
@@ -206,6 +207,10 @@
             float: right;
             clear: both;
             margin-top: 1px;
+          }
+
+          #msg {
+            margin-right: 0;
           }
 
           .login-related {
