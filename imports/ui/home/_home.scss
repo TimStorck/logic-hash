@@ -53,7 +53,7 @@
       .inner-panel {
         box-shadow: 0 0 3px $panel-border;
         background-color: lighten($panel-color,6);
-        padding: 7px 7px 3px 7px;
+        padding: 7px 7px 2px 7px;
         border-radius: 3px;
         overflow: hidden;
         text-align: center;
@@ -64,7 +64,7 @@
           box-shadow: 0 0 3px $panel-border inset;
           display: inline-block;
           overflow: hidden;
-          padding: 7px;
+          padding: 4px;
 
           .list-panel {
             background-color: $the-blue;
@@ -107,7 +107,7 @@
 
           .list-panel-spacer {
             float: left;
-            width: 7px;
+            width: 4px;
           }
         }
       }
