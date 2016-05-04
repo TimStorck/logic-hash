@@ -10,7 +10,7 @@
     margin: 0 auto;
 
     .header {
-      background-image: url(/img/logo50.png);
+      background-image: url(/img/logo2darker200.png);
       background-repeat: no-repeat;
       height: 205px;
 
@@ -48,7 +48,7 @@
       background-color: $the-red;
       border-radius: 5px;
       padding: 11px;
-      box-shadow: 0 0 3px $panel-border inset, -2px 2px 25px $shadow-color;
+      box-shadow: 0 0 3px $panel-border inset, -2px 2px 3px $shadow-color;
 
       .inner-panel {
         box-shadow: 0 0 3px $panel-border;
