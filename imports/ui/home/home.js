@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import {Posts} from '../../api/collections/posts.js';
+import { Meteor } from 'meteor/meteor';
 
 import './home.html';
 
@@ -19,5 +20,16 @@ Template.home.helpers({
 Template.home.events({
   "click #signup-span": function() {
     FlowRouter.go("sign_up");
+  },
+  'submit #login' : function(event, template) {
+
+    event.preventDefault();
+
+    const username = template.find('#username').value;
+    const password = template.find('#password').value;
+
+    Meteor.loginWithPassword(username, password, function() {
+      document.getElementById("msg").innerHTML = "Invalid Login Info";
+    });
   }
 });
