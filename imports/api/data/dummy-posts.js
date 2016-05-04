@@ -15,7 +15,7 @@ export function insertPosts() {
   const postsArray = [
     {
       author: "Joe",
-      content: "I think that global warming is the most important issue facing civilization."
+      content: "Global warming is the most important issue facing civilization."
     },
     {
       author: "Ben",
