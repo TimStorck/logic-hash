@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { Accounts } from 'meteor/accounts-base'
 
 import './signup.html';
 
@@ -13,7 +14,9 @@ Template.signUp.events({
     const confirmPassword = template.find('#confirmPassword').value;
 
     if (password === confirmPassword) {
-      
+      Accounts.createUser({username: username, email: email, password: password}, function(err) {
+        console.log(err);
+      });
     } else {
       document.getElementById("msg").innerHTML = "Passwords don't match";
     }
