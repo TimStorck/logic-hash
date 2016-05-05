@@ -10,10 +10,10 @@ Template.home.onCreated(function() {
 
 Template.home.helpers({
   recentlyAdded() {
-    return Posts.find({elicitor: {$exists: false}}, {sort: {dateMade: 1}, skip: 0, limit: 10 });
+    return Posts.find({$or: [ {elicitor: {$exists: false} }, {elicitor: ""} ] }, {sort: {dateMade: -1}, skip: 0, limit: 0 });
   },
   recentlyActive() {
-    return Posts.find({elicitor: {$exists: false}}, {sort: {dateDiscussed: 1}, skip: 0, limit: 10 });
+    return Posts.find({$or: [ {elicitor: {$exists: false} }, {elicitor: ""} ] }, {sort: {dateDiscussed: -1}, skip: 0, limit: 0 });
   }
 });
 
