@@ -8,11 +8,17 @@ Template.newMotion.events({
 
     event.preventDefault();
 
-    const email = template.find('#email').value;
-    const username = template.find('#username').value;
-    const password = template.find('#password').value;
-    const confirmPassword = template.find('#confirmPassword').value;
+    const author = Meteor.user();
+    const content = template.find('#text').value;
 
-    //method
+    const newPost = {
+      content: content,
+      author: author
+    }
+
+    Meteor.call('posts.insert', newPost);
+
+    //TODO Route to debate page
+    FlowRouter.go("home");
   }
 });
