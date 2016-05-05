@@ -54,7 +54,7 @@
       .inner-panel {
         box-shadow: 0 0 3px $panel-border;
         background-color: lighten($panel-color,6);
-        padding: 7px 7px 2px 7px;
+        padding: 7px 7px 3px 7px;
         border-radius: 3px;
         overflow: hidden;
         text-align: center;
@@ -256,7 +256,7 @@
         padding: 3px;
 
         .inner-panel {
-          padding: 3px;
+          padding: 3px 3px 0px 3px;
 
           .list-shell {
             padding: 3px;
