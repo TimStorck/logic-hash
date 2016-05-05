@@ -8,7 +8,7 @@ Template.newMotion.events({
 
     event.preventDefault();
 
-    const author = Meteor.user();
+    const author = Meteor.user().username;
     const content = template.find('#text').value;
 
     const newPost = {
