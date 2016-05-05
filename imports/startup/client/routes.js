@@ -11,6 +11,7 @@ import { devAddTen } from '../../ui/dev-add/dev-add.js';
 import { devTest } from '../../ui/dev-test/dev-test.js';
 import { sandbox } from '../../ui/dev-sandbox/dev-sandbox.js';
 import { signUp } from '../../ui/signup/signup.js';
+import { newMotion } from '../../ui/new-motion/new-motion.js';
 import { debate } from '../../ui/debate/debate.js';
 
 FlowRouter.route('/', {
@@ -24,6 +25,13 @@ FlowRouter.route('/debate', {
     name: 'debate',
     action: function() {
         BlazeLayout.render("debate");
+    }
+});
+
+FlowRouter.route('/new', {
+    name: 'new_motion',
+    action: function() {
+        BlazeLayout.render("newMotion");
     }
 });
 
