@@ -6,6 +6,7 @@
   text-align: center;
 
   .clear-shell {
+    position: relative;
     display: inline-block;
     margin: 0 auto;
 
@@ -16,8 +17,9 @@
       overflow: hidden;
 
       .login {
-        float: right;
-        margin-top: 4px;
+        position: absolute;
+        top:4px;
+        right: 0;
 
         #msg {
           margin-right: 10px;
@@ -42,6 +44,12 @@
             color: $the-blue;
           }
         }
+      }
+
+      .title {
+        float: center;
+        margin-top: 70px;
+        font-size: 3em;
       }
     }
 
@@ -161,7 +169,7 @@
             }
             .list-panel-spacer {
               clear: both;
-              height: 4px;
+              height: 12px;
             }
           }
         }
@@ -227,6 +235,10 @@
             }
           }
         }
+        .title {
+          font-size: 2em;
+          margin-top: 49px;
+        }
       }
 
       .panel {
@@ -251,6 +263,15 @@
 @media screen and (max-width: 550px) {
   .home {
     .clear-shell {
+      .header {
+        background-size: 60px;
+
+        .title {
+          fontsize: 1em;
+          float: left;
+          margin-top: 68px;
+        }
+      }
 
       .panel {
         padding: 3px;
