@@ -10,45 +10,47 @@
     display: inline-block;
     margin: 0 auto;
 
-    .header {
-      background-image: url(/img/logo2darker200.png);
-      background-repeat: no-repeat;
-      height: 205px;
-      overflow: hidden;
+    .login {
+      position: absolute;
+      top:4px;
+      right: 0;
 
-      .login {
-        position: absolute;
-        top:4px;
-        right: 0;
+      #msg {
+        margin-right: 10px;
+      }
 
-        #msg {
-          margin-right: 10px;
+      button {
+        background:none;
+        border: 1px $the-blue solid;
+        color: black;
+      }
+
+      .login-related {
+        float: right;
+        margin-top: 7px;
+
+        #signup-span {
+          margin-right: 13px;
         }
 
-        button {
-          background:none;
-          border: 1px $the-blue solid;
-          color: black;
-        }
-
-        .login-related {
-          float: right;
-          margin-top: 7px;
-
-          #signup-span {
-            margin-right: 13px;
-          }
-
-          #signup-span, #forgotP {
-            cursor: pointer;
-            color: $the-blue;
-          }
+        #signup-span, #forgotP {
+          cursor: pointer;
+          color: $the-blue;
         }
       }
+    }
+
+    .header {
+      margin-top: 6px;
+      background-image: url(/img/logo2darker200.png);
+      background-repeat: no-repeat;
+      background-size: 120px;;
+      height: 130px;
+      overflow: hidden;
 
       .title {
         float: center;
-        margin-top: 70px;
+        margin-top: 38px;
         font-size: 3em;
       }
     }
