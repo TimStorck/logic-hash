@@ -15,6 +15,10 @@
       top:4px;
       right: 0;
 
+      form {
+        display: inline-block;
+      }
+
       #msg {
         margin-right: 10px;
       }
@@ -23,20 +27,12 @@
         background:none;
         border: 1px $the-blue solid;
         color: black;
+        width: 70px;
       }
 
       .login-related {
         float: right;
-        margin-top: 7px;
-
-        #signup-span {
-          margin-right: 13px;
-        }
-
-        #signup-span, #forgotP {
-          cursor: pointer;
-          color: $the-blue;
-        }
+        margin-left: 2px;
       }
     }
 
@@ -212,6 +208,12 @@
 
         .login {
 
+          #login {
+            display: block;
+            float: right;
+            clear: both;
+          }
+
           #login > * {
             display: block;
             float: right;
@@ -220,21 +222,13 @@
           }
 
           #msg {
-            margin-right: 0;
+            margin-right: 0px;
           }
 
           .login-related {
-            margin-top: 0;
-
-            > * {
-              display: block;
-              float: right;
-              clear: both;
-            }
-
-            #signup-span {
-              margin-right: 0;
-            }
+            margin-top: 1px;
+            float: right;
+            clear: both;
           }
         }
         .title {
