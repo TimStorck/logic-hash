@@ -9,6 +9,8 @@ Template.debate.onCreated(function() {
   Meteor.subscribe('posts');
 
   const handle = this.autorun(function () {
-    console.log(debateTreeChanged(FlowRouter.getParam("mId"))); 
+    debateTreeChanged(FlowRouter.getParam("mId"), 
+      document.getElementById("debateCanvas"), 
+      document.getElementById("bucket")); 
   });
 });

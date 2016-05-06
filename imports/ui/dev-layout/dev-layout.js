@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 import './dev-layout.html';
 import '../../api/collections/methods.js';
 import '../../api/tabular/tbl-posts.js';
-import {responseCount} from '../../api/reactive/reactive.js';
+// import {responseCount} from '../../api/reactive/reactive.js';
 import {insertPosts} from '../../api/data/dummy-posts.js';
 
 // import { sandCanObj } from '../dev-sandbox/dev-sandbox.js';
