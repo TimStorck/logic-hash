@@ -21,9 +21,9 @@ FlowRouter.route('/', {
     }
 });
 
-FlowRouter.route('/debate', {
+FlowRouter.route('/debate/:mId', {
     name: 'debate',
-    action: function() {
+    action: function(params) {
         BlazeLayout.render("debate");
     }
 });
