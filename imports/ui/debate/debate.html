@@ -1,9 +1,20 @@
 <template name="debate">
   <div class="debate">
     <div class="outmost">
-      <div class="canvasShell TTTTTTT">
-        <canvas class="TTTTTTT" id="debateCanvas"></canvas>
+      <div class="canvasShell ">
+        <div class="canvasWrapper">
+          <canvas class="" id="debateCanvas" width="900" height="500"></canvas>
+          {{>motion}}
+        </div>
       </div>
     </div>
+  </div>
+</template>
+
+<template name="motion">
+  <div class="motion">
+  text
+    {{author}}<br>
+    {{content}}
   </div>
 </template>

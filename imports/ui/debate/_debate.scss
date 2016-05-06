@@ -1,5 +1,28 @@
 .debate {
-  canvas {
-    display: block;
+  text-align: center;
+
+  .canvasShell {
+    padding: 25px;
+    background: grey;
+    display: inline-block;
+    margin: 0 auto;
+
+    .canvasWrapper {
+      position: relative;
+
+      #debateCanvas {
+        background: white;
+        display: block;
+      }
+    }
+
+    .motion {
+      position: absolute;
+      border: 1px black solid;
+      border-radius: 4px;
+      box-shadow: -2px 2px 2px rgba(0,0,0,0.5);
+      top: 0;
+      left: 0;
+    }
   }
 }
