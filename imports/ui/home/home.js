@@ -18,7 +18,7 @@ Template.home.helpers({
 });
 
 Template.home.events({
-  "click #signup-span": function() {
+  "click #signUp": function() {
     FlowRouter.go("sign_up");
   },
   "click #logout": function() {
