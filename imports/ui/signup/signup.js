@@ -17,6 +17,7 @@ Template.signUp.events({
       Accounts.createUser({username: username, email: email, password: password}, function(err) {
         console.log(err);
       });
+      FlowRouter.go("/");
     } else {
       document.getElementById("msg").innerHTML = "Passwords don't match";
     }
