@@ -12,8 +12,6 @@
 
 body {
   background-color: $body-bg-color;
-  margin: 0;
-  @include flexbox-hor();
 }
 
 .raised {
