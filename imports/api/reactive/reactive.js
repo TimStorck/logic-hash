@@ -1,7 +1,11 @@
+import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import {Posts} from '../collections/posts.js';
 
-export function debateTreeChanged(elicitor, wrapper) {
+export function debateTreeChanged(motion, wrapper) {
   Meteor.subscribe('posts');  
-  return Posts.find({elicitor: elicitor}).count();
+  // console.log(Posts.find({elicitor: motion}).count());
+
+    return Posts.findOne({"_id": motion}).content;
+
 }
