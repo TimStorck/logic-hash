@@ -36,5 +36,8 @@ Template.home.events({
     Meteor.loginWithPassword(username, password, function() {
       document.getElementById("msg").innerHTML = "Invalid Login Info";
     });
+  },
+  'click .item' : function() {
+    console.log(this._id);
   }
 });
