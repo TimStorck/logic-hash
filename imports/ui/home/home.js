@@ -38,6 +38,6 @@ Template.home.events({
     });
   },
   'click .item' : function() {
-    console.log(this._id);
+    FlowRouter.go("/debate/" + this._id);
   }
 });
