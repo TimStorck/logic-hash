@@ -5,7 +5,10 @@ import {Posts} from '../collections/posts.js';
 export function debateTreeChanged(motion, wrapper) {
   Meteor.subscribe('posts');  
   // console.log(Posts.find({elicitor: motion}).count());
+  try {
+      return Posts.findOne({"_id": motion}).content;
+  } catch(e) {
 
-    return Posts.findOne({"_id": motion}).content;
+  }
 
 }
