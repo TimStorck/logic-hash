@@ -5,7 +5,7 @@ import {debateTreeChanged} from '../../api/reactive/reactive.js';
 
 import './debate.html';
 
-Template.debate.onCreated(function() {
+Template.debate.onRendered(function() {
   Meteor.subscribe('posts');
 
   const handle = this.autorun(function () {
