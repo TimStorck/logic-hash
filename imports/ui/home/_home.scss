@@ -1,6 +1,12 @@
 @import '../../../client/style/_mixins.scss';
 @import '../../../client/style/_variables.scss';
 
+.listItem {
+  .item {
+    cursor: pointer;
+  }
+}
+
 .home {
   width: 100vw;
   text-align: center;
