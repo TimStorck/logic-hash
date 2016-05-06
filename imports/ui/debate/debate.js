@@ -10,7 +10,7 @@ Template.debate.onRendered(function() {
 
   const handle = this.autorun(function () {
     debateTreeChanged(FlowRouter.getParam("mId"), 
-      document.getElementById("debateCanvas"), 
-      document.getElementById("bucket")); 
+      document.getElementById("bucket"), 
+      document.getElementById("debateCanvas")); 
   });
 });

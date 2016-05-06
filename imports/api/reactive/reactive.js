@@ -4,12 +4,13 @@ import {Posts} from '../collections/posts.js';
 
 export function debateTreeChanged(motion, bucket, canCtx) {
   Meteor.subscribe('posts');  
-  // console.log(Posts.find({elicitor: motion}).count());
+
   try {
-      return Posts.findOne({"_id": motion}).content;
+      let content = Posts.findOne({"_id": motion}).content;
+      bucket.innerHTML = content;
   } catch(e) {
 
   }
-      console.log(motion + bucket + canCtx);
+      // console.log(motion + bucket + canCtx);
 
 }
