@@ -1,7 +1,8 @@
-export function PostOb(author, content) {
+export function PostOb(author, content, responseNo) {
   this.content = content;
   this.author = author;
+  this.responseNo = responseNo;
   this.testMethod = function() {
-    console.log("method says hello")
+    console.log("number of responses to motion: " + this.responseNo)
   }
 }
