@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import {Posts} from '../collections/posts.js';
-import { PostOb } from './post-object.js';
+import { PostOb } from './obj-post.js';
 import { drawTextBox } from './drawing.js';
 
 export function debateTreeChanged(motionId, bucket, canCtx) {
