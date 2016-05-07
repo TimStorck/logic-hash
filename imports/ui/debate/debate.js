@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import {Posts} from '../../api/collections/posts.js';
 import { Meteor } from 'meteor/meteor';
-import {debateTreeChanged} from '../../api/reactive/reactive.js';
+import {debateTreeChanged} from '../../api/functions/reactive.js';
 
 import './debate.html';
 

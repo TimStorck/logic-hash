@@ -3,13 +3,9 @@ import { Template } from 'meteor/templating';
 import './dev-layout.html';
 import '../../api/collections/methods.js';
 import '../../api/tabular/tbl-posts.js';
-// import {responseCount} from '../../api/reactive/reactive.js';
 import {insertPosts} from '../../api/data/dummy-posts.js';
 
-// import { sandCanObj } from '../dev-sandbox/dev-sandbox.js';
 import { sandCtx } from '../dev-sandbox/dev-sandbox.js';
-
-// Tracker.autorun(function () {responseCount("qFFbm4wRNPnqMfBQG"); });
 
 Template.devLayout.onRendered(function() {
   document.body.style.backgroundColor = "rgb(200,200,200)";
@@ -17,7 +13,7 @@ Template.devLayout.onRendered(function() {
 
 Template.devLayout.events ({
   "click #btn-tst": function() {
-      console.log(Date());
+      // console.log(Date());
   },
   /* table events begin */
   "click #btn-tbl": function() {
