@@ -4,7 +4,7 @@ import {Posts} from '../collections/posts.js';
 import { PostOb } from './obj-post.js';
 import { drawTextBox } from './drawing.js';
 
-export function debateTreeChanged(motionId, bucket, canCtx) {
+export function debateTreeChanged(motionId, bucket, canvas) {
   Meteor.subscribe('posts');  
 
   try {
@@ -17,7 +17,11 @@ export function debateTreeChanged(motionId, bucket, canCtx) {
 
     drawTextBox(motion);
 
-    motion.testMethod();
+    // for (let i = 0; i < motion.responseNo; i++) {
+
+    // }
+
+    // motion.testMethod();
 
   } catch(e) {
     /*
