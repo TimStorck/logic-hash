@@ -42,6 +42,15 @@
         margin-left: 2px;
         margin-top: 1px;
       }
+
+      .userControls {
+        button {
+          float: right;
+          margin-bottom: 1px;
+          clear: both;
+          width: 130px;
+        }
+      }
     }
 
     .header {

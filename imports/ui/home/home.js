@@ -37,6 +37,9 @@ Template.home.events({
       document.getElementById("msg").innerHTML = "Invalid Login Info";
     });
   },
+  "click #newMotion": function() {
+    FlowRouter.go("/new");
+  },
   'click .item' : function() {
     FlowRouter.go("/debate/" + this._id);
   }
