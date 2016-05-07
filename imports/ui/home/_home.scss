@@ -8,13 +8,11 @@
 }
 
 .home {
-  width: 100vw;
   text-align: center;
 
   .clear-shell {
     position: relative;
     display: inline-block;
-    margin: 0 auto;
 
     .userControls {
       position: absolute;
@@ -220,8 +218,7 @@
     .clear-shell {
 
       .header {
-        background-size: 120px;;
-        height: 135px;
+        background-size: 120px;
 
         .userControls {
 
@@ -276,8 +273,10 @@
 @media screen and (max-width: 550px) {
   .home {
     .clear-shell {
+
       .header {
         background-size: 60px;
+        height: 110px;
 
         .title {
           fontsize: 1em;
