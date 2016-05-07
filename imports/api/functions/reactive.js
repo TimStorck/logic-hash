@@ -14,8 +14,8 @@ export function debateTreeChanged(motion, bucket, canCtx) {
     newElem.style.left = "450px";
     bucket.appendChild(newElem);
   } catch(e) {
-
+    /*
+    this try catch put in place because of exception thrown by "Posts.findOne({"_id": motion}).content" when page loading at meteor app startup. if debate page navigated to from landing page it would load fine, and if returned to by the url it would load fine
+    */
   }
-      // console.log(motion + bucket + canCtx);
-
 }
