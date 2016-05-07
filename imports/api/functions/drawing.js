@@ -1,3 +1,5 @@
+import { Coord } from './objects.js';
+
 export function drawTextBox(post, butcket, coord) {
   let newElem = document.createElement("div");
   newElem.setAttribute("class", "motion");

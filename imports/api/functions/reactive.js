@@ -1,24 +1,23 @@
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import {Posts} from '../collections/posts.js';
-import { PostOb } from './obj-post.js';
+import { PostOb } from './objects.js';
+import { Coord } from './objects.js';
 import { drawTextBox } from './drawing.js';
-import { Coord } from './obj-coord.js';
+import { centerOf } from './measurements.js';
+// import { addCoords } from './obj-coord.js';
 
 export function debateTreeChanged(motionId, bucket, canvas) {
   Meteor.subscribe('posts');  
 
   try {
-
-    let center = new Coord((canvas.width+1) / 2, (canvas.height+1) / 2)
+    let center = centerOf(new Coord(canvas.width, canvas.height));
 
     let motion = new PostOb(
       Posts.findOne({"_id": motionId}).author, 
       Posts.findOne({"_id": motionId}).content,
       Posts.find({"elicitor": motionId}).count()
     );
-
-    // console.log(canvas.width/2, ' ', canvas.height/2);
 
     drawTextBox(motion, bucket, center);
 
