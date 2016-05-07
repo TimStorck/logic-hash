@@ -4,14 +4,14 @@
       <div class="header">
 
         {{#if currentUser}}
-        <div class="login ">
-          <div class="userControls">
+        <div class="userControls ">
+          <div class="loggedIn">
             <button id="logout">Log Out</button>
             <button id="newMotion">Make New Motion</button>
           </div>
         </div>
         {{else}}
-        <div class="login ">
+        <div class="userControls ">
           <form id="login">
             <span id="msg" class=""></span>
             <input id="username" size="10" type="text" placeholder="Username" required>

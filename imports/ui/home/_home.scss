@@ -16,7 +16,7 @@
     display: inline-block;
     margin: 0 auto;
 
-    .login {
+    .userControls {
       position: absolute;
       top:4px;
       right: 0;
@@ -43,7 +43,7 @@
         margin-top: 1px;
       }
 
-      .userControls {
+      .loggedIn {
         button {
           float: right;
           margin-bottom: 1px;
@@ -223,7 +223,7 @@
         background-size: 120px;;
         height: 135px;
 
-        .login {
+        .userControls {
 
           #login {
             display: block;
