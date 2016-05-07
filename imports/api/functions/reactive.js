@@ -3,11 +3,14 @@ import { Meteor } from 'meteor/meteor';
 import {Posts} from '../collections/posts.js';
 import { PostOb } from './obj-post.js';
 import { drawTextBox } from './drawing.js';
+import { Coord } from './obj-coord.js';
 
 export function debateTreeChanged(motionId, bucket, canvas) {
   Meteor.subscribe('posts');  
 
   try {
+
+    let center = new Coord((canvas.width+1) / 2, (canvas.height+1) / 2)
 
     let motion = new PostOb(
       Posts.findOne({"_id": motionId}).author, 
@@ -15,7 +18,9 @@ export function debateTreeChanged(motionId, bucket, canvas) {
       Posts.find({"elicitor": motionId}).count()
     );
 
-    drawTextBox(motion);
+    // console.log(canvas.width/2, ' ', canvas.height/2);
+
+    drawTextBox(motion, bucket, center);
 
     // for (let i = 0; i < motion.responseNo; i++) {
 

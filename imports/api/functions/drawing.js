@@ -1,8 +1,8 @@
-export function drawTextBox(post, butcket) {
+export function drawTextBox(post, butcket, coord) {
   let newElem = document.createElement("div");
   newElem.setAttribute("class", "motion");
   newElem.innerHTML = post.content;
-  newElem.style.top = "250px";
-  newElem.style.left = "450px";
+  newElem.style.top = coord.yPx();
+  newElem.style.left = coord.xPx();
   bucket.appendChild(newElem);
 }
