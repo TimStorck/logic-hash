@@ -25,8 +25,6 @@ export function debateTreeChanged(motionId, bucket, canvas) {
 
     // }
 
-    // motion.testMethod();
-
   } catch(e) {
     /*
     this try catch put in place because of exception thrown by "Posts.findOne({"_id": motion}).content" when page loading at meteor app startup. if debate page navigated to from landing page it would load fine, and if returned to by the url it would load fine
