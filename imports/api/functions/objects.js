@@ -33,6 +33,11 @@ export function PostOb(author, content, responseNo) {
   };
 }
 
+export function Platform(coordA, coordB) {
+  this.a = coordA;
+  this.b = coordB;
+}
+
 export function filledSpaceModel() {
   const margin = 17;
   this.topLine = [];
@@ -127,13 +132,9 @@ export function filledSpaceModel() {
     let bottomRightMargin = new Coord(bottomRight.x + margin, bottomRight.y + margin);
     let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
     let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
-    this.topLine.push(topLeftMargin);
-    this.topLine.push(topRightMargin);
-    this.rightLine.push(topRightMargin);
-    this.rightLine.push(bottomRightMargin);
-    this.bottomLine.push(bottomRightMargin);
-    this.bottomLine.push(bottomLeftMargin);
-    this.leftLine.push(bottomLeftMargin);
-    this.leftLine.push(topLeftMargin);
+    this.topLine.push(new Platform(topLeftMargin, topRightMargin));
+    this.rightLine.push(new Platform(topRightMargin, bottomRightMargin));
+    this.bottomLine.push(new Platform(bottomRightMargin, bottomLeftMargin));
+    this.leftLine.push(new Platform(bottomLeftMargin, topLeftMargin));
   }
 }

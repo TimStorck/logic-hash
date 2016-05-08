@@ -1,4 +1,5 @@
 import { Coord } from './objects.js';
+import { Platform } from './objects.js';
 import { centerOf } from './measurements.js';
 import { dimensOf } from './measurements.js';
 import { widthFromChars } from './measurements.js';
@@ -42,25 +43,36 @@ function findBestSpot(postDimens) {
 }
 
 export function drawFSModel(fSModel, canvas) {
+  let canCtx = canvas.getContext("2d");
+
   for (let i = 0; i < fSModel.topLine.length; i++) {
-    drawCircle(fSModel.topLine[i], canvas);
+    drawLine(fSModel.topLine[i], canCtx);
   }
   for (let i = 0; i < fSModel.rightLine.length; i++) {
-    drawCircle(fSModel.rightLine[i], canvas);
+    drawLine(fSModel.rightLine[i], canCtx);
   }
   for (let i = 0; i < fSModel.bottomLine.length; i++) {
-    drawCircle(fSModel.bottomLine[i], canvas);
+    drawLine(fSModel.bottomLine[i], canCtx);
   }
   for (let i = 0; i < fSModel.leftLine.length; i++) {
-    drawCircle(fSModel.leftLine[i], canvas);
+    drawLine(fSModel.leftLine[i], canCtx);
   }
 }
 
-function drawCircle(coord, canvas) {
-  canCtx = canvas.getContext("2d");
+// function drawCircle(coord, canvas) {
+//   canCtx = canvas.getContext("2d");
+//   canCtx.beginPath();
+//   canCtx.fillStyle = "red";
+//   canCtx.arc(coord.x, coord.y, 2, 0, Math.PI*2, true);
+//   canCtx.fill();
+//   canCtx.closePath();
+// }
+
+function drawLine(platform, canCtx) {
   canCtx.beginPath();
-  canCtx.fillStyle = "red";
-  canCtx.arc(coord.x, coord.y, 2, 0, Math.PI*2, true);
-  canCtx.fill();
+  canCtx.strokeStyle = "red";
+  canCtx.moveTo(platform.a.x,platform.a.y);
+  canCtx.lineTo(platform.b.x,platform.b.y);
+  canCtx.stroke();
   canCtx.closePath();
 }

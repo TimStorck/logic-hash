@@ -39,3 +39,14 @@ filledSpaceModel
       else
         any points in between new points horizontally, splice out
         push new points
+
+array of platforms
+  when adding new platform
+    if there is point below it
+      find if it extends beyond left 
+        if so, abridge to new edge
+      if it doesnt extend either way,  remove it
+  when finding best spot
+    find lowest platform
+      see if its wide enough
+      if not check next (sorted in order of lowest)
