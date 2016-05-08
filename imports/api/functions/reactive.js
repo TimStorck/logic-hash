@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Posts } from '../collections/posts.js';
 import { PostOb } from './objects.js';
 import { Coord } from './objects.js';
-import { drawTextBox } from './drawing.js';
+import { drawMotionTextBox } from './drawing.js';
 import { centerOf } from './measurements.js';
 import { drawResponseTextBox } from './drawing.js';
 
@@ -25,7 +25,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
   }
 
   if (typeof motion != "undefined") {
-    drawTextBox(motion, bucket, center);
+    drawMotionTextBox(motion, bucket, center);
 
     let fetchArray = Posts.find({"elicitor": motionId}).fetch();
     let responseArray = [];

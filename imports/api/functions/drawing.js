@@ -3,9 +3,9 @@ import { centerOf } from './measurements.js';
 import { dimensOf } from './measurements.js';
 import { widthFromChars } from './measurements.js';
 
-export function drawTextBox(post, butcket, centerPos) {
+export function drawMotionTextBox(post, butcket, centerPos) {
   let newElem = document.createElement("div");
-  newElem.setAttribute("class", "motion");
+  newElem.setAttribute("class", "post");
   newElem.innerHTML = post.content;
   newElem.style.width = widthFromChars(post.content.length);
 
@@ -17,11 +17,19 @@ export function drawTextBox(post, butcket, centerPos) {
 }
 
 export function drawResponseTextBox(post, bucket) {
-  let centerPos = findBestSpot(post);
+  let newElem = document.createElement("div");
+  newElem.setAttribute("class", "post");
+  newElem.innerHTML = post.content;
+  newElem.style.width = widthFromChars(post.content.length);
+
+  bucket.appendChild(newElem);
+
+  let centerPos = findBestSpot(newElem);
   console.log(centerPos);
 }
 
-function findBestSpot(post) {
+function findBestSpot(newElem) {
+  let postDimens = dimensOf(newElem);
 
   return new Coord(0, 0);
 }
