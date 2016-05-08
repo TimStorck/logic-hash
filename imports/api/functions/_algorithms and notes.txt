@@ -33,5 +33,6 @@ filledSpaceModel
           update left line
         if extend beyond right edge
           update right line
-      any points in between new points horizontally, splice out
-      push new points
+      else
+        any points in between new points horizontally, splice out
+        push new points

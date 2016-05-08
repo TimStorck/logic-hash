@@ -30,6 +30,7 @@ export function PostOb(author, content, responseNo) {
 }
 
 export function filledSpaceModel() {
+  const margin = 17;
   this.topLine = [];
   this.rightLine = [];
   this.bottomLine = [];
@@ -38,32 +39,36 @@ export function filledSpaceModel() {
     referredByAdjacent prevents infinite recursion
   */
   this.updateTopLine = function(topLeft, bottomRight, referredByAdjacent) {
-    let topRight = new Coord(bottomRight.x, topLeft.y);
-    if (!referredByAdjacent) {
+    let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
+    let topRightMargin = new Coord(bottomRight.x + margin, topLeft.y - margin);
+    if (referredByAdjacent) {
 
     } else {
 
     }
   };
   this.updateRightLine = function(topLeft, bottomRight, referredByAdjacent) {
-    let topRight = new Coord(bottomRight.x, topLeft.y);
-    if (!referredByAdjacent) {
+    let topRightMargin = new Coord(bottomRight.x + margin, topLeft.y - margin);
+    let bottomRightMargin = new Coord(bottomRight.x + margin, bottomRight.y + margin);
+    if (referredByAdjacent) {
       
     } else {
       
     }
   };
   this.updateBottomLine = function(topLeft, bottomRight, referredByAdjacent) {
-    let bottomLeft = new Coord(topLeft.x, bottomRight.y);
-    if (!referredByAdjacent) {
+    let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
+    let bottomRightMargin = new Coord(bottomRight.x + margin, bottomRight.y + margin);
+    if (referredByAdjacent) {
       
     } else {
       
     }
   };
   this.updateLeftLine = function(topLeft, bottomRight, referredByAdjacent) {
-    let bottomLeft = new Coord(topLeft.x, bottomRight.y);
-    if (!referredByAdjacent) {
+    let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
+    let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
+    if (referredByAdjacent) {
       
     } else {
       
