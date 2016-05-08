@@ -9,7 +9,12 @@ export function centerOf(dimens) {
 }
 
 export function widthFromChars(charNo) {
-  return (charNo / (Math.sqrt(charNo) / 12.9) ) + "px";
+  if (charNo < 50) {
+    return "auto";
+  } else {
+    return (charNo / (Math.sqrt(charNo) / 12.9) ) + "px";
+  }
+  
   /*
     so that text box with few words has smaller width and 
     textboxes with varying amounts of characters approximate square shape.
