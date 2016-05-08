@@ -20,21 +20,26 @@ export function debateTreeChanged(motionId, bucket, canvas) {
       Posts.find({"elicitor": motionId}).count()
     );
   } catch(e) {
-    console.log("Exception thrown loading motion data");
+    /*
+    this try catch put in place because of exception thrown by 
+    "Posts.findOne({"_id": motionId}).content" when page loading 
+    at meteor app startup. if debate page navigated to from landing 
+    page it would load fine, and if returned to by the url it would load fine
+    */
   }
 
   if (typeof motion != "undefined") {
     drawTextBox(motion, bucket, center);
 
     let fetchArray = Posts.find({"elicitor": motionId}).fetch();
-    // let responseArray = [];
+    let responseArray = [];
 
-    // for (let i = 0; i < responseArray.length; i++) {
-    //   responseArray.push(new PostOb(
-    //     fetchArray[i].author,
-    //     fetchArray[i].content,
-    //     fetchArray[i]._id
-    //   ));
-    // }
+    for (let i = 0; i < fetchArray.length; i++) {
+      responseArray.push(new PostOb(
+        fetchArray[i].author,
+        fetchArray[i].content,
+        fetchArray[i]._id
+      ));
+    }
   }
 }
