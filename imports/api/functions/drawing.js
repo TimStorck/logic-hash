@@ -3,7 +3,7 @@ import { centerOf } from './measurements.js';
 import { dimensOf } from './measurements.js';
 import { widthFromChars } from './measurements.js';
 
-export function drawMotionTextBox(post, butcket, centerPos) {
+export function drawMotionTextBox(post, butcket, centerPos, fSModel) {
   let newElem = document.createElement("div");
   newElem.setAttribute("class", "post");
   newElem.innerHTML = post.content;
@@ -16,7 +16,7 @@ export function drawMotionTextBox(post, butcket, centerPos) {
   newElem.style.left = topLeftPos.xPx();
 }
 
-export function drawResponseTextBox(post, bucket) {
+export function drawResponseTextBox(post, bucket, fSModel) {
   let newElem = document.createElement("div");
   newElem.setAttribute("class", "post");
   newElem.innerHTML = post.content;
@@ -24,12 +24,12 @@ export function drawResponseTextBox(post, bucket) {
 
   bucket.appendChild(newElem);
 
-  let centerPos = findBestSpot(newElem);
+  let postDimens = dimensOf(newElem);
+  let centerPos = findBestSpot(postDimens);
   console.log(centerPos);
 }
 
-function findBestSpot(newElem) {
-  let postDimens = dimensOf(newElem);
+function findBestSpot(postDimens) {
 
   return new Coord(0, 0);
 }

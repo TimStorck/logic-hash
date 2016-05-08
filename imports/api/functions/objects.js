@@ -23,3 +23,22 @@ export function PostOb(author, content, responseNo) {
     // console.log("number of responses to motion: " + this.responseNo)
   };
 }
+
+export function filledSpaceModel() {
+  this.topLine = [];
+  this.rightLine = [];
+  this.bottomLine = [];
+  this.leftLine = [];
+  this.updateTopLine = function(postDimens, referredByAdjacent) {
+
+  };
+  this.updateRightLine = function(postDimens, referredByAdjacent) {
+
+  };
+  this.updateBottomLine = function(postDimens, referredByAdjacent) {
+
+  };
+  this.updateLeftLine = function(postDimens, referredByAdjacent) {
+
+  };
+}

@@ -3,9 +3,10 @@ import { Meteor } from 'meteor/meteor';
 import { Posts } from '../collections/posts.js';
 import { PostOb } from './objects.js';
 import { Coord } from './objects.js';
+import { filledSpaceModel } from './objects.js';
 import { drawMotionTextBox } from './drawing.js';
-import { centerOf } from './measurements.js';
 import { drawResponseTextBox } from './drawing.js';
+import { centerOf } from './measurements.js';
 
 export function debateTreeChanged(motionId, bucket, canvas) {
   Meteor.subscribe('posts');  
@@ -25,11 +26,12 @@ export function debateTreeChanged(motionId, bucket, canvas) {
   }
 
   if (typeof motion != "undefined") {
-    drawMotionTextBox(motion, bucket, center);
+    const fSModel = new filledSpaceModel();
+
+    drawMotionTextBox(motion, bucket, center, fSModel);
 
     let fetchArray = Posts.find({"elicitor": motionId}).fetch();
     let responseArray = [];
-
     for (let i = 0; i < fetchArray.length; i++) {
       responseArray.push(new PostOb(
         fetchArray[i].author,
@@ -37,9 +39,8 @@ export function debateTreeChanged(motionId, bucket, canvas) {
         fetchArray[i]._id
       ));
     }
-
     for (let i = 0; i < responseArray.length; i++) {
-      drawResponseTextBox(responseArray[i], bucket);
+      drawResponseTextBox(responseArray[i], bucket, fSModel);
     }
   }
 }
