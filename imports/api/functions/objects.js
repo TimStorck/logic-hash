@@ -29,16 +29,16 @@ export function filledSpaceModel() {
   this.rightLine = [];
   this.bottomLine = [];
   this.leftLine = [];
-  this.updateTopLine = function(postDimens, referredByAdjacent) {
+  this.updateTopLine = function(topLeftCoord, bottomRightCoord, referredByAdjacent) {
 
   };
-  this.updateRightLine = function(postDimens, referredByAdjacent) {
+  this.updateRightLine = function(topLeftCoord, bottomRightCoord, referredByAdjacent) {
 
   };
-  this.updateBottomLine = function(postDimens, referredByAdjacent) {
+  this.updateBottomLine = function(topLeftCoord, bottomRightCoord, referredByAdjacent) {
 
   };
-  this.updateLeftLine = function(postDimens, referredByAdjacent) {
+  this.updateLeftLine = function(topLeftCoord, bottomRightCoord, referredByAdjacent) {
 
   };
 }
