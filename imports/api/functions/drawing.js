@@ -11,9 +11,15 @@ export function drawMotionTextBox(post, butcket, centerPos, fSModel) {
 
   bucket.appendChild(newElem);
   
-  let topLeftPos = centerPos.minus(centerOf(dimensOf(newElem)));
+  let dimens = dimensOf(newElem);
+  let topLeftPos = centerPos.minus(centerOf(dimens));
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
+
+  fSModel.updateTopLine(topLeftPos, topLeftPos.plus(dimens), true);
+  fSModel.updateLeftLine(topLeftPos, topLeftPos.plus(dimens), true);
+  fSModel.updateBottomLine(topLeftPos, topLeftPos.plus(dimens), true);
+  fSModel.updateRightLine(topLeftPos, topLeftPos.plus(dimens), true);
 }
 
 export function drawResponseTextBox(post, bucket, fSModel) {
@@ -32,4 +38,8 @@ export function drawResponseTextBox(post, bucket, fSModel) {
 function findBestSpot(postDimens) {
 
   return new Coord(0, 0);
+}
+
+export function drawFSModel(fSModel, canvas) {
+
 }

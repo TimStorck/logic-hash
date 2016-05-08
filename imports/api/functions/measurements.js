@@ -25,3 +25,55 @@ export function widthFromChars(charNo) {
     of an average character, or a square of it or something like that.
   */
 }
+
+export function rightMost(arr) {
+  return arr.sort(function (a, b) {
+    if (a.x < b.x) {
+      return 1;
+    }
+    if (a.x > b.x) {
+      return -1;
+    }
+    // a must be equal to b
+    return 0;
+  })[0];
+}
+
+export function leftMost(arr) {
+  return arr.sort(function (a, b) {
+    if (a.x > b.x) {
+      return 1;
+    }
+    if (a.x < b.x) {
+      return -1;
+    }
+    // a must be equal to b
+    return 0;
+  })[0];
+}
+
+export function topMost(arr) {
+  return arr.sort(function (a, b) {
+    if (a.y < b.y) {
+      return 1;
+    }
+    if (a.y > b.y) {
+      return -1;
+    }
+    // a must be equal to b
+    return 0;
+  })[0];
+}
+
+export function bottomMost(arr) {
+  return arr.sort(function (a, b) {
+    if (a.y > b.y) {
+      return 1;
+    }
+    if (a.y < b.y) {
+      return -1;
+    }
+    // a must be equal to b
+    return 0;
+  })[0];
+}

@@ -1,3 +1,8 @@
+import { rightMost } from './measurements.js';
+import { leftMost } from './measurements.js';
+import { topMost } from './measurements.js';
+import { bottomMost } from './measurements.js';
+
 export function Coord(x, y) {
   this.x = Math.floor(x);
   this.y = Math.floor(y);
@@ -29,16 +34,39 @@ export function filledSpaceModel() {
   this.rightLine = [];
   this.bottomLine = [];
   this.leftLine = [];
-  this.updateTopLine = function(topLeftCoord, bottomRightCoord, referredByAdjacent) {
+  /*
+    referredByAdjacent prevents infinite recursion
+  */
+  this.updateTopLine = function(topLeft, bottomRight, referredByAdjacent) {
+    let topRight = new Coord(bottomRight.x, topLeft.y);
+    if (!referredByAdjacent) {
 
+    } else {
+
+    }
   };
-  this.updateRightLine = function(topLeftCoord, bottomRightCoord, referredByAdjacent) {
-
+  this.updateRightLine = function(topLeft, bottomRight, referredByAdjacent) {
+    let topRight = new Coord(bottomRight.x, topLeft.y);
+    if (!referredByAdjacent) {
+      
+    } else {
+      
+    }
   };
-  this.updateBottomLine = function(topLeftCoord, bottomRightCoord, referredByAdjacent) {
-
+  this.updateBottomLine = function(topLeft, bottomRight, referredByAdjacent) {
+    let bottomLeft = new Coord(topLeft.x, bottomRight.y);
+    if (!referredByAdjacent) {
+      
+    } else {
+      
+    }
   };
-  this.updateLeftLine = function(topLeftCoord, bottomRightCoord, referredByAdjacent) {
-
+  this.updateLeftLine = function(topLeft, bottomRight, referredByAdjacent) {
+    let bottomLeft = new Coord(topLeft.x, bottomRight.y);
+    if (!referredByAdjacent) {
+      
+    } else {
+      
+    }
   };
 }
