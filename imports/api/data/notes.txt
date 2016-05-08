@@ -1,1 +1,2 @@
 rounded coords throw off fsmodel?
+coord pushed to array in fsmodel passed by reference? 
