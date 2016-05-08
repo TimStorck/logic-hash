@@ -20,10 +20,7 @@ export function drawMotionTextBox(post, butcket, centerPos, fSModel) {
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
 
-  fSModel.updateTopLine(topLeftPos, topLeftPos.plus(dimens), true);
-  fSModel.updateLeftLine(topLeftPos, topLeftPos.plus(dimens), true);
-  fSModel.updateBottomLine(topLeftPos, topLeftPos.plus(dimens), true);
-  fSModel.updateRightLine(topLeftPos, topLeftPos.plus(dimens), true);
+  fSModel.addMotion(topLeftPos, topLeftPos.plus(dimens));
 }
 
 export function drawResponseTextBox(post, bucket, fSModel) {

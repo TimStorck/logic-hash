@@ -28,52 +28,69 @@ export function widthFromChars(charNo) {
 
 export function rightMost(arr) {
   return arr.sort(function (a, b) {
-    if (a.x < b.x) {
-      return 1;
-    }
-    if (a.x > b.x) {
-      return -1;
-    }
-    // a must be equal to b
+    if (a.x < b.x) return 1;
+    if (a.x > b.x) return -1;
     return 0;
   })[0];
 }
 
 export function leftMost(arr) {
   return arr.sort(function (a, b) {
-    if (a.x > b.x) {
-      return 1;
-    }
-    if (a.x < b.x) {
-      return -1;
-    }
-    // a must be equal to b
+    if (a.x > b.x) return 1;
+    if (a.x < b.x) return -1;
     return 0;
   })[0];
 }
 
 export function topMost(arr) {
   return arr.sort(function (a, b) {
-    if (a.y < b.y) {
-      return 1;
-    }
-    if (a.y > b.y) {
-      return -1;
-    }
-    // a must be equal to b
+    if (a.y < b.y) return 1;
+    if (a.y > b.y) return -1;
     return 0;
   })[0];
 }
 
 export function bottomMost(arr) {
   return arr.sort(function (a, b) {
-    if (a.y > b.y) {
-      return 1;
-    }
-    if (a.y < b.y) {
-      return -1;
-    }
-    // a must be equal to b
+    if (a.y > b.y) return 1;
+    if (a.y < b.y) return -1;
     return 0;
   })[0];
 }
+
+// export function sortLeftToRight(arr) {
+//   return arr.sort(function (a, b) {
+//     if (a.x > b.x) return 1;
+//     if (a.x < b.x) return -1;
+//     if (a.y == b.y) return -1;
+//     return 1;
+//   });
+// }
+
+// export function sortBottomtoTop(arr) {
+//   return arr.sort(function (a, b) {
+//     if (a.y > b.y) return 1;
+//     if (a.y < b.y) return -1;
+//     return 0;
+//   });
+// }
+
+// export function sortTopToBottom(arr) {
+//   return arr.sort(function (a, b) {
+//     if (a.y < b.y) return 1;
+//     if (a.y > b.y) return -1;
+//     return 0;
+//   });
+// }
+
+// export function sortRightToLeft(arr) {
+//   return arr.sort(function (a, b) {
+//     if (a.x < b.x) return 1;
+//     if (a.x > b.x) return -1;
+//     return 0;
+//   });
+// }
+
+// export function closestPointLeftOf(coord, arr) {
+
+// }

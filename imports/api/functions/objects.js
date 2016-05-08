@@ -2,6 +2,10 @@ import { rightMost } from './measurements.js';
 import { leftMost } from './measurements.js';
 import { topMost } from './measurements.js';
 import { bottomMost } from './measurements.js';
+// import { sortBottomToTop } from './measurements.js';
+// import { sortTopToBottom } from './measurements.js';
+// import { sortLeftToRight } from './measurements.js';
+// import { sortRightToLeft } from './measurements.js';
 
 export function Coord(x, y) {
   this.x = Math.floor(x);
@@ -118,4 +122,18 @@ export function filledSpaceModel() {
     this.leftLine.push(topLeftMargin);
     this.leftLine.push(bottomLeftMargin);
   };
+  this.addMotion = function(topLeft, bottomRight) {
+    let topRightMargin = new Coord(bottomRight.x + margin, topLeft.y - margin);
+    let bottomRightMargin = new Coord(bottomRight.x + margin, bottomRight.y + margin);
+    let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
+    let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
+    this.topLine.push(topLeftMargin);
+    this.topLine.push(topRightMargin);
+    this.rightLine.push(topRightMargin);
+    this.rightLine.push(bottomRightMargin);
+    this.bottomLine.push(bottomRightMargin);
+    this.bottomLine.push(bottomLeftMargin);
+    this.leftLine.push(bottomLeftMargin);
+    this.leftLine.push(topLeftMargin);
+  }
 }
