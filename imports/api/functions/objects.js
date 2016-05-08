@@ -42,7 +42,12 @@ export function filledSpaceModel() {
     let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
     let topRightMargin = new Coord(bottomRight.x + margin, topLeft.y - margin);
     if (!referredByAdjacent) {
-
+      if (topLeftMargin.x < leftMost(topLine)) {
+        updateLeftLine(topLeft, bottomRight, true);
+      }
+      if (topRightMargin.x > rightMost(topLine)) {
+        updateRightLine(topLeft, bottomRight, true);
+      }
     } 
     for (let i=0; i < this.topLine.length; i++) {
       if (topLine[i].x > topLeftMargin.x && topLine[i].x < topRightMargin) {
@@ -57,7 +62,12 @@ export function filledSpaceModel() {
     let topRightMargin = new Coord(bottomRight.x + margin, topLeft.y - margin);
     let bottomRightMargin = new Coord(bottomRight.x + margin, bottomRight.y + margin);
     if (!referredByAdjacent) {
-      
+      if (topRightMargin.y < topMost(rightLine)) {
+        updateTopLine(topLeft, bottomRight, true);
+      }
+      if (bottomRightMargin.y > bottomMost(rightLine)) {
+        updateBottomLine(topLeft, bottomRight, true);
+      }
     } 
     for (let i=0; i < this.rightLine.length; i++) {
       if (rightLine[i].y < topRightMargin.x && rightLine[i].y > bottomRightMargin) {
@@ -72,7 +82,12 @@ export function filledSpaceModel() {
     let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
     let bottomRightMargin = new Coord(bottomRight.x + margin, bottomRight.y + margin);
     if (!referredByAdjacent) {
-      
+      if (bottomRightMargin.x > rightMost(bottomLine)) {
+        updateRightLine(topLeft, bottomRight, true);
+      }
+      if (bottomLeftMargin.x < leftMost(bottomLine)) {
+        updateLeftLine(topLeft, bottomRight, true);
+      }
     } 
     for (let i=0; i < this.bottomLine.length; i++) {
       if (bottomLine[i].x > bottomLeftMargin.x && bottomLine[i].x < bottomRightMargin) {
@@ -87,7 +102,12 @@ export function filledSpaceModel() {
     let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
     let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
     if (!referredByAdjacent) {
-      
+      if (topLeftMargin.y < topMost(leftLine)) {
+        updateTopLine(topLeft, bottomRight, true);
+      }
+      if (bottomLeftMargin.y > bottomMost(leftLine)) {
+        updateBottomLine(topLeft, bottomRight, true);
+      }
     } 
     for (let i=0; i < this.leftLine.length; i++) {
       if (leftLine[i].y < topLeftMargin.x && leftLine[i].y > bottomLeftMargin) {
