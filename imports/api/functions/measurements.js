@@ -16,8 +16,7 @@ export function widthFromChars(charNo) {
   }
   
   /*
-    so that text box with few words has smaller width and 
-    textboxes with varying amounts of characters approximate square shape.
+    so that textboxes with varying amounts of characters approximate square shape.
 
     set up excel sheet collecting data for amounts of characters and 
     width of div that makes it look close to square. the relationship is
