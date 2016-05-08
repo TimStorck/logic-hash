@@ -6,7 +6,7 @@ import { Coord } from './objects.js';
 import { filledSpaceModel } from './objects.js';
 import { drawMotionTextBox } from './drawing.js';
 import { drawResponseTextBox } from './drawing.js';
-import { drawFXModel } from './drawing.js';
+import { drawFSModel } from './drawing.js';
 import { centerOf } from './measurements.js';
 
 export function debateTreeChanged(motionId, bucket, canvas) {
@@ -43,5 +43,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     for (let i = 0; i < responseArray.length; i++) {
       drawResponseTextBox(responseArray[i], bucket, fSModel);
     }
+
+    drawFSModel(fSModel, canvas);
   }
 }

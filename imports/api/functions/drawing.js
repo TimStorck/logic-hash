@@ -41,5 +41,25 @@ function findBestSpot(postDimens) {
 }
 
 export function drawFSModel(fSModel, canvas) {
+  for (let i = 0; i < fSModel.topLine.length; i++) {
+    drawCircle(fSModel.topLine[i], canvas);
+  }
+  for (let i = 0; i < fSModel.rightLine.length; i++) {
+    drawCircle(fSModel.rightLine[i], canvas);
+  }
+  for (let i = 0; i < fSModel.bottomLine.length; i++) {
+    drawCircle(fSModel.bottomLine[i], canvas);
+  }
+  for (let i = 0; i < fSModel.leftLine.length; i++) {
+    drawCircle(fSModel.leftLine[i], canvas);
+  }
+}
 
+function drawCircle(coord, canvas) {
+  canCtx = canvas.getContext("2d");
+  canCtx.beginPath();
+  canCtx.fillStyle = "red";
+  canCtx.arc(coord.x, coord.y, 1,0,Math.PI*2,true);
+  canCtx.fill();
+  canCtx.closePath();
 }
