@@ -1,10 +1,11 @@
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
-import {Posts} from '../collections/posts.js';
+import { Posts } from '../collections/posts.js';
 import { PostOb } from './objects.js';
 import { Coord } from './objects.js';
 import { drawTextBox } from './drawing.js';
 import { centerOf } from './measurements.js';
+import { drawResponseTextBox } from './drawing.js';
 
 export function debateTreeChanged(motionId, bucket, canvas) {
   Meteor.subscribe('posts');  
@@ -20,12 +21,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
       Posts.find({"elicitor": motionId}).count()
     );
   } catch(e) {
-    /*
-    this try catch put in place because of exception thrown by 
-    "Posts.findOne({"_id": motionId}).content" when page loading 
-    at meteor app startup. if debate page navigated to from landing 
-    page it would load fine, and if returned to by the url it would load fine
-    */
+    // this try catch put in place because of exception thrown by "Posts.findOne({"_id": motionId}).content" when page loading at meteor app startup. if debate page navigated to from landing page it would load fine, and if returned to by the url it would load fine
   }
 
   if (typeof motion != "undefined") {
@@ -40,6 +36,10 @@ export function debateTreeChanged(motionId, bucket, canvas) {
         fetchArray[i].content,
         fetchArray[i]._id
       ));
+    }
+
+    for (let i = 0; i < responseArray.length; i++) {
+      drawResponseTextBox(responseArray[i], bucket);
     }
   }
 }

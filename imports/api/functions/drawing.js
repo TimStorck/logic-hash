@@ -15,3 +15,13 @@ export function drawTextBox(post, butcket, centerPos) {
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
 }
+
+export function drawResponseTextBox(post, bucket) {
+  let centerPos = findBestSpot(post);
+  console.log(centerPos);
+}
+
+function findBestSpot(post) {
+
+  return new Coord(0, 0);
+}
