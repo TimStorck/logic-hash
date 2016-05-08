@@ -1,0 +1,27 @@
+debateTreeChanged(motion, bucket, canvas) {
+  
+}
+
+the angle of the previous line tells you which way you're going
+
+overlap replies
+dont overlap replies
+
+get angle to center of previousBox from center of motionBox
+  if upperRight, get rightEdge of previousBox
+    get angle to rightEdge of previousBox from rightEdge of motionBox
+      if 
+
+
+either trying to bring textBox down, or trying to bring it left, or trying to bring it up, or trying to bring it right
+
+update upperEdge as you go and test against it for textboxes you want to bring down
+
+check upper edge for lowest point
+  see if it will fit there
+    check for other spot at that point
+      see if it will fit there
+        check next lowest point
+          if it fits, check other spots at that point
+            record spot with shortest radius from motion
+            

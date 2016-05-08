@@ -5,7 +5,6 @@ import { PostOb } from './objects.js';
 import { Coord } from './objects.js';
 import { drawTextBox } from './drawing.js';
 import { centerOf } from './measurements.js';
-// import { addCoords } from './obj-coord.js';
 
 export function debateTreeChanged(motionId, bucket, canvas) {
   Meteor.subscribe('posts');  
@@ -21,9 +20,11 @@ export function debateTreeChanged(motionId, bucket, canvas) {
 
     drawTextBox(motion, bucket, center);
 
-    // for (let i = 0; i < motion.responseNo; i++) {
+    let responseArray = Posts.find({"elicitor": motionId}).fetch();
 
-    // }
+    for (let i = 0; i < responseArray.length; i++) {
+      console.log(responseArray[i].content);
+    }
 
   } catch(e) {
     /*

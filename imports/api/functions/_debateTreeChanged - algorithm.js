@@ -1,3 +1,0 @@
-debateTreeChanged(motion, bucket, canCtx) {
-  
-}
