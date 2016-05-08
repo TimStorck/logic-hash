@@ -2,6 +2,10 @@ import { Coord } from './objects.js';
 import { centerOf } from './measurements.js';
 import { dimensOf } from './measurements.js';
 import { widthFromChars } from './measurements.js';
+import { rightMost } from './measurements.js';
+import { leftMost } from './measurements.js';
+import { topMost } from './measurements.js';
+import { bottomMost } from './measurements.js';
 
 export function drawMotionTextBox(post, butcket, centerPos, fSModel) {
   let newElem = document.createElement("div");
@@ -59,7 +63,7 @@ function drawCircle(coord, canvas) {
   canCtx = canvas.getContext("2d");
   canCtx.beginPath();
   canCtx.fillStyle = "red";
-  canCtx.arc(coord.x, coord.y, 1,0,Math.PI*2,true);
+  canCtx.arc(coord.x, coord.y, 2, 0, Math.PI*2, true);
   canCtx.fill();
   canCtx.closePath();
 }

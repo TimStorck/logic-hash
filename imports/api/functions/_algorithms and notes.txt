@@ -17,13 +17,16 @@ either trying to bring textBox down, or trying to bring it left, or trying to br
 
 update upperEdge as you go and test against it for textboxes you want to bring down
 
-check upper edge for lowest point
-  see if it will fit there
-    check for other spot at that point
-      see if it will fit there
-        check next lowest point
-          if it fits, check other spots at that point
-            record spot with shortest radius from motion
+check topLine for lowest point
+  find connecting point at that level
+    see if it will fit there
+      if so - mark as potential
+      check for other spot at that point
+        see if it will fit there
+          if so - mark as potential
+          check next lowest point
+            if it fits, check other spots at that point
+              record spot with shortest radius from motion
             
 filledSpaceModel            
   updateTopLine (div, referredFromAdjacent)
