@@ -60,7 +60,7 @@ export function filledSpaceModel() {
     // for each platform in topLine
     for (let i = 0; i < this.topLine.length; i++) {
       //if narrower
-      if (fitsAbove(dimens, this.topLine[i])) {
+      if (fitsAbove(dimens, platformWidth(this.topLine[i]))) {
         spot = new Coord(centerOfTopPlatform(this.topLine[i]), this.topLine[i].a.y - centerOf(dimens).y);
         break;
       } 
@@ -80,19 +80,19 @@ export function filledSpaceModel() {
         break;
       }
       //if lowest platform
-      if (i = 0) {
+      if (i === 0) {
         continue;
       }
       let adjLeft = adjacentLeft(i, this.topLine);
       if (adjLeft < i) {
-        if (fitsAbove(dimens, platfrmWidth(this.topLine[adjLeft]) + platformWidth(this.topLine[i]))) {
+        if (fitsAbove(dimens, platformWidth(this.topLine[adjLeft]) + platformWidth(this.topLine[i]))) {
           spot = new Coord(this.topLine[i].b.x - centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
           break;
         }
       }
       let adjRight = adjacentRight(i, this.topLine);
       if (adjRight < i) {
-        if (fitsAbove(dimens, platfrmWidth(this.topLine[adjRight]) + platformWidth(this.topLine[i]))) {
+        if (fitsAbove(dimens, platformWidth(this.topLine[adjRight]) + platformWidth(this.topLine[i]))) {
           spot = new Coord(this.topLine[i].a.x + centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
           break;
         }

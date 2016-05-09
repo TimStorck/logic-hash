@@ -26,29 +26,8 @@ export function widthFromChars(charNo) {
   */
 }
 
-export function fitsAbove(dimens, topLinePlatform) {
-  if ((topLinePlatform.b.x - topLinePlatform.a.x) > dimens.x) {
-    return true
-  }
-  return false;
-}
-
-export function fitsToRightOf(dimens, rightLinePlatform) {
-  if ((rightLinePlatform.b.y - rightLinePlatform.a.y) > dimens.y) {
-    return true
-  }
-  return false;
-}
-
-export function fitsBelow(dimens, bottomLinePlatform) {
-  if ((bottomLinePlatform.b.x - bottomLinePlatform.a.x) > dimens.x) {
-    return true
-  }
-  return false;
-}
-
-export function fitsToLeftOf(dimens, leftLinePlatform) {
-  if ((leftLinePlatform.b.y - leftLinePlatform.a.y) > dimens.y) {
+export function fitsAbove(dimens, width) {
+  if (width > dimens.x) {
     return true
   }
   return false;

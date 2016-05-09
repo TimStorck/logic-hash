@@ -16,7 +16,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
   let canCtx = canvas.getContext("2d");
 
   let motion;
-
+  
   try {
     motion = new PostOb(
       Posts.findOne({"_id": motionId}).author, 
