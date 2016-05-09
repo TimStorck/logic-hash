@@ -11,6 +11,7 @@ import { bottomMost } from './measurements.js';
 export function drawMotionTextBox(post, butcket, centerPos, fSModel) {
   let newElem = document.createElement("div");
     newElem.setAttribute("class", "post motion");
+    newElem.setAttribute("id", post._id);
       let authortDiv = document.createElement("div");
       authortDiv.setAttribute("class", "author");
       authortDiv.innerHTML = post.author;
@@ -36,6 +37,7 @@ export function drawMotionTextBox(post, butcket, centerPos, fSModel) {
 export function drawResponseTextBox(post, bucket, fSModel) {
   let newElem = document.createElement("div");
     newElem.setAttribute("class", "post");
+    newElem.setAttribute("id", post._id);
       let authortDiv = document.createElement("div");
       authortDiv.setAttribute("class", "author");
       authortDiv.innerHTML = post.author;

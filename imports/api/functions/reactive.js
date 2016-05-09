@@ -23,6 +23,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
   
   try {
     motion = new PostOb(
+      Posts.findOne({"_id": motionId})._id, 
       Posts.findOne({"_id": motionId}).author, 
       Posts.findOne({"_id": motionId}).content,
       Posts.find({"elicitor": motionId}).count()
@@ -47,6 +48,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     let responseArray = [];
     for (let i = 0; i < fetchArray.length; i++) {
       responseArray.push(new PostOb(
+        fetchArray[i]._id,
         fetchArray[i].author,
         fetchArray[i].content,
         fetchArray[i]._id

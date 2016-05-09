@@ -35,7 +35,8 @@ export function Coord(x, y) {
   };
 }
 
-export function PostOb(author, content, responseNo) {
+export function PostOb(_id, author, content, responseNo) {
+  this._id = _id;
   this.content = content;
   this.author = author;
   this.responseNo = responseNo;

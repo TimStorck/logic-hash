@@ -16,3 +16,9 @@ Template.debate.onRendered(function() {
     ); 
   });
 });
+
+Template.debate.events({
+  'click .post': function(event) {
+    console.log("click" + event.target.id);
+  }
+});
