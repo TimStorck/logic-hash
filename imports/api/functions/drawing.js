@@ -33,22 +33,31 @@ export function drawResponseTextBox(post, bucket, fSModel) {
   bucket.appendChild(newElem);
 
   let dimens = dimensOf(newElem);
-  let centerPos = findBestSpot(dimens, fSModel);
-  let topLeftPos = centerPos.minus(centerOf(dimens));
+  let centerPos;
+  let topLeftPos;
+  switch(Math.floor(Math.random() * 4) % 4) {
+    case 0:
+      centerPos = fSModel.findSpotLeft(dimens);
+      topLeftPos = centerPos.minus(centerOf(dimens));
+      fSModel.updateLeftLine(topLeftPos, topLeftPos.plus(dimens), false);
+      break;
+    case 1:
+      centerPos = fSModel.findSpotRight(dimens);
+      topLeftPos = centerPos.minus(centerOf(dimens));
+      fSModel.updateRightLine(topLeftPos, topLeftPos.plus(dimens), false);
+      break;
+    case 2:
+      centerPos = fSModel.findSpotTop(dimens);
+      topLeftPos = centerPos.minus(centerOf(dimens));
+      fSModel.updateTopLine(topLeftPos, topLeftPos.plus(dimens), false);
+      break;
+    case 3:
+      centerPos = fSModel.findSpotBottom(dimens);
+      topLeftPos = centerPos.minus(centerOf(dimens));
+      fSModel.updateBottomLine(topLeftPos, topLeftPos.plus(dimens), false);
+  }
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
-  // fSModel.updateLeftLine(topLeftPos, topLeftPos.plus(dimens), false);
-  // fSModel.updateRightLine(topLeftPos, topLeftPos.plus(dimens), false);
-  // fSModel.updateTopLine(topLeftPos, topLeftPos.plus(dimens), false);
-  fSModel.updateBottomLine(topLeftPos, topLeftPos.plus(dimens), false);
-}
-
-function findBestSpot(dimens, fSModel) {
-  
-  // return fSModel.findSpotLeft(dimens);
-  // return fSModel.findSpotRight(dimens);
-  // return fSModel.findSpotTop(dimens);
-  return fSModel.findSpotBottom(dimens);
 }
 
 export function drawFSModel(fSModel, canvas) {
