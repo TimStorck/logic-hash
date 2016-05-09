@@ -3,3 +3,4 @@ coord pushed to array in fsmodel passed by reference?
 performance boost from fsmodel methods being external functions?
 if there are no spaces in a post then the text doesnt wrap
   even very long words in the wrong place can make a textbox bigger than anticipated
+i think if a short text box spawns next to a tall one it trims the overhanging platform a little
