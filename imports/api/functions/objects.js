@@ -106,6 +106,59 @@ export function filledSpaceModel() {
     return spot;
   };
 
+  this.findSpotBottom = function(dimens) {
+    let spot;
+    // for each platform in bottomLine
+    for (let i = 0; i < this.bottomLine.length; i++) {
+      //if textbox narrower
+      if (fitsHor(dimens, platformWidth(this.bottomLine[i]))) {
+        spot = new Coord(centerOfHor(this.bottomLine[i].a.x, this.bottomLine[i].b.x), this.bottomLine[i].a.y + centerOf(dimens).y);
+        break;
+      } 
+      //if only platform
+      if (this.bottomLine.length === 1) {
+        spot = new Coord(centerOfHor(this.bottomLine[i].a.x, this.bottomLine[i].b.x), this.bottomLine[i].a.y + centerOf(dimens).y);
+        break;
+      } 
+      //if left edge
+      if (platformIsLeftMost(i, this.bottomLine)) {
+        spot = new Coord(this.bottomLine[i].b.x - centerOf(dimens).x, this.bottomLine[i].a.y + centerOf(dimens).y);
+        break;
+      } 
+      //if right edge
+      if (platformIsRightMost(i, this.bottomLine)) {
+        spot = new Coord(this.bottomLine[i].a.x + centerOf(dimens).x, this.bottomLine[i].a.y + centerOf(dimens).y);
+        break;
+      }
+      //if highest platform
+      if (i === 0) {
+        continue;
+      }
+      //if adjacent left not protruding
+      let adjLeft = adjacentLeft(i, this.bottomLine);
+      if (adjLeft < i) {
+        if (fitsHor(dimens, platformWidth(this.bottomLine[adjLeft]) + platformWidth(this.bottomLine[i]))) {
+          spot = new Coord(this.bottomLine[i].b.x - centerOf(dimens).x, this.bottomLine[i].a.y + centerOf(dimens).y);
+          break;
+        }
+      }
+      //if adjacent right not protruding
+      let adjRight = adjacentRight(i, this.bottomLine);
+      if (adjRight < i) {
+        if (fitsHor(dimens, platformWidth(this.bottomLine[adjRight]) + platformWidth(this.bottomLine[i]))) {
+          spot = new Coord(this.bottomLine[i].a.x + centerOf(dimens).x, this.bottomLine[i].a.y + centerOf(dimens).y);
+          break;
+        }
+      }
+      //if lowest platform
+      if (i === this.bottomLine.length - 1) {
+        spot = new Coord(centerOfHor(this.bottomLine[i].a.x, this.bottomLine[i].b.x), this.bottomLine[i].a.y + centerOf(dimens).y);
+        break;
+      }
+    }
+    return spot;
+  };
+
   this.findSpotRight = function(dimens) {
     let spot;
     // for each platform in rightLine
@@ -159,53 +212,53 @@ export function filledSpaceModel() {
     return spot;
   };
 
-  this.findSpotBottom = function(dimens) {
+  this.findSpotLeft = function(dimens) {
     let spot;
-    // for each platform in bottomLine
-    for (let i = 0; i < this.bottomLine.length; i++) {
-      //if textbox narrower
-      if (fitsHor(dimens, platformWidth(this.bottomLine[i]))) {
-        spot = new Coord(centerOfHor(this.bottomLine[i].a.x, this.bottomLine[i].b.x), this.bottomLine[i].a.y + centerOf(dimens).y);
+    // for each platform in leftLine
+    for (let i = 0; i < this.leftLine.length; i++) {
+      //if text box shorter
+      if (fitsVert(dimens, platformHeight(this.leftLine[i]))) {
+        spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, centerOfVert(this.leftLine[i].a.y, this.leftLine[i].b.y));
         break;
       } 
       //if only platform
-      if (this.bottomLine.length === 1) {
-        spot = new Coord(centerOfHor(this.bottomLine[i].a.x, this.bottomLine[i].b.x), this.bottomLine[i].a.y + centerOf(dimens).y);
+      if (this.leftLine.length === 1) {
+        spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, centerOfVert(this.leftLine[i].a.y, this.leftLine[i].b.y));
         break;
       } 
-      //if left edge
-      if (platformIsLeftMost(i, this.bottomLine)) {
-        spot = new Coord(this.bottomLine[i].b.x - centerOf(dimens).x, this.bottomLine[i].a.y + centerOf(dimens).y);
+      //if top edge
+      if (platformIsTopMost(i, this.leftLine)) {
+        spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, this.leftLine[i].b.y - centerOf(dimens).y);
         break;
       } 
-      //if right edge
-      if (platformIsRightMost(i, this.bottomLine)) {
-        spot = new Coord(this.bottomLine[i].a.x + centerOf(dimens).x, this.bottomLine[i].a.y + centerOf(dimens).y);
+      //if bottom edge
+      if (platformIsBottomMost(i, this.leftLine)) {
+        spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, this.leftLine[i].a.y + centerOf(dimens).y);
         break;
       }
-      //if highest platform
+      //if right-most platform
       if (i === 0) {
         continue;
       }
-      //if adjacent left not protruding
-      let adjLeft = adjacentLeft(i, this.bottomLine);
-      if (adjLeft < i) {
-        if (fitsHor(dimens, platformWidth(this.bottomLine[adjLeft]) + platformWidth(this.bottomLine[i]))) {
-          spot = new Coord(this.bottomLine[i].b.x - centerOf(dimens).x, this.bottomLine[i].a.y + centerOf(dimens).y);
+      //if adjacent top not protruding
+      let adjTop = adjacentTop(i, this.leftLine);
+      if (adjTop < i) {
+        if (fitsVert(dimens, platformHeight(this.leftLine[adjTop]) + platformHeight(this.leftLine[i]))) {
+          spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, this.leftLine[i].b.y - centerOf(dimens).y);
           break;
         }
       }
-      //if adjacent right not protruding
-      let adjRight = adjacentRight(i, this.bottomLine);
-      if (adjRight < i) {
-        if (fitsHor(dimens, platformWidth(this.bottomLine[adjRight]) + platformWidth(this.bottomLine[i]))) {
-          spot = new Coord(this.bottomLine[i].a.x + centerOf(dimens).x, this.bottomLine[i].a.y + centerOf(dimens).y);
+      //if adjacent bottom not protruding
+      let adjBottom = adjacentBottom(i, this.leftLine);
+      if (adjBottom < i) {
+        if (fitsVert(dimens, platformHeight(this.leftLine[adjBottom]) + platformHeight(this.leftLine[i]))) {
+          spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, this.leftLine[i].a.y + centerOf(dimens).y);
           break;
         }
       }
-      //if lowest platform
-      if (i === this.bottomLine.length - 1) {
-        spot = new Coord(centerOfHor(this.bottomLine[i].a.x, this.bottomLine[i].b.x), this.bottomLine[i].a.y + centerOf(dimens).y);
+      //if left-most platform
+      if (i === this.leftLine.length - 1) {
+        spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, centerOfVert(this.leftLine[i].a.y, this.leftLine[i].b.y));
         break;
       }
     }
@@ -305,7 +358,7 @@ export function filledSpaceModel() {
       }
     } 
     for (let i=0; i < this.rightLine.length; i++) {
-      //remove any lower platforms within width
+      //remove any left-more platforms within height
       if (this.rightLine[i].a.y >= topRightMargin.y && this.rightLine[i].b.y <= bottomRightMargin.y) {
         this.rightLine.splice(i, 1);
         i--;
@@ -319,17 +372,57 @@ export function filledSpaceModel() {
         ));
         this.rightLine[i].b.y = topRightMargin.y;
       }
-      //clip any lower platforms crossing top edge
+      //clip left-more platform crossing top edge
       if (this.rightLine[i].b.y > topRightMargin.y && this.rightLine[i].b.y < bottomRightMargin.y) {
         this.rightLine[i].b = new Coord(this.rightLine[i].b.x, topRightMargin.y);
       }
-      //clip any lower platforms crossing lower edge
+      //clip left-more platform crossing lower edge
       if (this.rightLine[i].a.y < bottomRightMargin.y && this.rightLine[i].a.y > topRightMargin.y) {
         this.rightLine[i].a = new Coord(this.rightLine[i].a.x, bottomRightMargin.y);
       }
     }
     this.rightLine.push(new Platform(topRightMargin, bottomRightMargin));
     this.rightLine = sortLeftToRight(this.rightLine);
+  };
+
+  this.updateLeftLine = function(topLeft, bottomRight, referredByAdjacent) {
+    let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
+    let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
+    //check if over edge, and if so, have adjacent side update too
+    if (!referredByAdjacent) {
+      if (false) {
+        // updateXLine(topLeft, bottomRight, true);
+      }
+      if (false) {
+        // updateXLine(topLeft, bottomRight, true);
+      }
+    } 
+    for (let i=0; i < this.leftLine.length; i++) {
+      //remove any right-more platforms within height
+      if (this.leftLine[i].a.y >= topLeftMargin.y && this.leftLine[i].b.y <= bottomLeftMargin.y) {
+        this.leftLine.splice(i, 1);
+        i--;
+        continue;
+      }
+      //split right-more platform that is taller
+      if (this.leftLine[i].a.y < topLeftMargin.y && this.leftLine[i].b.y > bottomLeftMargin.y) {
+        this.leftLine.push(new Platform(
+          new Coord(this.leftLine[i].b.x, bottomLeftMargin.y), 
+          new Coord(this.leftLine[i].b.x, this.leftLine[i].b.y)
+        ));
+        this.leftLine[i].b.y = topLeftMargin.y;
+      }
+      //clip right-more platform crossing top edge
+      if (this.leftLine[i].b.y > topLeftMargin.y && this.leftLine[i].b.y < bottomLeftMargin.y) {
+        this.leftLine[i].b = new Coord(this.leftLine[i].b.x, topLeftMargin.y);
+      }
+      //clip right-more platform crossing lower edge
+      if (this.leftLine[i].a.y < bottomLeftMargin.y && this.leftLine[i].a.y > topLeftMargin.y) {
+        this.leftLine[i].a = new Coord(this.leftLine[i].a.x, bottomLeftMargin.y);
+      }
+    }
+    this.leftLine.push(new Platform(topLeftMargin, bottomLeftMargin));
+    this.leftLine = sortRightToLeft(this.leftLine);
   };
 
   this.addMotion = function(topLeft, bottomRight) {
