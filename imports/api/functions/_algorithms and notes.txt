@@ -50,3 +50,8 @@ array of platforms
     find lowest platform
       see if its wide enough
       if not check next (sorted in order of lowest)
+
+if platform to left doesnt protrude
+  if current platform and platform to left combined fit div
+    spot = 
+    if not 

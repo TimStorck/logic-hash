@@ -32,14 +32,17 @@ export function drawResponseTextBox(post, bucket, fSModel) {
 
   bucket.appendChild(newElem);
 
-  let postDimens = dimensOf(newElem);
-  let centerPos = findBestSpot(postDimens);
-  console.log(centerPos);
+  let dimens = dimensOf(newElem);
+  let centerPos = findBestSpot(dimens, fSModel);
+  let topLeftPos = centerPos.minus(centerOf(dimens));
+  newElem.style.top = topLeftPos.yPx();
+  newElem.style.left = topLeftPos.xPx();
+  fSModel.updateTopLine(topLeftPos, topLeftPos.plus(dimens), false);
 }
 
-function findBestSpot(postDimens) {
-
-  return new Coord(0, 0);
+function findBestSpot(dimens, fSModel) {
+  
+  return fSModel.findSpotTop(dimens);
 }
 
 export function drawFSModel(fSModel, canvas) {
