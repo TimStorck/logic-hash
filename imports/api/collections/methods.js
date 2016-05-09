@@ -14,5 +14,8 @@ Meteor.methods({
   },
   'posts.removeAll': function() {
     Posts.remove({});
+  },
+  'posts.remove': function(idString) {
+    Posts.remove({_id: idString});
   }
 })

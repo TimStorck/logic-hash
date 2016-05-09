@@ -8,6 +8,7 @@ import { devLayout } from '../../ui/dev-layout/dev-layout.js';
 import { devTable } from '../../ui/dev-table/dev-table.js';
 import { devAdd } from '../../ui/dev-add/dev-add.js';
 import { devAddTen } from '../../ui/dev-add/dev-add.js';
+import { devRem } from '../../ui/dev-add/dev-add.js';
 import { devTest } from '../../ui/dev-test/dev-test.js';
 import { sandbox } from '../../ui/dev-sandbox/dev-sandbox.js';
 import { signUp } from '../../ui/signup/signup.js';
@@ -53,6 +54,13 @@ FlowRouter.route('/dev/add', {
     name: 'dev_add',
     action: function() {
         BlazeLayout.render("devLayout", {content: "devAdd"});
+    }
+});
+
+FlowRouter.route('/dev/rem', {
+    name: 'dev_rem',
+    action: function() {
+        BlazeLayout.render("devLayout", {content: "devRem"});
     }
 });
 

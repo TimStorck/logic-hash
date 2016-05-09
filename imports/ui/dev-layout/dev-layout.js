@@ -31,6 +31,9 @@ Template.devLayout.events ({
   "click #btn-rem-all": function() {
     Meteor.call('posts.removeAll');
   },
+  "click #btn-rem": function() {
+    FlowRouter.go("dev_rem");
+  },
   "click #btn-dum": function() {
     insertPosts();
   },

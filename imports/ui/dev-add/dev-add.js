@@ -43,3 +43,16 @@ Template.devAddTen.events({
     FlowRouter.go("dev");
   }
 });
+
+Template.devRem.events({
+  'submit #rem-form' : function(event, template) {
+
+    event.preventDefault();
+
+    const postId = template.find('#_id').value;
+    
+    Meteor.call('posts.remove', postId);
+    
+    FlowRouter.go("dev");
+  }
+});
