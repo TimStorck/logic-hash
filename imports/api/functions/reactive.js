@@ -13,8 +13,8 @@ import { centerOf } from './measurements.js';
 export function debateTreeChanged(motionId, bucket, canvas) {
   Meteor.subscribe('posts');  
 
-  canvas.height = window.innerHeight - 100;
-  canvas.width = window.innerWidth - 100;
+  canvas.height = window.innerHeight - 50;
+  canvas.width = window.innerWidth - 50;
 
   let motionCenter = centerOf(new Coord(canvas.width, canvas.height));
   let canCtx = canvas.getContext("2d");

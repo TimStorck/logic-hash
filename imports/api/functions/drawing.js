@@ -12,6 +12,11 @@ export function drawMotionTextBox(post, butcket, centerPos, fSModel) {
   let newElem = document.createElement("div");
     newElem.setAttribute("class", "post motion");
     newElem.setAttribute("id", post._id);
+      let flagDiv = document.createElement("div");
+      flagDiv.setAttribute("class", "flagBox");
+      flagDiv.innerHTML = "Flag";
+      newElem.appendChild(flagDiv);
+
       let authortDiv = document.createElement("div");
       authortDiv.setAttribute("class", "author");
       authortDiv.innerHTML = post.author;
@@ -38,6 +43,11 @@ export function drawResponseTextBox(post, bucket, fSModel) {
   let newElem = document.createElement("div");
     newElem.setAttribute("class", "post");
     newElem.setAttribute("id", post._id);
+      let flagDiv = document.createElement("div");
+      flagDiv.setAttribute("class", "flagBox");
+      flagDiv.innerHTML = "Flag";
+      newElem.appendChild(flagDiv);
+      
       let authortDiv = document.createElement("div");
       authortDiv.setAttribute("class", "author");
       authortDiv.innerHTML = post.author;

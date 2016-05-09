@@ -19,9 +19,11 @@ export function centerOfVert(top, bottom) {
 export function widthFromChars(charNo) {
   if (charNo < 50) {
     return "auto";
-  } else {
-    return (charNo / (Math.sqrt(charNo) / 12.9) ) + "px";
-  }
+  } 
+  if (charNo < 100) {
+    return "170px";
+  } 
+  return (charNo / (Math.sqrt(charNo) / 18.9) ) + "px";
 }
 
 export function platformWidth(platform) {

@@ -1,11 +1,12 @@
-.debate {
+  .debate {
   text-align: center;
 
   .canvasShell {
-    padding: 25px;
+    padding: 1px;
     background: grey;
     display: inline-block;
     margin: 0 auto;
+    margin-top: 15px;
 
     .canvasWrapper {
       position: relative;
@@ -22,10 +23,17 @@
       border: 1px black solid;
       border-radius: 4px;
       box-shadow: -2px 2px 2px rgba(0,0,0,0.3);
-      padding: 8px;
+      padding: 2px;
       /*top and left are set programmatically*/
       top: 0;
       left: 0;
+
+      .flagBox {
+        float: right;
+        color: rgba(0,0,0,0.5);
+        padding: 0 5px 0 5px;
+        border: 1px rgba(0,0,0,0.5) solid;
+      }
 
       .author, .content {
         border: 1px rgba(0,0,0,0.3) solid;
@@ -41,7 +49,8 @@
       }
 
       .content {
-        clear: left;
+        display: block;
+        clear: both;
         text-align: left;
       }
     }
