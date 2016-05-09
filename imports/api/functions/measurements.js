@@ -123,33 +123,43 @@ export function fitsToLeftOf(dimens, leftLinePlatform) {
   return false;
 }
 
-export function platformIsLeftMost(i) {
-  if (i === 0) {
-    return true;
+export function platformIsLeftMost(i, line) {
+  for (let j = 0; j < line.length; j++) {
+    if (i === j) { 
+      continue;
+    }
+    if (line[j].a.x < line[i].a.x) {
+      return false;
+    }
   }
-  return false;
+  return true;
 }
 
-export function platformIsTopMost(i) {
-  if (i === 0) {
-    return true;
+export function platformIsRightMost(i, line) {
+  for (let j = 0; j < line.length; j++) {
+    if (i === j) { 
+      continue;
+    }
+    if (line[j].b.x > line[i].b.x) {
+      return false;
+    }
   }
-  return false;
+  return true;
 }
 
-export function platformIsRightMost(i, arrLength) {
-  if (i === arrLength - 1) {
-    return true;
-  }
-  return false;
-}
+// export function platformIsBottomMost(i, arrLength) {
+//   if (i === arrLength - 1) {
+//     return true;
+//   }
+//   return false;
+// }
 
-export function platformIsBottomMost(i, arrLength) {
-  if (i === arrLength - 1) {
-    return true;
-  }
-  return false;
-}
+// export function platformIsTopMost(i) {
+//   if (i === 0) {
+//     return true;
+//   }
+//   return false;
+// }
 
 export function centerOfTopPlatform(platform) {
   return ( (platform.b.x - platform.a.x) / 2 ) + platform.a.x;

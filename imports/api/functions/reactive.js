@@ -13,6 +13,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
   Meteor.subscribe('posts');  
 
   let center = centerOf(new Coord(canvas.width, canvas.height));
+  let canCtx = canvas.getContext("2d");
 
   let motion;
 
@@ -27,6 +28,9 @@ export function debateTreeChanged(motionId, bucket, canvas) {
   }
 
   if (typeof motion != "undefined") {
+    canCtx.fillStyle = "white";
+    canCtx.fillRect(0,0,canvas.width,canvas.height);
+
     const fSModel = new filledSpaceModel();
 
     drawMotionTextBox(motion, bucket, center, fSModel);

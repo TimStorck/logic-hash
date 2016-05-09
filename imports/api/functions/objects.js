@@ -68,28 +68,34 @@ export function filledSpaceModel() {
     for (let i = 0; i < this.topLine.length; i++) {
       //if narrower
       if (fitsAbove(dimens, this.topLine[i])) {
+        console.log("if narrower");
         spot = new Coord(centerOfTopPlatform(this.topLine[i]), this.topLine[i].a.y - centerOf(dimens).y);
         break;
       } 
       //if only platform
-      if (platformIsLeftMost(i) && platformIsRightMost(i, this.topLine.length)) {
+      if (this.topLine.length === 1) {
+        console.log("if only platform");
         spot = new Coord(centerOfTopPlatform(this.topLine[i]), this.topLine[i].a.y - centerOf(dimens).y);
         break;
       } 
       //if left edge
-      if (platformIsLeftMost(i)) {
+      if (platformIsLeftMost(i, this.topLine)) {
+        console.log("if left edge");
         spot = new Coord(this.topLine[i].b.x - centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
         break;
       } 
       //if right edge
-      if (platformIsRightMost(i, this.topLine.length)) {
+      if (platformIsRightMost(i, this.topLine)) {
+        console.log("if right edge");
         spot = new Coord(this.topLine[i].a.x + centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
         break;
       }
       //if lowest platform
       if (i = 0) {
+        console.log("if lowest platform");
         continue;
       }
+        console.log("the rest");
       let adjLeft = adjacentLeft(i, this.topLine);
       if (adjLeft < i) {
         if (fitsAbove(dimens, platfrmWidth(this.topLine[adjLeft]) + platformWidth(this.topLine[i]))) {
