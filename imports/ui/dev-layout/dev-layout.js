@@ -35,7 +35,7 @@ Template.devLayout.events ({
     FlowRouter.go("dev_rem");
   },
   "click #btn-dum": function() {
-    insertPosts();
+    Meteor.call('posts.loadDummy');
   },
   /* table events end */
 

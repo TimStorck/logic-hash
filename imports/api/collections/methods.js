@@ -1,5 +1,7 @@
 import { Posts } from './posts.js';
 import { Meteor } from 'meteor/meteor';
+import { postsArray } from '../data/dummy-posts.js';
+import { globalWarmingResponses } from '../data/dummy-posts.js';
 
 Meteor.methods({
   'posts.insert': function(postParam) {
@@ -17,5 +19,18 @@ Meteor.methods({
   },
   'posts.remove': function(idString) {
     Posts.remove({_id: idString});
+  },
+  'posts.loadDummy': function() {
+    postsLength = postsArray.length;
+    for (let i = 0; i < postsLength; i++) {
+      Meteor.call('posts.insert', postsArray[i]);
+    }
+
+    let globalWarmingId = Posts.findOne({content: "Global warming is the most important issue facing civilization."})._id;
+    globalResponsesLength = globalWarmingResponses.length;
+    for (let i = 0; i < globalResponsesLength; i++) {
+      globalWarmingResponses[i].elicitor = globalWarmingId;
+      Posts.insert(globalWarmingResponses[i]);
+    }
   }
 })
