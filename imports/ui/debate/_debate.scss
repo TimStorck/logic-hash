@@ -36,6 +36,11 @@
         border: 1px rgba(0,0,0,0.5) solid;
       }
 
+      .flagBox:hover {
+        color: black;
+        border: 1px black solid;
+      }
+
       .author, .content {
         border: 1px rgba(0,0,0,0.3) solid;
         border-radius: 2px;
