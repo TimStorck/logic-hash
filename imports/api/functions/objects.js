@@ -1,11 +1,4 @@
-// import { rightMost } from './measurements.js';
-// import { leftMost } from './measurements.js';
-// import { topMost } from './measurements.js';
-// import { bottomMost } from './measurements.js';
 import { sortBottomToTop } from './measurements.js';
-// import { sortTopToBottom } from './measurements.js';
-// import { sortLeftToRight } from './measurements.js';
-// import { sortRightToLeft } from './measurements.js';
 import { platformIsTopMost } from './measurements.js';
 import { platformIsBottomMost } from './measurements.js';
 import { platformIsRightMost } from './measurements.js';
@@ -68,34 +61,28 @@ export function filledSpaceModel() {
     for (let i = 0; i < this.topLine.length; i++) {
       //if narrower
       if (fitsAbove(dimens, this.topLine[i])) {
-        console.log("if narrower");
         spot = new Coord(centerOfTopPlatform(this.topLine[i]), this.topLine[i].a.y - centerOf(dimens).y);
         break;
       } 
       //if only platform
       if (this.topLine.length === 1) {
-        console.log("if only platform");
         spot = new Coord(centerOfTopPlatform(this.topLine[i]), this.topLine[i].a.y - centerOf(dimens).y);
         break;
       } 
       //if left edge
       if (platformIsLeftMost(i, this.topLine)) {
-        console.log("if left edge");
         spot = new Coord(this.topLine[i].b.x - centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
         break;
       } 
       //if right edge
       if (platformIsRightMost(i, this.topLine)) {
-        console.log("if right edge");
         spot = new Coord(this.topLine[i].a.x + centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
         break;
       }
       //if lowest platform
       if (i = 0) {
-        console.log("if lowest platform");
         continue;
       }
-        console.log("the rest");
       let adjLeft = adjacentLeft(i, this.topLine);
       if (adjLeft < i) {
         if (fitsAbove(dimens, platfrmWidth(this.topLine[adjLeft]) + platformWidth(this.topLine[i]))) {
@@ -156,98 +143,8 @@ export function filledSpaceModel() {
     }
     this.topLine.push(new Platform(topLeftMargin, topRightMargin));
     this.topLine = sortBottomToTop(this.topLine);
-    console.log(this.topLine);
   };
-
-  /*
-    referredByAdjacent prevents infinite recursion
-  */
-  // this.updateTopLine = function(topLeft, bottomRight, referredByAdjacent) {
-  //   let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
-  //   let topRightMargin = new Coord(bottomRight.x + margin, topLeft.y - margin);
-  //   if (!referredByAdjacent) {
-  //     if (topLeftMargin.x < leftMost(topLine)) {
-  //       updateLeftLine(topLeft, bottomRight, true);
-  //     }
-  //     if (topRightMargin.x > rightMost(topLine)) {
-  //       updateRightLine(topLeft, bottomRight, true);
-  //     }
-  //   } 
-  //   for (let i=0; i < this.topLine.length; i++) {
-  //     if (topLine[i].x > topLeftMargin.x && topLine[i].x < topRightMargin) {
-  //       this.topLine = this.topLine.splice(i, 1);
-  //       i--;
-  //     }
-  //   }
-  //   this.topLine.push(topLeftMargin);
-  //   this.topLine.push(topRightMargin);
-  // };
-  // this.updateRightLine = function(topLeft, bottomRight, referredByAdjacent) {
-  //   let topRightMargin = new Coord(bottomRight.x + margin, topLeft.y - margin);
-  //   let bottomRightMargin = new Coord(bottomRight.x + margin, bottomRight.y + margin);
-  //   if (!referredByAdjacent) {
-  //     if (topRightMargin.y < topMost(rightLine)) {
-  //       updateTopLine(topLeft, bottomRight, true);
-  //     }
-  //     if (bottomRightMargin.y > bottomMost(rightLine)) {
-  //       updateBottomLine(topLeft, bottomRight, true);
-  //     }
-  //   } 
-  //   for (let i=0; i < this.rightLine.length; i++) {
-  //     if (rightLine[i].y < topRightMargin.x && rightLine[i].y > bottomRightMargin) {
-  //       this.rightLine = this.rightLine.splice(i, 1);
-  //       i--;
-  //     }
-  //   }
-  //   this.rightLine.push(bottomRightMargin);
-  //   this.rightLine.push(topRightMargin);
-  // };
-  // this.updateBottomLine = function(topLeft, bottomRight, referredByAdjacent) {
-  //   let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
-  //   let bottomRightMargin = new Coord(bottomRight.x + margin, bottomRight.y + margin);
-  //   if (!referredByAdjacent) {
-  //     if (bottomRightMargin.x > rightMost(bottomLine)) {
-  //       updateRightLine(topLeft, bottomRight, true);
-  //     }
-  //     if (bottomLeftMargin.x < leftMost(bottomLine)) {
-  //       updateLeftLine(topLeft, bottomRight, true);
-  //     }
-  //   } 
-  //   for (let i=0; i < this.bottomLine.length; i++) {
-  //     if (bottomLine[i].x > bottomLeftMargin.x && bottomLine[i].x < bottomRightMargin) {
-  //       this.bottomLine = this.bottomLine.splice(i, 1);
-  //       i--;
-  //     }
-  //   }
-  //   this.bottomLine.push(bottomLeftMargin);
-  //   this.bottomLine.push(bottomRightMargin);
-  // };
-  // this.updateLeftLine = function(topLeft, bottomRight, referredByAdjacent) {
-  //   let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
-  //   let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
-  //   if (!referredByAdjacent) {
-  //     if (topLeftMargin.y < topMost(leftLine)) {
-  //       updateTopLine(topLeft, bottomRight, true);
-  //     }
-  //     if (bottomLeftMargin.y > bottomMost(leftLine)) {
-  //       updateBottomLine(topLeft, bottomRight, true);
-  //     }
-  //   } 
-  //   for (let i=0; i < this.leftLine.length; i++) {
-  //     if (leftLine[i].y < topLeftMargin.x && leftLine[i].y > bottomLeftMargin) {
-  //       this.leftLine = this.leftLine.splice(i, 1);
-  //       i--;
-  //     }
-  //   }
-  //   this.leftLine.push(topLeftMargin);
-  //   this.leftLine.push(bottomLeftMargin);
-  // };
   this.addMotion = function(topLeft, bottomRight) {
-    //these variables were causing problems
-    // let topRightMargin = new Coord(bottomRight.x + margin, topLeft.y - margin);
-    // let bottomRightMargin = new Coord(bottomRight.x + margin, bottomRight.y + margin);
-    // let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
-    // let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
     /*
       platform coordinates entered left to right or top to bottom.
     */
