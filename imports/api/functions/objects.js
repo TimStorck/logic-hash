@@ -9,10 +9,7 @@ import { fitsToRightOf } from './measurements.js';
 import { fitsBelow } from './measurements.js';
 import { fitsToLeftOf } from './measurements.js';
 //combine horizontal ones and vertical ones (centerOf...)
-import { centerOfTopPlatform } from './measurements.js';
-import { centerOfRightPlatform } from './measurements.js';
-import { centerOfLeftPlatform } from './measurements.js';
-import { centerOfBottomPlatform } from './measurements.js';
+import { centerOfHor } from './measurements.js';
 import { platformWidth } from './measurements.js';
 import { adjacentLeft } from './measurements.js';
 import { adjacentRight } from './measurements.js';
@@ -61,12 +58,12 @@ export function filledSpaceModel() {
     for (let i = 0; i < this.topLine.length; i++) {
       //if narrower
       if (fitsAbove(dimens, platformWidth(this.topLine[i]))) {
-        spot = new Coord(centerOfTopPlatform(this.topLine[i]), this.topLine[i].a.y - centerOf(dimens).y);
+        spot = new Coord(centerOfHor(this.topLine[i].a.x, this.topLine[i].b.x), this.topLine[i].a.y - centerOf(dimens).y);
         break;
       } 
       //if only platform
       if (this.topLine.length === 1) {
-        spot = new Coord(centerOfTopPlatform(this.topLine[i]), this.topLine[i].a.y - centerOf(dimens).y);
+        spot = new Coord(centerOfHor(this.topLine[i].a.x, this.topLine[i].b.x), this.topLine[i].a.y - centerOf(dimens).y);
         break;
       } 
       //if left edge
@@ -98,7 +95,7 @@ export function filledSpaceModel() {
         }
       }
       if (i === this.topLine.length - 1) {
-        spot = new Coord(centerOfTopPlatform(this.topLine[i]), this.topLine[i].a.y - centerOf(dimens).y);
+        spot = new Coord(centerOfHor(this.topLine[i].a.x, this.topLine[i].b.x), this.topLine[i].a.y - centerOf(dimens).y);
         break;
       }
     }

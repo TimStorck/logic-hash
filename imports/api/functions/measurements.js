@@ -14,16 +14,6 @@ export function widthFromChars(charNo) {
   } else {
     return (charNo / (Math.sqrt(charNo) / 12.9) ) + "px";
   }
-  
-  /*
-    so that textboxes with varying amounts of characters approximate square shape.
-
-    set up excel sheet collecting data for amounts of characters and 
-    width of div that makes it look close to square. the relationship is
-    something like the formula here. that divisor constant may be the relationship
-    between the number of pixels of line height and pixel width
-    of an average character, or a square of it or something like that.
-  */
 }
 
 export function fitsAbove(dimens, width) {
@@ -57,21 +47,8 @@ export function platformIsRightMost(i, line) {
   return true;
 }
 
-
-export function centerOfTopPlatform(platform) {
-  return ( (platform.b.x - platform.a.x) / 2 ) + platform.a.x;
-}
-
-export function centerOfRightPlatorm(platform) {
-  return ( (platform.b.y - platform.a.y) / 2 ) + platform.a.y;
-}
-
-export function centerOfBottomPlatorm(platform) {
-  return ( (platform.b.x - platform.a.x) / 2 ) + platform.a.x;
-}
-
-export function centerOfLeftPlatorm(platform) {
-  return ( (platform.b.y - platform.a.y) / 2 ) + platform.a.y;
+export function centerOfHor(left, right) {
+  return Math.floor((left + right) / 2);
 }
 
 export function platformWidth(platform) {
