@@ -10,9 +10,18 @@ import { bottomMost } from './measurements.js';
 
 export function drawMotionTextBox(post, butcket, centerPos, fSModel) {
   let newElem = document.createElement("div");
-  newElem.setAttribute("class", "post");
-  newElem.innerHTML = post.content;
-  newElem.style.width = widthFromChars(post.content.length);
+    newElem.setAttribute("class", "post motion");
+      let authortDiv = document.createElement("div");
+      authortDiv.setAttribute("class", "author");
+      authortDiv.innerHTML = post.author;
+      newElem.appendChild(authortDiv);
+
+      let contentDiv = document.createElement("div");
+      contentDiv.setAttribute("class", "content");
+      contentDiv.innerHTML = post.content;
+      newElem.appendChild(contentDiv);
+      
+    newElem.style.width = widthFromChars(post.content.length);
 
   bucket.appendChild(newElem);
   
@@ -26,9 +35,18 @@ export function drawMotionTextBox(post, butcket, centerPos, fSModel) {
 
 export function drawResponseTextBox(post, bucket, fSModel) {
   let newElem = document.createElement("div");
-  newElem.setAttribute("class", "post");
-  newElem.innerHTML = post.content;
-  newElem.style.width = widthFromChars(post.content.length);
+    newElem.setAttribute("class", "post");
+      let authortDiv = document.createElement("div");
+      authortDiv.setAttribute("class", "author");
+      authortDiv.innerHTML = post.author;
+      newElem.appendChild(authortDiv);
+
+      let contentDiv = document.createElement("div");
+      contentDiv.setAttribute("class", "content");
+      contentDiv.innerHTML = post.content;
+      newElem.appendChild(contentDiv);
+
+    newElem.style.width = widthFromChars(post.content.length);
 
   bucket.appendChild(newElem);
 
