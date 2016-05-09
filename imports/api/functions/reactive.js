@@ -12,7 +12,10 @@ import { centerOf } from './measurements.js';
 export function debateTreeChanged(motionId, bucket, canvas) {
   Meteor.subscribe('posts');  
 
-  let center = centerOf(new Coord(canvas.width, canvas.height+300));
+  canvas.height = window.innerHeight - 100;
+  canvas.width = window.innerWidth - 100;
+
+  let center = centerOf(new Coord(canvas.width, canvas.height));
   let canCtx = canvas.getContext("2d");
 
   let motion;
@@ -31,7 +34,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     while (bucket.firstChild) {
       bucket.removeChild(bucket.firstChild);
     }
-    
+
     canCtx.fillStyle = "white";
     canCtx.fillRect(0,0,canvas.width,canvas.height);
 
