@@ -37,12 +37,18 @@ export function drawResponseTextBox(post, bucket, fSModel) {
   let topLeftPos = centerPos.minus(centerOf(dimens));
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
-  fSModel.updateLeftLine(topLeftPos, topLeftPos.plus(dimens), false);
+  // fSModel.updateLeftLine(topLeftPos, topLeftPos.plus(dimens), false);
+  // fSModel.updateRightLine(topLeftPos, topLeftPos.plus(dimens), false);
+  // fSModel.updateTopLine(topLeftPos, topLeftPos.plus(dimens), false);
+  fSModel.updateBottomLine(topLeftPos, topLeftPos.plus(dimens), false);
 }
 
 function findBestSpot(dimens, fSModel) {
   
-  return fSModel.findSpotLeft(dimens);
+  // return fSModel.findSpotLeft(dimens);
+  // return fSModel.findSpotRight(dimens);
+  // return fSModel.findSpotTop(dimens);
+  return fSModel.findSpotBottom(dimens);
 }
 
 export function drawFSModel(fSModel, canvas) {

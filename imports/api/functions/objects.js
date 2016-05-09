@@ -268,15 +268,6 @@ export function filledSpaceModel() {
   this.updateTopLine = function(topLeft, bottomRight, referredByAdjacent) {
     let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
     let topRightMargin = new Coord(bottomRight.x + margin, topLeft.y - margin);
-    //check if over edge, and if so, have adjacent side update too
-    if (!referredByAdjacent) {
-      if (false) {
-        // updateLeftLine(topLeft, bottomRight, true);
-      }
-      if (false) {
-        // updateRightLine(topLeft, bottomRight, true);
-      }
-    } 
     for (let i=0; i < this.topLine.length; i++) {
       //remove any lower platforms within width
       if (this.topLine[i].a.x >= topLeftMargin.x && this.topLine[i].b.x <= topRightMargin.x) {
@@ -302,21 +293,22 @@ export function filledSpaceModel() {
       }
     }
     this.topLine.push(new Platform(topLeftMargin, topRightMargin));
+    //check if over edge, and if so, have adjacent side update too
+    if (!referredByAdjacent) {
+      if (platformIsRightMost(this.topLine.length-1, this.topLine)) {
+        this.updateRightLine(topLeft, bottomRight, true);
+      }
+      if (platformIsLeftMost(this.topLine.length-1, this.topLine)) {
+        this.updateLeftLine(topLeft, bottomRight, true);
+      }
+    } 
+    //referral block must be after push and before sort
     this.topLine = sortBottomToTop(this.topLine);
   };
 
   this.updateBottomLine = function(topLeft, bottomRight, referredByAdjacent) {
     let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
     let bottomRightMargin = new Coord(bottomRight.x + margin, bottomRight.y + margin);
-    //check if over edge, and if so, have adjacent side update too
-    if (!referredByAdjacent) {
-      if (false) {
-        // updateXLine(topLeft, bottomRight, true);
-      }
-      if (false) {
-        // updateXLine(topLeft, bottomRight, true);
-      }
-    } 
     for (let i=0; i < this.bottomLine.length; i++) {
       //remove any higher platforms within width
       if (this.bottomLine[i].a.x >= bottomLeftMargin.x && this.bottomLine[i].b.x <= bottomRightMargin.x) {
@@ -342,21 +334,22 @@ export function filledSpaceModel() {
       }
     }
     this.bottomLine.push(new Platform(bottomLeftMargin, bottomRightMargin));
+    //check if over edge, and if so, have adjacent side update too
+    if (!referredByAdjacent) {
+      if (platformIsRightMost(this.bottomLine.length-1, this.bottomLine)) {
+        this.updateRightLine(topLeft, bottomRight, true);
+      }
+      if (platformIsLeftMost(this.bottomLine.length-1, this.bottomLine)) {
+        this.updateLeftLine(topLeft, bottomRight, true);
+      }
+    } 
+    //referral block must be after push and before sort
     this.bottomLine = sortTopToBottom(this.bottomLine);
   };
 
   this.updateRightLine = function(topLeft, bottomRight, referredByAdjacent) {
     let topRightMargin = new Coord(bottomRight.x + margin, topLeft.y - margin);
     let bottomRightMargin = new Coord(bottomRight.x + margin, bottomRight.y + margin);
-    //check if over edge, and if so, have adjacent side update too
-    if (!referredByAdjacent) {
-      if (false) {
-        // updateXLine(topLeft, bottomRight, true);
-      }
-      if (false) {
-        // updateXLine(topLeft, bottomRight, true);
-      }
-    } 
     for (let i=0; i < this.rightLine.length; i++) {
       //remove any left-more platforms within height
       if (this.rightLine[i].a.y >= topRightMargin.y && this.rightLine[i].b.y <= bottomRightMargin.y) {
@@ -382,21 +375,22 @@ export function filledSpaceModel() {
       }
     }
     this.rightLine.push(new Platform(topRightMargin, bottomRightMargin));
+    //check if over edge, and if so, have adjacent side update too
+    if (!referredByAdjacent) {
+      if (platformIsTopMost(this.rightLine.length-1, this.rightLine)) {
+        this.updateTopLine(topLeft, bottomRight, true);
+      }
+      if (platformIsBottomMost(this.rightLine.length-1, this.rightLine)) {
+        this.updateBottomLine(topLeft, bottomRight, true);
+      }
+    } 
+    //referral block must be after push and before sort
     this.rightLine = sortLeftToRight(this.rightLine);
   };
 
   this.updateLeftLine = function(topLeft, bottomRight, referredByAdjacent) {
     let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
     let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
-    //check if over edge, and if so, have adjacent side update too
-    if (!referredByAdjacent) {
-      if (false) {
-        // updateXLine(topLeft, bottomRight, true);
-      }
-      if (false) {
-        // updateXLine(topLeft, bottomRight, true);
-      }
-    } 
     for (let i=0; i < this.leftLine.length; i++) {
       //remove any right-more platforms within height
       if (this.leftLine[i].a.y >= topLeftMargin.y && this.leftLine[i].b.y <= bottomLeftMargin.y) {
@@ -422,6 +416,16 @@ export function filledSpaceModel() {
       }
     }
     this.leftLine.push(new Platform(topLeftMargin, bottomLeftMargin));
+    //check if over edge, and if so, have adjacent side update too
+    if (!referredByAdjacent) {
+      if (platformIsTopMost(this.leftLine.length-1, this.leftLine)) {
+        this.updateTopLine(topLeft, bottomRight, true);
+      }
+      if (platformIsBottomMost(this.leftLine.length-1, this.leftLine)) {
+        this.updateBottomLine(topLeft, bottomRight, true);
+      }
+    } 
+    //referral block must be after push and before sort
     this.leftLine = sortRightToLeft(this.leftLine);
   };
 
