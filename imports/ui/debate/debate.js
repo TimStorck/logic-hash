@@ -18,7 +18,10 @@ Template.debate.onRendered(function() {
 });
 
 Template.debate.events({
-  'click .post': function(event) {
-    console.log("click" + event.target.id);
+  // 'click .post': function(event) {
+  //   console.log("click post " + event.target.id);
+  // },
+  'click .flagBox': function(event) {
+    console.log("click flagbox" + event.currentTarget.parentNode.id);
   }
 });
