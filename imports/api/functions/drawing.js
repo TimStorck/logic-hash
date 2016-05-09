@@ -58,6 +58,8 @@ export function drawResponseTextBox(post, bucket, fSModel) {
   }
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
+
+  return centerPos;
 }
 
 export function drawFSModel(fSModel, canvas) {
@@ -77,20 +79,24 @@ export function drawFSModel(fSModel, canvas) {
   }
 }
 
-// function drawCircle(coord, canvas) {
-//   canCtx = canvas.getContext("2d");
-//   canCtx.beginPath();
-//   canCtx.fillStyle = "red";
-//   canCtx.arc(coord.x, coord.y, 2, 0, Math.PI*2, true);
-//   canCtx.fill();
-//   canCtx.closePath();
-// }
-
+/*
+  this function is for development use, to check out the filled space model boundaries
+  (called from reactive.js)
+*/
 function drawLine(platform, canCtx) {
   canCtx.beginPath();
   canCtx.strokeStyle = "red";
   canCtx.moveTo(platform.a.x,platform.a.y);
   canCtx.lineTo(platform.b.x,platform.b.y);
+  canCtx.stroke();
+  canCtx.closePath();
+}
+
+export function drawRadial(motionCenter, responseCenter, canCtx) {
+  canCtx.beginPath();
+  canCtx.strokeStyle = "black";
+  canCtx.moveTo(motionCenter.x, motionCenter.y);
+  canCtx.lineTo(responseCenter.x, responseCenter.y);
   canCtx.stroke();
   canCtx.closePath();
 }

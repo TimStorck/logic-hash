@@ -6,6 +6,7 @@ import { Coord } from './objects.js';
 import { filledSpaceModel } from './objects.js';
 import { drawMotionTextBox } from './drawing.js';
 import { drawResponseTextBox } from './drawing.js';
+import { drawRadial } from './drawing.js';
 import { drawFSModel } from './drawing.js';
 import { centerOf } from './measurements.js';
 
@@ -15,7 +16,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
   canvas.height = window.innerHeight - 100;
   canvas.width = window.innerWidth - 100;
 
-  let center = centerOf(new Coord(canvas.width, canvas.height));
+  let motionCenter = centerOf(new Coord(canvas.width, canvas.height));
   let canCtx = canvas.getContext("2d");
 
   let motion;
@@ -40,7 +41,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
 
     const fSModel = new filledSpaceModel();
 
-    drawMotionTextBox(motion, bucket, center, fSModel);
+    drawMotionTextBox(motion, bucket, motionCenter, fSModel);
 
     let fetchArray = Posts.find({"elicitor": motionId}).fetch();
     let responseArray = [];
@@ -51,10 +52,15 @@ export function debateTreeChanged(motionId, bucket, canvas) {
         fetchArray[i]._id
       ));
     }
+    let responseCenter;
     for (let i = 0; i < responseArray.length; i++) {
-      drawResponseTextBox(responseArray[i], bucket, fSModel);
+      responseCenter = drawResponseTextBox(responseArray[i], bucket, fSModel);
+      drawRadial(motionCenter, responseCenter, canCtx);
     }
 
-    drawFSModel(fSModel, canvas);
+    /*
+      uncomment below line to view Filled Space Model boundaries
+    */
+    // drawFSModel(fSModel, canvas);
   }
 }
