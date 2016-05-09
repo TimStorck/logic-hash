@@ -1,17 +1,22 @@
 import { sortBottomToTop } from './measurements.js';
+import { sortTopToBottom } from './measurements.js';
+import { sortLeftToRight } from './measurements.js';
+import { sortRightToLeft } from './measurements.js';
 import { platformIsTopMost } from './measurements.js';
 import { platformIsBottomMost } from './measurements.js';
 import { platformIsRightMost } from './measurements.js';
 import { platformIsLeftMost } from './measurements.js';
 import { centerOf } from './measurements.js';
-import { fitsAbove } from './measurements.js';
-import { fitsToRightOf } from './measurements.js';
-import { fitsBelow } from './measurements.js';
-import { fitsToLeftOf } from './measurements.js';
 import { centerOfHor } from './measurements.js';
+import { centerOfVert } from './measurements.js';
+import { fitsHor } from './measurements.js';
+import { fitsVert } from './measurements.js';
 import { platformWidth } from './measurements.js';
+import { platformHeight } from './measurements.js';
 import { adjacentLeft } from './measurements.js';
 import { adjacentRight } from './measurements.js';
+import { adjacentTop } from './measurements.js';
+import { adjacentBottom } from './measurements.js';
 
 export function Coord(x, y) {
   this.x = Math.floor(x);
@@ -53,7 +58,7 @@ export function filledSpaceModel() {
     // for each platform in topLine
     for (let i = 0; i < this.topLine.length; i++) {
       //if narrower
-      if (fitsAbove(dimens, platformWidth(this.topLine[i]))) {
+      if (fitsHor(dimens, platformWidth(this.topLine[i]))) {
         spot = new Coord(centerOfHor(this.topLine[i].a.x, this.topLine[i].b.x), this.topLine[i].a.y - centerOf(dimens).y);
         break;
       } 
@@ -79,7 +84,7 @@ export function filledSpaceModel() {
       //if adjacent left not protruding
       let adjLeft = adjacentLeft(i, this.topLine);
       if (adjLeft < i) {
-        if (fitsAbove(dimens, platformWidth(this.topLine[adjLeft]) + platformWidth(this.topLine[i]))) {
+        if (fitsHor(dimens, platformWidth(this.topLine[adjLeft]) + platformWidth(this.topLine[i]))) {
           spot = new Coord(this.topLine[i].b.x - centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
           break;
         }
@@ -87,7 +92,7 @@ export function filledSpaceModel() {
       //if adjacent right not protruding
       let adjRight = adjacentRight(i, this.topLine);
       if (adjRight < i) {
-        if (fitsAbove(dimens, platformWidth(this.topLine[adjRight]) + platformWidth(this.topLine[i]))) {
+        if (fitsHor(dimens, platformWidth(this.topLine[adjRight]) + platformWidth(this.topLine[i]))) {
           spot = new Coord(this.topLine[i].a.x + centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
           break;
         }
