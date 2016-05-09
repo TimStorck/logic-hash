@@ -8,7 +8,6 @@ import { fitsAbove } from './measurements.js';
 import { fitsToRightOf } from './measurements.js';
 import { fitsBelow } from './measurements.js';
 import { fitsToLeftOf } from './measurements.js';
-//combine horizontal ones and vertical ones (centerOf...)
 import { centerOfHor } from './measurements.js';
 import { platformWidth } from './measurements.js';
 import { adjacentLeft } from './measurements.js';
@@ -35,9 +34,6 @@ export function PostOb(author, content, responseNo) {
   this.content = content;
   this.author = author;
   this.responseNo = responseNo;
-  this.testMethod = function() {
-    // console.log("number of responses to motion: " + this.responseNo)
-  };
 }
 
 export function Platform(coordA, coordB) {
@@ -80,6 +76,7 @@ export function filledSpaceModel() {
       if (i === 0) {
         continue;
       }
+      //if adjacent left not protruding
       let adjLeft = adjacentLeft(i, this.topLine);
       if (adjLeft < i) {
         if (fitsAbove(dimens, platformWidth(this.topLine[adjLeft]) + platformWidth(this.topLine[i]))) {
@@ -87,6 +84,7 @@ export function filledSpaceModel() {
           break;
         }
       }
+      //if adjacent right not protruding
       let adjRight = adjacentRight(i, this.topLine);
       if (adjRight < i) {
         if (fitsAbove(dimens, platformWidth(this.topLine[adjRight]) + platformWidth(this.topLine[i]))) {
@@ -94,6 +92,7 @@ export function filledSpaceModel() {
           break;
         }
       }
+      //if highest point
       if (i === this.topLine.length - 1) {
         spot = new Coord(centerOfHor(this.topLine[i].a.x, this.topLine[i].b.x), this.topLine[i].a.y - centerOf(dimens).y);
         break;
