@@ -195,8 +195,8 @@ export function adjacentRight(i, line) {
 
 export function sortBottomToTop(arr) {
   return arr.sort(function (a, b) {
-    if (a.a.y > b.a.y) return 1;
-    if (a.a.y < b.a.y) return -1;
+    if (a.a.y > b.a.y) return -1;
+    if (a.a.y < b.a.y) return 1;
     return 0;
   });
 }

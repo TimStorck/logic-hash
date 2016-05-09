@@ -129,12 +129,10 @@ export function filledSpaceModel() {
       if (this.topLine[i].a.x >= topLeftMargin.x && this.topLine[i].b.x <= topRightMargin.x) {
         this.topLine.splice(i, 1);
         i--;
-        console.log("trying to remove lower platform");
         continue;
       }
       //split any lower platform that is wider
       if (this.topLine[i].a.x < topLeftMargin.x && this.topLine[i].b.x > topRightMargin.x) {
-        console.log("trying to split any lower platform that is wider");
         this.topLine.push(new Platform(
           new Coord(topRightMargin.x, this.topLine[i].b.y), 
           new Coord(this.topLine[i].b.x, this.topLine[i].b.y)
@@ -143,12 +141,10 @@ export function filledSpaceModel() {
       }
       //clip any lower platforms crossing left edge
       if (this.topLine[i].b.x > topLeftMargin.x && this.topLine[i].b.x < topRightMargin.x) {
-        console.log("trying to clip any lower platforms crossing left edge");
         this.topLine[i].b = new Coord(topLeftMargin.x, this.topLine[i].b.y);
       }
       //clip any lower platforms crossing right edge
       if (this.topLine[i].a.x < topRightMargin.x && this.topLine[i].a.x > topLeftMargin.x) {
-        console.log("trying to clip any lower platforms crossing right edge");
         this.topLine[i].a = new Coord(topRightMargin.x, this.topLine[i].a.y);
       }
     }

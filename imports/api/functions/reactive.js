@@ -45,6 +45,5 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     }
 
     drawFSModel(fSModel, canvas);
-    console.log(fSModel.rightLine);
   }
 }
