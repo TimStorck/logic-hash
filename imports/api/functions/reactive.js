@@ -28,6 +28,10 @@ export function debateTreeChanged(motionId, bucket, canvas) {
   }
 
   if (typeof motion != "undefined") {
+    while (bucket.firstChild) {
+      bucket.removeChild(bucket.firstChild);
+    }
+    
     canCtx.fillStyle = "white";
     canCtx.fillRect(0,0,canvas.width,canvas.height);
 
