@@ -13,12 +13,20 @@
       </div>
       {{#if currentUser}}
       <div class="sidebar">
-        wasap
-        <form id="newResponse" class="">
-          <textarea id="responseText" rows="6" cols="20" required></textarea> 
-          <button id="submitMotion">Submit</button>
-          <span id="msg"></span>
-        </form>
+        <div class="panel ">
+          <div class="inner-panel ">
+            <div class="form-shell ">
+              <div class="form-box">
+                <h2>Respond To Motion</h2>
+                <form id="newResponse" class="">
+                  <textarea id="responseText" rows="6" cols="20" required></textarea> 
+                  <button id="submitMotion">Submit</button>
+                  <span id="msg"></span>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       {{/if}}
     </div>

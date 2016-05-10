@@ -3,7 +3,7 @@
 
   .logoDiv {
     cursor: pointer;
-    position: absolute;    
+    position: fixed;    
     top: -30px;
     left: -30px;
     padding-left: 32px;
@@ -27,23 +27,66 @@
   }
 
   .sidebar {
-    position: absolute;    
-    top: calc(50vh - 100px);
-    left: -5px;
-    padding-left: 7px;
-    border: 1px black solid;display: inline-block;
-    background-color: white;
-    box-shadow: -2px 2px 2px rgba(0,0,0,0.3);
-    border-radius: 4px;
+    position: fixed;
+    left: -23px;
+    bottom: -26px;
 
-    form {
-      margin: 0 2px 2px 0;
+    .panel {
+      background-color: $the-red;
+      border-radius: 5px;
+      box-shadow: 0 0 3px $panel-border inset, -2px 2px 3px $shadow-color;
+      display: inline-block;
+      padding: 11px 11px 11px 11px;
 
-      button {
-        display: block;
-        clear: left;
-        float: none;
-        margin: 0px auto;
+      .inner-panel {
+        box-shadow: 0 0 3px $panel-border;
+        background-color: lighten($panel-color,6);
+        border-radius: 3px;
+        display: inline-block;
+        padding: 7px 7px 7px 7px;
+
+        .form-shell {
+          display: inline-block;
+          padding: 2px 2px 2px 2px;
+          background-color: darken($panel-color, 3);
+          border-radius: 3px;
+          box-shadow: 0 0 3px $panel-border inset;
+          text-align: center;
+
+          .form-box {
+            background-color: lighten($panel-color,6);
+            box-shadow: 0 0 3px $panel-border inset;
+            border-radius: 2px;
+            display: inline-block;
+            padding: 8px 10px 4px 10px;
+
+            h2 {
+              padding-top: 0;
+              margin-top: 0;
+              margin-bottom: 16px;
+            }
+
+            form {
+              display: inline-block;
+              text-align: center;
+
+              > * {
+                float: left;
+                clear: both;
+                margin-bottom: 3px;
+              }
+
+              #submitMotion {
+                background-color: white;
+                border: 1px black solid;
+                display: block;
+                clear: left;
+                float: none;
+                margin: 0px auto;
+              }
+            }
+          }
+        }
       }
     }
   }
