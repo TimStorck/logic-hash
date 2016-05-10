@@ -39,7 +39,7 @@ export function drawMotionTextBox(post, butcket, centerPos, fSModel) {
   fSModel.addMotion(topLeftPos, topLeftPos.plus(dimens));
 }
 
-export function drawResponseTextBox(post, bucket, fSModel) {
+export function drawResponseTextBox(post, bucket, fSModel, sideOscillator) {
   let newElem = document.createElement("div");
     newElem.setAttribute("class", "post");
     newElem.setAttribute("id", post._id);
@@ -65,7 +65,7 @@ export function drawResponseTextBox(post, bucket, fSModel) {
   let dimens = dimensOf(newElem);
   let centerPos;
   let topLeftPos;
-  switch(Math.floor(Math.random() * 4) % 4) {
+  switch(sideOscillator) {
     case 0:
       centerPos = fSModel.findSpotLeft(dimens);
       topLeftPos = centerPos.minus(centerOf(dimens));

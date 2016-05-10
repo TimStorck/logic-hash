@@ -54,9 +54,15 @@ export function debateTreeChanged(motionId, bucket, canvas) {
       ));
     }
     let responseCenter;
+    let sideOscillator = 0;
     for (let i = 0; i < responseArray.length; i++) {
-      responseCenter = drawResponseTextBox(responseArray[i], bucket, fSModel);
+      responseCenter = drawResponseTextBox(responseArray[i], bucket, fSModel, sideOscillator);
       drawRadial(motionCenter, responseCenter, canCtx);
+      if (sideOscillator === 3) {
+        sideOscillator = 0;
+      } else {
+        sideOscillator++;
+      }
     }
 
     /*
