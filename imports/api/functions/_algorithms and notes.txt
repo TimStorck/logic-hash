@@ -1,57 +1,10 @@
-debateTreeChanged(motion, bucket, canvas) {
-  
-}
 
-the angle of the previous line tells you which way you're going
 
 overlap replies
 dont overlap replies
 
-get angle to center of previousBox from center of motionBox
-  if upperRight, get rightEdge of previousBox
-    get angle to rightEdge of previousBox from rightEdge of motionBox
-      if 
 
 
-either trying to bring textBox down, or trying to bring it left, or trying to bring it up, or trying to bring it right
-
-update upperEdge as you go and test against it for textboxes you want to bring down
-
-check topLine for lowest point
-  find connecting point at that level
-    see if it will fit there
-      if so - mark as potential
-      check for other spot at that point
-        see if it will fit there
-          if so - mark as potential
-          check next lowest point
-            if it fits, check other spots at that point
-              record spot with shortest radius from motion
-            
-filledSpaceModel            
-  updateTopLine (div, referredFromAdjacent)
-    get new points
-      if (!referredFromAdjacent)
-        if extend beyond left edge
-          update left line
-        if extend beyond right edge
-          update right line
-      else
-        any points in between new points horizontally, splice out
-        push new points
-
-array of platforms
-  when adding new platform
-    if there is point below it
-      find if it extends beyond left 
-        if so, abridge to new edge
-      if it doesnt extend either way,  remove it
-  when finding best spot
-    find lowest platform
-      see if its wide enough
-      if not check next (sorted in order of lowest)
-
-if platform to left doesnt protrude
-  if current platform and platform to left combined fit div
-    spot = 
-    if not 
+if fsmodel topmost platform above canvas
+  expand up
+    window.scrollTo(0, 0);  //not 0,0
