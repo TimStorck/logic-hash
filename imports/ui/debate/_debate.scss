@@ -4,25 +4,34 @@
   .logoDiv {
     cursor: pointer;
     position: fixed;    
-    top: -30px;
-    left: -30px;
-    padding-left: 32px;
-    padding-top: 32px;
-    border: 1px black solid;display: inline-block;
-    background-color: white;
-    box-shadow: -2px 2px 2px rgba(0,0,0,0.3);
-    border-radius: 24px;
+    top: -15px;
+    left: -15px;
 
-    background-image: url(/img/logo2darker200.png);
-    background-repeat: no-repeat;
-    background-size: 100px;
-    background-position: right bottom;
 
-    width: 100px;
-    height: 100px;
+    .panel {
+      background-color: $the-red;
+      border-radius: 0 0 32px 0;
+      box-shadow: 0 0 3px $panel-border inset, -2px 2px 3px $shadow-color;
+      display: inline-block;
+      padding: 11px 11px 11px 11px;
 
-    img {
-      width: 100px;
+      .inner-panel {
+        box-shadow: 0 0 3px $panel-border;
+        background-color: white;
+        border-radius: 0 0 25px 0;
+        display: inline-block;
+        padding: 7px 7px 7px 7px;
+
+        .imgDiv {
+          display: inline-block;
+          background-image: url(/img/logo2darker200.png);
+          background-repeat: no-repeat;
+          background-size: 100px;
+          background-position: right bottom;
+          width: 100px;
+          height: 100px;
+        }
+      }
     }
   }
 
