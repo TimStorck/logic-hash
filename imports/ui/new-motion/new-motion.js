@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { Accounts } from 'meteor/accounts-base'
+import { Accounts } from 'meteor/accounts-base';
 
 import './new-motion.html';
 
@@ -18,7 +18,6 @@ Template.newMotion.events({
 
     Meteor.call('posts.insert', newPost);
 
-    //TODO Route to debate page
     FlowRouter.go("home");
   }
 });

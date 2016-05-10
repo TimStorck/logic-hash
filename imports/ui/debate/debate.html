@@ -7,14 +7,16 @@
           <div id="bucket"></div>
         </div>
       </div>
+      {{#if currentUser}}
       <div class="sidebar">
         wasap
         <form id="newResponse" class="">
-          <textarea id="text" rows="6" cols="30" required></textarea> 
+          <textarea id="responseText" rows="6" cols="20" required></textarea> 
           <button id="submitMotion">Submit</button>
           <span id="msg"></span>
         </form>
       </div>
+      {{/if}}
     </div>
   </div>
 </template>

@@ -23,5 +23,20 @@ Template.debate.events({
   // },
   'click .flagBox': function(event) {
     console.log("click flagbox" + event.currentTarget.parentNode.id);
+  },
+  'submit #newResponse' : function(event, template) {
+
+    event.preventDefault();
+
+    const author = Meteor.user().username;
+    const content = template.find('#responseText').value;
+
+    const newPost = {
+      content: content,
+      author: author,
+      elicitor: FlowRouter.getParam("mId")
+    }
+
+    Meteor.call('posts.insert', newPost);
   }
 });
