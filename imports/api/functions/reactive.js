@@ -50,8 +50,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
       responseArray.push(new PostOb(
         fetchArray[i]._id,
         fetchArray[i].author,
-        fetchArray[i].content,
-        fetchArray[i]._id
+        fetchArray[i].content
       ));
     }
     let responseCenter;
