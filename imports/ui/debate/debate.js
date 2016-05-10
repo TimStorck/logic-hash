@@ -38,5 +38,8 @@ Template.debate.events({
     }
 
     Meteor.call('posts.insert', newPost);
-  }
+  },
+  'click .logoDiv': function(event) {
+    FlowRouter.go("home");
+  },
 });
