@@ -7,6 +7,7 @@ i think if a short text box spawns next to a tall one it trims the overhanging p
 optimization
   populating postob properties from one query instead of multiple
   do i even need the postob object or can i use whatever the query returns?
+  pass measurement functions more specific variables where possible [instead of objects]
 
 optimizations in filled space model
   right now filled space model only checks one adjacent platform to fit a new text box

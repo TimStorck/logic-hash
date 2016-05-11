@@ -17,6 +17,8 @@ import { adjacentLeft } from './measurements.js';
 import { adjacentRight } from './measurements.js';
 import { adjacentTop } from './measurements.js';
 import { adjacentBottom } from './measurements.js';
+import { widthWithAdjacentLeft } from './recursiveFindSpotFunctions.js';
+import { widthWithAdjacentRight } from './recursiveFindSpotFunctions.js';
 
 export function Coord(x, y) {
   this.x = Math.floor(x);
@@ -83,21 +85,15 @@ export function filledSpaceModel() {
         continue;
       }
       //if adjacent left not protruding
-      let adjLeft = adjacentLeft(i, this.topLine);
-      if (adjLeft < i) {
-        if (fitsHor(dimens, platformWidth(this.topLine[adjLeft]) + platformWidth(this.topLine[i]))) {
-          spot = new Coord(this.topLine[i].b.x - centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
-          break;
-        }
-      }
+      if (fitsHor(dimens, widthWithAdjacentLeft(i, this.topLine))) {
+        spot = new Coord(this.topLine[i].b.x - centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
+        break;
+      } 
       //if adjacent right not protruding
-      let adjRight = adjacentRight(i, this.topLine);
-      if (adjRight < i) {
-        if (fitsHor(dimens, platformWidth(this.topLine[adjRight]) + platformWidth(this.topLine[i]))) {
-          spot = new Coord(this.topLine[i].a.x + centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
-          break;
-        }
-      }
+      if (fitsHor(dimens, widthWithAdjacentRight(i, this.topLine))) {
+        spot = new Coord(this.topLine[i].a.x + centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
+        break;
+      } 
       //if highest platform
       if (i === this.topLine.length - 1) {
         spot = new Coord(centerOfHor(this.topLine[i].a.x, this.topLine[i].b.x), this.topLine[i].a.y - centerOf(dimens).y);
