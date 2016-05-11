@@ -70,16 +70,16 @@ function createTextBoxElement(post, bucket) {
 function getPosition(fSModel, sideOscillator, dimens) {
   switch(sideOscillator) {
     case 0:
-      return fSModel.findSpotLeft(dimens);
+      return fSModel.findSpotTop(dimens);
       break;
     case 1:
       return fSModel.findSpotRight(dimens);
       break;
     case 2:
-      return fSModel.findSpotTop(dimens);
+      return fSModel.findSpotBottom(dimens);
       break;
     case 3:
-      return fSModel.findSpotBottom(dimens);
+      return fSModel.findSpotLeft(dimens);
       break;
     default:
       console.log("sideOscillator invalid");
@@ -89,16 +89,16 @@ function getPosition(fSModel, sideOscillator, dimens) {
 function updateFSM(topLeftPos, dimens, fSModel, sideOscillator) {
   switch(sideOscillator) {
     case 0:
-      fSModel.updateLeftLine(topLeftPos, topLeftPos.plus(dimens), false);
+      fSModel.updateTopLine(topLeftPos, topLeftPos.plus(dimens), false);
       break;
     case 1:
       fSModel.updateRightLine(topLeftPos, topLeftPos.plus(dimens), false);
       break;
     case 2:
-      fSModel.updateTopLine(topLeftPos, topLeftPos.plus(dimens), false);
+      fSModel.updateBottomLine(topLeftPos, topLeftPos.plus(dimens), false);
       break;
     case 3:
-      fSModel.updateBottomLine(topLeftPos, topLeftPos.plus(dimens), false);
+      fSModel.updateLeftLine(topLeftPos, topLeftPos.plus(dimens), false);
       break;
     default:
       console.log("sideOscillator invalid");
