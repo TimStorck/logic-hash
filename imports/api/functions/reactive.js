@@ -50,7 +50,8 @@ export function debateTreeChanged(motionId, bucket, canvas) {
       responseArray.push(new PostOb(
         fetchArray[i]._id,
         fetchArray[i].author,
-        fetchArray[i].content
+        fetchArray[i].content,
+        Posts.find({"elicitor": fetchArray[i]._id}).count()
       ));
     }
     let responseCenter;
@@ -68,6 +69,6 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     /*
       uncomment below line to view Filled Space Model boundaries
     */
-    // drawFSModel(fSModel, canvas);
+    drawFSModel(fSModel, canvas);
   }
 }

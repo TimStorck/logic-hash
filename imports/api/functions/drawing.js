@@ -32,36 +32,6 @@ export function drawResponseTextBox(post, bucket, fSModel, sideOscillator) {
   return centerPos;
 }
 
-
-/*
-  for development, to view filled space model boundaries
-*/
-export function drawFSModel(fSModel, canvas) {
-  let canCtx = canvas.getContext("2d");
-
-  for (let i = 0; i < fSModel.topLine.length; i++) {
-    drawLine(fSModel.topLine[i], canCtx);
-  }
-  for (let i = 0; i < fSModel.rightLine.length; i++) {
-    drawLine(fSModel.rightLine[i], canCtx);
-  }
-  for (let i = 0; i < fSModel.bottomLine.length; i++) {
-    drawLine(fSModel.bottomLine[i], canCtx);
-  }
-  for (let i = 0; i < fSModel.leftLine.length; i++) {
-    drawLine(fSModel.leftLine[i], canCtx);
-  }
-}
-
-function drawLine(platform, canCtx) {
-  canCtx.beginPath();
-  canCtx.strokeStyle = "red";
-  canCtx.moveTo(platform.a.x,platform.a.y);
-  canCtx.lineTo(platform.b.x,platform.b.y);
-  canCtx.stroke();
-  canCtx.closePath();
-}
-
 export function drawRadial(motionCenter, responseCenter, canCtx) {
   canCtx.beginPath();
   canCtx.strokeStyle = "black";
@@ -133,4 +103,33 @@ function updateFSM(topLeftPos, dimens, fSModel, sideOscillator) {
     default:
       console.log("sideOscillator invalid");
   }
+}
+
+/*
+  for development, to view filled space model boundaries
+*/
+export function drawFSModel(fSModel, canvas) {
+  let canCtx = canvas.getContext("2d");
+
+  for (let i = 0; i < fSModel.topLine.length; i++) {
+    drawLine(fSModel.topLine[i], canCtx);
+  }
+  for (let i = 0; i < fSModel.rightLine.length; i++) {
+    drawLine(fSModel.rightLine[i], canCtx);
+  }
+  for (let i = 0; i < fSModel.bottomLine.length; i++) {
+    drawLine(fSModel.bottomLine[i], canCtx);
+  }
+  for (let i = 0; i < fSModel.leftLine.length; i++) {
+    drawLine(fSModel.leftLine[i], canCtx);
+  }
+}
+
+function drawLine(platform, canCtx) {
+  canCtx.beginPath();
+  canCtx.strokeStyle = "red";
+  canCtx.moveTo(platform.a.x,platform.a.y);
+  canCtx.lineTo(platform.b.x,platform.b.y);
+  canCtx.stroke();
+  canCtx.closePath();
 }
