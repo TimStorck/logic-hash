@@ -19,8 +19,8 @@ import { adjacentTop } from './measurements.js';
 import { adjacentBottom } from './measurements.js';
 import { widthWithAdjacentLeft } from './recursiveFindSpotFunctions.js';
 import { widthWithAdjacentRight } from './recursiveFindSpotFunctions.js';
-import { widthWithAdjacentAbove } from './recursiveFindSpotFunctions.js';
-import { widthWithAdjacentBelow } from './recursiveFindSpotFunctions.js';
+import { heightWithAdjacentTop } from './recursiveFindSpotFunctions.js';
+import { heightWithAdjacentBottom } from './recursiveFindSpotFunctions.js';
 
 export function Coord(x, y) {
   this.x = Math.floor(x);
@@ -181,21 +181,15 @@ export function filledSpaceModel() {
         continue;
       }
       //if adjacent top not protruding
-      let adjTop = adjacentTop(i, this.rightLine);
-      if (adjTop < i) {
-        if (fitsVert(dimens, platformHeight(this.rightLine[adjTop]) + platformHeight(this.rightLine[i]))) {
-          spot = new Coord(this.rightLine[i].a.x + centerOf(dimens).x, this.rightLine[i].b.y - centerOf(dimens).y);
-          break;
-        }
-      }
+      if (fitsVert(dimens, heightWithAdjacentTop(i, this.rightLine))) {
+        spot = new Coord(this.rightLine[i].a.x + centerOf(dimens).x, this.rightLine[i].b.y - centerOf(dimens).y);
+        break;
+      } 
       //if adjacent bottom not protruding
-      let adjBottom = adjacentBottom(i, this.rightLine);
-      if (adjBottom < i) {
-        if (fitsVert(dimens, platformHeight(this.rightLine[adjBottom]) + platformHeight(this.rightLine[i]))) {
-          spot = new Coord(this.rightLine[i].a.x + centerOf(dimens).x, this.rightLine[i].a.y + centerOf(dimens).y);
-          break;
-        }
-      }
+      if (fitsVert(dimens, heightWithAdjacentBottom(i, this.rightLine))) {
+        spot = new Coord(this.rightLine[i].a.x + centerOf(dimens).x, this.rightLine[i].a.y + centerOf(dimens).y);
+        break;
+      } 
       //if right-most platform
       if (i === this.rightLine.length - 1) {
         spot = new Coord(this.rightLine[i].a.x + centerOf(dimens).x, centerOfVert(this.rightLine[i].a.y, this.rightLine[i].b.y));
@@ -234,21 +228,15 @@ export function filledSpaceModel() {
         continue;
       }
       //if adjacent top not protruding
-      let adjTop = adjacentTop(i, this.leftLine);
-      if (adjTop < i) {
-        if (fitsVert(dimens, platformHeight(this.leftLine[adjTop]) + platformHeight(this.leftLine[i]))) {
-          spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, this.leftLine[i].b.y - centerOf(dimens).y);
-          break;
-        }
-      }
+      if (fitsVert(dimens, heightWithAdjacentTop(i, this.leftLine))) {
+        spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, this.leftLine[i].b.y - centerOf(dimens).y);
+        break;
+      } 
       //if adjacent bottom not protruding
-      let adjBottom = adjacentBottom(i, this.leftLine);
-      if (adjBottom < i) {
-        if (fitsVert(dimens, platformHeight(this.leftLine[adjBottom]) + platformHeight(this.leftLine[i]))) {
-          spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, this.leftLine[i].a.y + centerOf(dimens).y);
-          break;
-        }
-      }
+      if (fitsVert(dimens, heightWithAdjacentBottom(i, this.leftLine))) {
+        spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, this.leftLine[i].a.y + centerOf(dimens).y);
+        break;
+      } 
       //if left-most platform
       if (i === this.leftLine.length - 1) {
         spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, centerOfVert(this.leftLine[i].a.y, this.leftLine[i].b.y));
