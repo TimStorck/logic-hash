@@ -16,7 +16,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
   canvas.height = window.innerHeight - 50;
   canvas.width = window.innerWidth - 50;
 
-  let motionCenter = centerOf(new Coord(canvas.width, canvas.height + 550));
+  let motionCenter = centerOf(new Coord(canvas.width, canvas.height));
   let canCtx = canvas.getContext("2d");
 
   let motion;
@@ -59,11 +59,11 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     for (let i = 0; i < responseArray.length; i++) {
       responseCenter = drawResponseTextBox(responseArray[i], bucket, fSModel, sideOscillator);
       drawRadial(motionCenter, responseCenter, canCtx);
-      // if (sideOscillator === 3) {
-      //   sideOscillator = 0;
-      // } else {
-      //   sideOscillator++;
-      // }
+      if (sideOscillator === 3) {
+        sideOscillator = 0;
+      } else {
+        sideOscillator++;
+      }
     }
 
     /*
