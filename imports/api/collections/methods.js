@@ -6,11 +6,11 @@ import { globalWarmingResponses } from '../data/dummy-posts.js';
 Meteor.methods({
   'posts.insert': function(postParam) {
     if (postParam.elicitor == null || postParam.elicitor == "") {
-      postParam.dateDiscussed = Date();
-      postParam.dateMade = Date();
+      postParam.dateDiscussed = Date.parse(Date());
+      postParam.dateMade = Date.parse(Date());
     } else {
       //TODO make below coniditonal update recursive
-      Posts.update({_id: postParam.elicitor}, {$set: {dateDiscussed: Date()} } );
+      Posts.update({_id: postParam.elicitor}, {$set: {dateDiscussed: Date.parse(Date())} } );
     }
     Posts.insert(postParam);
   },
