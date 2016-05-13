@@ -46,6 +46,16 @@ export function debateTreeChanged(motionId, bucket, canvas) {
 
     drawMotionTextBox(motion, bucket, motionCenter, fSModel);
 
+
+
+
+
+
+
+
+
+
+
     let fetchArray = Posts.find({"elicitor": motionId}).fetch();
     let responseArray = [];
     for (let i = 0; i < fetchArray.length; i++) {
@@ -62,16 +72,21 @@ export function debateTreeChanged(motionId, bucket, canvas) {
       responseCenter = drawResponseTextBox(responseArray[i], bucket, fSModel, sideOscillator);
       drawRadial(motionCenter, responseCenter, canCtx);
 
-
-
       if (responseArray[i].responseNo > 0) {
         console.log("number of responses for " + responseArray[i].content + "------post is " + responseArray[i].responseNo);
       }
 
-
-
       sideOscillator === 3 ? sideOscillator = 0 : sideOscillator++;
     }
+
+
+
+
+
+
+
+
+
 
     /*
       uncomment below line to view Filled Space Model boundaries

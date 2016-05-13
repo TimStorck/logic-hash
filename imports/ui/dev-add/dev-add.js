@@ -18,7 +18,7 @@ Template.devAdd.events({
     }
 
     Meteor.call('posts.insert', newPost);
-    FlowRouter.go("dev");
+    // FlowRouter.go("dev");
   }
 });
 
