@@ -33,10 +33,12 @@ export function debateTreeChanged(motionId, bucket, canvas) {
   }
 
   if (typeof motion != "undefined") {
+    // reset bucktet contents
     while (bucket.firstChild) {
       bucket.removeChild(bucket.firstChild);
     }
 
+    //clear canvas
     canCtx.fillStyle = "white";
     canCtx.fillRect(0,0,canvas.width,canvas.height);
 
@@ -59,9 +61,15 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     for (let i = 0; i < responseArray.length; i++) {
       responseCenter = drawResponseTextBox(responseArray[i], bucket, fSModel, sideOscillator);
       drawRadial(motionCenter, responseCenter, canCtx);
+
+
+
       if (responseArray[i].responseNo > 0) {
         console.log("number of responses for " + responseArray[i].content + "------post is " + responseArray[i].responseNo);
       }
+
+
+
       sideOscillator === 3 ? sideOscillator = 0 : sideOscillator++;
     }
 

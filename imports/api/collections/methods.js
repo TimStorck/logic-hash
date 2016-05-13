@@ -1,7 +1,7 @@
 import { Posts } from './posts.js';
 import { Meteor } from 'meteor/meteor';
-import { postsArray } from '../data/dummy-posts.js';
-import { globalWarmingResponses } from '../data/dummy-posts.js';
+import { postsArray } from '../../data/dummy-posts.js';
+import { globalWarmingResponses } from '../../data/dummy-posts.js';
 
 Meteor.methods({
   'posts.insert': function(postParam) {
