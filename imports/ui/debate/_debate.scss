@@ -155,6 +155,7 @@
 
       .content {
         display: block;
+        width: calc(100% - 10px);
         clear: both;
         text-align: left;
       }
