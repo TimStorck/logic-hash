@@ -53,20 +53,16 @@ export function debateTreeChanged(motionId, bucket, canvas) {
         fetchArray[i].content,
         Posts.find({"elicitor": fetchArray[i]._id}).count()
       ));
-      if (responseArray[i].responseNo > 0) {
-        console.log("number of responses for " + responseArray[i].content + "------post is " + responseArray[i].responseNo);
-      }
     }
     let responseCenter;
     let sideOscillator = 0;
     for (let i = 0; i < responseArray.length; i++) {
       responseCenter = drawResponseTextBox(responseArray[i], bucket, fSModel, sideOscillator);
       drawRadial(motionCenter, responseCenter, canCtx);
-      if (sideOscillator === 3) {
-        sideOscillator = 0;
-      } else {
-        sideOscillator++;
+      if (responseArray[i].responseNo > 0) {
+        console.log("number of responses for " + responseArray[i].content + "------post is " + responseArray[i].responseNo);
       }
+      sideOscillator === 3 ? sideOscillator = 0 : sideOscillator++;
     }
 
     /*
