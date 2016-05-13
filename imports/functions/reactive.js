@@ -53,6 +53,9 @@ export function debateTreeChanged(motionId, bucket, canvas) {
         fetchArray[i].content,
         Posts.find({"elicitor": fetchArray[i]._id}).count()
       ));
+      if (responseArray[i].responseNo > 0) {
+        console.log("number of responses for " + responseArray[i].content + "------post is " + responseArray[i].responseNo);
+      }
     }
     let responseCenter;
     let sideOscillator = 0;
