@@ -1,7 +1,8 @@
 import { Template } from 'meteor/templating';
-import {Posts} from '../../api/collections/posts.js';
+import { Posts } from '../../api/collections/posts.js';
 import { Meteor } from 'meteor/meteor';
-import {debateTreeChanged} from '../../functions/reactive.js';
+import { debateTreeChanged } from '../../functions/reactive.js';
+// import { createFlagModal } from '../../functions/drawing.js';
 
 import './debate.html';
 
@@ -31,13 +32,21 @@ Template.debate.events({
     console.log("click flagbox " + event.currentTarget.parentNode.id);
   },
   'click .respondBtn': function(event, template) {
-    event.stopPropagation();
+    // event.stopPropagation();
     if (event.currentTarget.parentNode.id === FlowRouter.getParam("mId")) {
       template.responseResponse.set( false );
     } else {
       template.responseResponse.set( true );
       template.elicitor.set(event.currentTarget.parentNode.id);
     }
+  },
+  'mouseover .flagBox': function(event, template) {
+    document.getElementById("fm-" + event.currentTarget.parentNode.id).style.display = "block";
+    document.getElementById("fm-" + event.currentTarget.parentNode.id).style.left = event.pageX + 'px';
+    document.getElementById("fm-" + event.currentTarget.parentNode.id).style.top = event.pageY + 'px';
+  },
+  'mouseout .flagBox': function(event, template) {
+    document.getElementById("fm-" + event.currentTarget.parentNode.id).style.display = "none";
   },
   'submit #newResponse' : function(event, template) {
     event.preventDefault();

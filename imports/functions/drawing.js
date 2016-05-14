@@ -69,6 +69,8 @@ function createTextBoxElement(post, bucket) {
 
   bucket.appendChild(newElem);
 
+  createFlagModal(post, bucket);
+
   return newElem;
 }
 
@@ -137,4 +139,17 @@ function drawLine(platform, canCtx) {
   canCtx.lineTo(platform.b.x,platform.b.y);
   canCtx.stroke();
   canCtx.closePath();
+}
+
+function createFlagModal(post, bucket) {
+  // console.log("sup");
+
+  let newModal = document.createElement("div");
+    newModal.setAttribute("class", "flagModal");
+    newModal.setAttribute("id", "fm-" + post._id);
+    newModal.innerHTML = "modal content for " + post._id;
+
+  bucket.appendChild(newModal);
+
+  return newModal;
 }
