@@ -59,6 +59,11 @@ function createTextBoxElement(post, bucket) {
       contentDiv.setAttribute("class", "content");
       contentDiv.innerHTML = post.content;
       newElem.appendChild(contentDiv);
+
+      let respondDiv = document.createElement("div");
+      respondDiv.setAttribute("class", "respondBtn");
+      respondDiv.innerHTML = "Respond";
+      newElem.appendChild(respondDiv);
       
     newElem.style.width = widthFromChars(post.content.length);
 

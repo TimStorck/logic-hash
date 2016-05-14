@@ -18,11 +18,16 @@ Template.debate.onRendered(function() {
 });
 
 Template.debate.events({
-  // 'click .post': function(event) {
-  //   console.log("click post " + event.target.id);
-  // },
+  'click .post': function(event) {
+    console.log("click post " + event.target.id);
+  },
   'click .flagBox': function(event) {
+    event.stopPropagation();
     console.log("click flagbox" + event.currentTarget.parentNode.id);
+  },
+  'click .respondBtn': function(event) {
+    event.stopPropagation();
+    console.log("click respondBtn" + event.currentTarget.parentNode.id);
   },
   'submit #newResponse' : function(event, template) {
 
