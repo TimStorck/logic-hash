@@ -28,7 +28,7 @@ Template.debate.events({
   },
   'click .flagBox': function(event) {
     event.stopPropagation();
-    console.log("click flagbox" + event.currentTarget.parentNode.id);
+    console.log("click flagbox " + event.currentTarget.parentNode.id);
   },
   'click .respondBtn': function(event, template) {
     event.stopPropagation();
@@ -38,7 +38,6 @@ Template.debate.events({
       template.responseResponse.set( true );
       template.elicitor.set(event.currentTarget.parentNode.id);
     }
-    console.log("click respondBtn" + event.currentTarget.parentNode.id);
   },
   'submit #newResponse' : function(event, template) {
     event.preventDefault();
