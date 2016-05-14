@@ -43,43 +43,49 @@ export const postsArray = [
 
 export const globalWarmingResponses = [
   {
+    author: "Katie",
+    content: "Nobody likes the winter anyway!"
+  },
+  {
     author: "Jen",
-    content: "I don't know, what about nuclear weapons?"
-  },
-  {
-    author: "Jan",
-    content: "Asteroids are what we should be worried about."
-  },
-  {
-    author: "Joey",
-    content: "Yeah it's all over, enjoy the ride."
-  },
-  {
-    author: "Joseph",
-    content: "The Universities are all getting their funding from the same corporate interests who have a vested interest in subverting the fossil fuel industry. The fossile fuel revolution is the main thing responsible for the modern world and people should show some respect."
-  },
-  {
-    author: "Jason",
-    content: "The climate changes no matter what, it never has stayed the same for long periods of time. If you try to keep it stable, that is a fool's errand."
+    content: "Nuclear weapons are a greater threat than global warming."
   },
   {
     author: "Julie",
     content: "Alternative energies can't compete with fossil fuel in terms of the amount of energy they produce and the reliability of the supply."
   },
   {
-    author: "Kevin",
-    content: "The correlation between greenhouse gas levels in the atmosphere and fossil fuel combustion cannot be ascertained with 100% certainty."
-  },
-  {
-    author: "Connor",
-    content: "Lol"
+    author: "Joey",
+    content: "It's all over, enjoy the ride."
   },
   {
     author: "Jackson",
     content: "Everybody knows it's the sun that is making it warmer"
-  },
-  {
-    author: "Katie",
-    content: "Nobody likes the winter anyway!"
-  },
+  }
+];
+
+export const nukesResponses = [
+ {
+  author: "Max",
+  content: "Nuclear weapons are not a threat anymore because of the United Nations."
+ },
+ {
+  author: "Mark",
+  content: "Yeah, nukes will knock us off the horse before anything."
+ },
+ {
+  author: "Mike",
+  content: "Global warming is more dangerous than nuclear weapons because it is very unlikely the nuclear weapons would be used against multiple cities. Global warming, however, will almost certainly result in the destruction of a great number of citiies, in that coastal cities will have to be abandoned in something like a hundred years."
+ }
+];
+
+export const defeatistResponses = [
+ {
+  author: "Kevin",
+  content: "That doesn't actually address the point of the motion. You are asserting a separate but somewhat related motion, which is that it doesn't matter if global warming is the most important thing."
+ },
+ {
+  author: "Ken",
+  content: "What if you are wrong and there is still a chance to save civilization, but we don't because you convinced people that there was no hope?"
+ }
 ];

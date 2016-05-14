@@ -2,6 +2,8 @@ import { Posts } from './posts.js';
 import { Meteor } from 'meteor/meteor';
 import { postsArray } from '../../data/dummy-posts.js';
 import { globalWarmingResponses } from '../../data/dummy-posts.js';
+import { nukesResponses } from '../../data/dummy-posts.js';
+import { defeatistResponses } from '../../data/dummy-posts.js';
 
 Meteor.methods({
   'posts.insert': function(postParam) {
@@ -31,6 +33,20 @@ Meteor.methods({
     for (let i = 0; i < globalResponsesLength; i++) {
       globalWarmingResponses[i].elicitor = globalWarmingId;
       Posts.insert(globalWarmingResponses[i]);
+    }
+
+    let nukesId = Posts.findOne({content: "Nuclear weapons are a greater threat than global warming."})._id;
+    nukesLength = nukesResponses.length;
+    for (let i = 0; i < nukesLength; i++) {
+      nukesResponses[i].elicitor = nukesId;
+      Posts.insert(nukesResponses[i]);
+    }
+
+    let defeatistId = Posts.findOne({content: "It's all over, enjoy the ride."})._id;
+    defeatistLength = defeatistResponses.length;
+    for (let i = 0; i < defeatistLength; i++) {
+      defeatistResponses[i].elicitor = defeatistId;
+      Posts.insert(defeatistResponses[i]);
     }
   }
 })
