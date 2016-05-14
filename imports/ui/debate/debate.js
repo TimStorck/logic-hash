@@ -6,7 +6,7 @@ import {debateTreeChanged} from '../../functions/reactive.js';
 import './debate.html';
 
 Template.debate.onCreated(function() {
-  this.elicitor = new ReactiveVar( false );
+  this.elicitor = new ReactiveVar( "initialized, unassigned elicitor reactive var" );
   this.responseResponse = new ReactiveVar( false );
 });
 
@@ -36,6 +36,7 @@ Template.debate.events({
       template.responseResponse.set( false );
     } else {
       template.responseResponse.set( true );
+      template.elicitor.set(event.currentTarget.parentNode.id);
     }
     console.log("click respondBtn" + event.currentTarget.parentNode.id);
   },
@@ -62,5 +63,8 @@ Template.debate.events({
 Template.debate.helpers({
   responseResponse() {
     return Template.instance().responseResponse.get();
+  },
+  getElicitor() {
+    return Template.instance().elicitor.get();
   }
 });
