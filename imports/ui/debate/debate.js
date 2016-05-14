@@ -41,18 +41,24 @@ Template.debate.events({
     console.log("click respondBtn" + event.currentTarget.parentNode.id);
   },
   'submit #newResponse' : function(event, template) {
-
     event.preventDefault();
 
     const author = Meteor.user().username;
     const content = template.find('#responseText').value;
-
-    const newPost = {
-      content: content,
-      author: author,
-      elicitor: FlowRouter.getParam("mId")
+    let newPost;
+    if (Template.instance().responseResponse.get()) {
+      newPost = {
+        content: content,
+        author: author,
+        elicitor: Template.instance().elicitor.get()
+      }
+    } else {
+      newPost = {
+        content: content,
+        author: author,
+        elicitor: FlowRouter.getParam("mId")
+      }
     }
-
     Meteor.call('posts.insert', newPost);
   },
   'click .logoDiv': function(event) {
