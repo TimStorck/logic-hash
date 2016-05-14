@@ -70,8 +70,9 @@ Template.debate.helpers({
 });
 
 function truncate(string) {
-  if (string.length > 50) {
-    return string.substring(0,string.lastIndexOf(" ", 50)) + " ...";
+  if (string.length > 40) {
+    //truncates to last space character before 40th character
+    return string.substring(0,string.lastIndexOf(" ", 40)) + " ...";
   } else {
     return string;
   }
