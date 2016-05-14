@@ -46,47 +46,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
 
     drawMotionTextBox(motion, bucket, motionCenter, fSModel);
 
-
-
-
-
-
-
-
-
-
-
-    let fetchArray = Posts.find({"elicitor": motionId}).fetch();
-    let responseArray = [];
-    for (let i = 0; i < fetchArray.length; i++) {
-      responseArray.push(new PostOb(
-        fetchArray[i]._id,
-        fetchArray[i].author,
-        fetchArray[i].content,
-        Posts.find({"elicitor": fetchArray[i]._id}).count()
-      ));
-    }
-    let responseCenter;
-    let sideOscillator = 0;
-    for (let i = 0; i < responseArray.length; i++) {
-      responseCenter = drawResponseTextBox(responseArray[i], bucket, fSModel, sideOscillator);
-      drawRadial(motionCenter, responseCenter, canCtx);
-
-      if (responseArray[i].responseNo > 0) {
-        console.log("number of responses for " + responseArray[i].content + "------post is " + responseArray[i].responseNo);
-      }
-
-      sideOscillator === 3 ? sideOscillator = 0 : sideOscillator++;
-    }
-
-
-
-
-
-
-
-
-
+    drawResponses(motionId, motionCenter, null, fSModel, true, canCtx);
 
     /*
       uncomment below line to view Filled Space Model boundaries
@@ -94,3 +54,81 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     drawFSModel(fSModel, canvas);
   }
 }
+
+function drawResponses(elicitorId, elicitorCenter, sideOscillator,  fSModel, elicitorIsMotion, canCtx) {
+  let fetchArray = Posts.find({"elicitor": elicitorId}).fetch();
+  if (fetchArray.length > 0) {
+    let responseArray = [];
+    for(let i = 0; i < fetchArray.length; i++) {
+        responseArray.push(new PostOb(
+        fetchArray[i]._id,
+        fetchArray[i].author,
+        fetchArray[i].content,
+        Posts.find({"elicitor": fetchArray[i]._id}).count()
+      ));
+    }
+    let responseCenter;
+    // if elicitor is motion
+    if (sideOscillator == null) {
+      sideOscillator = 0;
+    }
+    for (let i = 0; i < responseArray.length; i++) {
+      responseCenter = drawResponseTextBox(responseArray[i], bucket, fSModel, sideOscillator);
+      drawRadial(elicitorCenter, responseCenter, canCtx);
+
+      if (responseArray[i].responseNo > 0) {
+        drawResponses(responseArray[i]._id, responseCenter, sideOscillator, fSModel, false, canCtx);
+      }
+
+      if (elicitorIsMotion) {
+        sideOscillator === 3 ? sideOscillator = 0 : sideOscillator++;
+      }
+    }
+  }
+}
+
+function isMotion(post) {
+  if (post.elicitor == null || post.elicitor == "") {
+    return true;
+  }
+  return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // let fetchArray = Posts.find({"elicitor": motionId}).fetch();
+    // let responseArray = [];
+    // for (let i = 0; i < fetchArray.length; i++) {
+    //   responseArray.push(new PostOb(
+    //     fetchArray[i]._id,
+    //     fetchArray[i].author,
+    //     fetchArray[i].content,
+    //     Posts.find({"elicitor": fetchArray[i]._id}).count()
+    //   ));
+    // }
+    // let responseCenter;
+    // let sideOscillator = 0;
+    // for (let i = 0; i < responseArray.length; i++) {
+    //   responseCenter = drawResponseTextBox(responseArray[i], bucket, fSModel, sideOscillator);
+    //   drawRadial(motionCenter, responseCenter, canCtx);
+
+    //   if (responseArray[i].responseNo > 0) {
+    //     console.log("number of responses for " + responseArray[i].content + "------post is " + responseArray[i].responseNo);
+    //   }
+
+    //   sideOscillator === 3 ? sideOscillator = 0 : sideOscillator++;
+    // }
