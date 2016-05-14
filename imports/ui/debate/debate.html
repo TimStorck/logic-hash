@@ -22,7 +22,14 @@
           <div class="inner-panel ">
             <div class="form-shell ">
               <div class="form-box">
-                <h2>Respond To Motion</h2>
+                <h2>Respond To:</h2>
+                {{ #if responseResponse }}
+                  <div class="replyBoxElicitor">
+                    {{responseResponse}}
+                  </div>
+                {{ else }}
+                <h2>Motion</h2>
+                {{ /if }}
                 <form id="newResponse" class="">
                   <textarea id="responseText" rows="6" cols="20" required></textarea> 
                   <button id="submitMotion">Submit</button>

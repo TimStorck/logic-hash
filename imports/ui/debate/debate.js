@@ -5,6 +5,11 @@ import {debateTreeChanged} from '../../functions/reactive.js';
 
 import './debate.html';
 
+Template.debate.onCreated(function() {
+  this.elicitor = new ReactiveVar( false );
+  this.responseResponse = new ReactiveVar( false );
+});
+
 Template.debate.onRendered(function() {
   Meteor.subscribe('posts');
 
@@ -25,8 +30,13 @@ Template.debate.events({
     event.stopPropagation();
     console.log("click flagbox" + event.currentTarget.parentNode.id);
   },
-  'click .respondBtn': function(event) {
+  'click .respondBtn': function(event, template) {
     event.stopPropagation();
+    if (event.currentTarget.parentNode.id === FlowRouter.getParam("mId")) {
+      template.responseResponse.set( false );
+    } else {
+      template.responseResponse.set( true );
+    }
     console.log("click respondBtn" + event.currentTarget.parentNode.id);
   },
   'submit #newResponse' : function(event, template) {
@@ -47,4 +57,10 @@ Template.debate.events({
   'click .logoDiv': function(event) {
     FlowRouter.go("home");
   },
+});
+
+Template.debate.helpers({
+  responseResponse() {
+    return Template.instance().responseResponse.get();
+  }
 });
