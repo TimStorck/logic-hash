@@ -65,6 +65,14 @@ Template.debate.helpers({
     return Template.instance().responseResponse.get();
   },
   getElicitor() {
-    return Template.instance().elicitor.get();
+    return truncate(Posts.findOne({"_id": Template.instance().elicitor.get()}).content);
   }
 });
+
+function truncate(string) {
+  if (string.length > 50) {
+    return string.substring(0,string.lastIndexOf(" ", 50)) + " ...";
+  } else {
+    return string;
+  }
+}
