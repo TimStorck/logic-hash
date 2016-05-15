@@ -92,6 +92,7 @@ Template.debate.events({
       event.currentTarget.style.fontStyle = "normal";
     } else {
       flagSelected = this._id;
+      resetFlagItalics();
       event.currentTarget.style.fontStyle = "italic";
     }
   }
@@ -115,5 +116,14 @@ function truncate(string) {
     return string.substring(0,string.lastIndexOf(" ", 40)) + " ...";
   } else {
     return string;
+  }
+}
+
+function resetFlagItalics() {
+  let flagNameColl = document.getElementsByClassName("flagName");
+  let iter;
+  let fncLength = flagNameColl.length;
+  for (iter=0; iter < fncLength; iter++) {
+    flagNameColl[iter].style.fontStyle = "normal";
   }
 }
