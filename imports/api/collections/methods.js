@@ -52,14 +52,12 @@ Meteor.methods({
     }
   },
   'flags.loadData': function() {
-    console.log("meteor method loadData");
     flagsLength = flagData.length;
     for (let i = 0; i < flagsLength; i++) {
       Meteor.call('flags.insert', flagData[i]);
     }
   },
   'flags.insert': function(flagParam) {
-    console.log("meteor method insert");
     Flags.insert(flagParam);
   },
   'flags.removeAll': function() {

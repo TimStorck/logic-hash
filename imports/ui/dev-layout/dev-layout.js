@@ -12,13 +12,12 @@ Template.devLayout.onRendered(function() {
 
 Template.devLayout.events ({
   "click #btn-tst": function() {
-    Meteor.call('flags.removeAll');
   },
   "click #btn-flag-load": function() {
     Meteor.call('flags.loadData');
   },
   "click #btn-flag-dump": function() {
-      // console.log(Date());
+    Meteor.call('flags.removeAll');
   },
   /* table events begin */
   "click #btn-tbl": function() {
