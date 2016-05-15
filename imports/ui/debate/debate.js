@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import { Posts } from '../../api/collections/posts.js';
 import { Meteor } from 'meteor/meteor';
 import { debateTreeChanged } from '../../functions/reactive.js';
-import { Flags } from '../../api/collections/flags.js';
+import { flagData } from '../../data/flag-data.js';
 
 import './debate.html';
 
@@ -15,7 +15,6 @@ Template.debate.onCreated(function() {
 
 Template.debate.onRendered(function() {
   Meteor.subscribe('posts');
-  Meteor.subscribe('flags');
 
   const handle = this.autorun(function () {
     debateTreeChanged(
@@ -42,10 +41,11 @@ Template.debate.events({
       template.elicitor.set(event.currentTarget.parentNode.id);
     }
     /*
-      comment below line out for easier testing
+      comment below lines out for easier testing
     */
     // document.getElementById("newResponse").reset();
-    flagSelected = "";
+    // flagSelected = "";
+    // resetFlagItalics();
   },
   'mouseover .flagBox': function(event, template) {
     document.getElementById("fm-" + event.currentTarget.parentNode.id).style.display = "block";
@@ -78,20 +78,25 @@ Template.debate.events({
     }
     Meteor.call('posts.insert', newPost);
     /*
-      comment below line out for easier testing
+      comment below lines out for easier testing
     */
     // document.getElementById("newResponse").reset();
-    flagSelected = "";
+    // flagSelected = "";
+    // resetFlagItalics();
   },
   'click .logoDiv': function(event) {
     FlowRouter.go("home");
-  },
+  }
+});
+
+
+Template.debate.events({
   'click .flagName': function(event) {
-    if (flagSelected === this._id) {
+    if (flagSelected === this.name) {
       flagSelected = "";
       event.currentTarget.style.fontStyle = "normal";
     } else {
-      flagSelected = this._id;
+      flagSelected = this.name;
       resetFlagItalics();
       event.currentTarget.style.fontStyle = "italic";
     }
@@ -105,9 +110,7 @@ Template.debate.helpers({
   getElicitor() {
     return truncate(Posts.findOne({"_id": Template.instance().elicitor.get()}).content);
   },
-  getFlags() {
-    return Flags.find({});
-  }
+  getFlags: flagData
 });
 
 function truncate(string) {

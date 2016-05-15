@@ -7,6 +7,7 @@ import { rightMost } from './measurements.js';
 import { leftMost } from './measurements.js';
 import { topMost } from './measurements.js';
 import { bottomMost } from './measurements.js';
+import { flagData } from '../data/flag-data.js';
 
 export function drawMotionTextBox(post, butcket, centerPos, fSModel) {
   let newElem = createTextBoxElement(post, bucket);
@@ -46,9 +47,10 @@ function createTextBoxElement(post, bucket) {
     newElem.setAttribute("class", "post");
     newElem.setAttribute("id", post._id);
       if (hasFlag(post)) {
+        let flag = findFlagObject(post.flag);
         let flagDiv = document.createElement("div");
         flagDiv.setAttribute("class", "flagBox");
-        flagDiv.setAttribute("style", "color='" + );
+        flagDiv.setAttribute("style", "background-color: " + flag.color + ";");
         flagDiv.innerHTML = "&nbsp;";
         newElem.appendChild(flagDiv);
       }
@@ -163,4 +165,15 @@ function hasFlag(post) {
   } else {
     return true;
   }
+}
+
+function findFlagObject(name) {
+  for(let i = 0; i < flagData.length; i++) {
+    if(flagData[i].name === name) {
+      console.log("found flag obj "+ flagData[i].color);
+      return flagData[i];
+    }
+  }
+  console.log("flag obj not found " + name);
+  return false;
 }
