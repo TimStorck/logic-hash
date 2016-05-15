@@ -73,6 +73,9 @@ Template.debate.events({
   'click .logoDiv': function(event) {
     FlowRouter.go("home");
   },
+  'click .flagTDiv': function(event) {
+    console.log("click flagTDiv " + this._id + " " + this.name);
+  }
 });
 
 Template.debate.helpers({

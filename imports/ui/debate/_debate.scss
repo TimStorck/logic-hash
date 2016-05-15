@@ -105,7 +105,7 @@
     }
   }
 
-  .flagChoice {
+  .flagOptionBox {
     display: block;
     position: absolute;
     background-color: white;
@@ -114,6 +114,10 @@
     bottom: 10px;
     left: 230px;
     border: 1px black solid;
+
+    .flagTDiv {
+      cursor: pointer;
+    }
   }
 
   .canvasShell {

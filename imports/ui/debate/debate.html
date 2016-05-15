@@ -42,9 +42,9 @@
       </div>
       {{/if}}
       <!-- -->
-      <div class="flagChoice">
+      <div class="flagOptionBox">
         {{ #each getFlags }}
-          {{ name }} <br>
+          {{>flag }} 
         {{ /each }}
       </div>
       <!-- -->
@@ -52,3 +52,8 @@
   </div>
 </template>
 
+<template name="flag">
+  <div class="flagTDiv" style="background-color: {{ color }};">
+    {{ name }}
+  </div>
+</template>
