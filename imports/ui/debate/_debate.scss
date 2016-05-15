@@ -105,6 +105,17 @@
     }
   }
 
+  .flagChoice {
+    display: block;
+    position: absolute;
+    background-color: white;
+    box-shadow: -2px 2px 2px rgba(0,0,0,0.3);
+    width: 300px;
+    bottom: 10px;
+    left: 230px;
+    border: 1px black solid;
+  }
+
   .canvasShell {
     padding: 1px;
     background: grey;
