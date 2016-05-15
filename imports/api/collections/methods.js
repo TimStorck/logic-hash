@@ -1,9 +1,11 @@
 import { Posts } from './posts.js';
+import { Flags } from './flags.js';
 import { Meteor } from 'meteor/meteor';
 import { postsArray } from '../../data/dummy-posts.js';
 import { globalWarmingResponses } from '../../data/dummy-posts.js';
 import { nukesResponses } from '../../data/dummy-posts.js';
 import { defeatistResponses } from '../../data/dummy-posts.js';
+import { flagData } from '../../data/flag-data.js';
 
 Meteor.methods({
   'posts.insert': function(postParam) {
@@ -48,5 +50,19 @@ Meteor.methods({
       defeatistResponses[i].elicitor = defeatistId;
       Posts.insert(defeatistResponses[i]);
     }
+  },
+  'flags.loadData': function() {
+    console.log("meteor method loadData");
+    flagsLength = flagData.length;
+    for (let i = 0; i < flagsLength; i++) {
+      Meteor.call('flags.insert', flagData[i]);
+    }
+  },
+  'flags.insert': function(flagParam) {
+    console.log("meteor method insert");
+    Flags.insert(flagParam);
+  },
+  'flags.removeAll': function() {
+    Flags.remove({});
   }
 })

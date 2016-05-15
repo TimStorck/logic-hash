@@ -6,6 +6,8 @@ Meteor.startup(() => {
 
 import '../imports/api/collections/posts.js';
 
+import '../imports/api/collections/flags.js';
+
 import '../imports/api/tabular/tbl-posts.js';
 
 import '../imports/api/collections/methods.js';
