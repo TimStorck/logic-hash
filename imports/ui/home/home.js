@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import {Posts} from '../../api/collections/posts.js';
+import { Posts } from '../../api/collections/posts.js';
 import { Meteor } from 'meteor/meteor';
 
 import './home.html';

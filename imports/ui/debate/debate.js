@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import { Posts } from '../../api/collections/posts.js';
 import { Meteor } from 'meteor/meteor';
 import { debateTreeChanged } from '../../functions/reactive.js';
-// import { createFlagModal } from '../../functions/drawing.js';
+import { Flags } from '../../api/collections/flags.js';
 
 import './debate.html';
 
@@ -13,6 +13,7 @@ Template.debate.onCreated(function() {
 
 Template.debate.onRendered(function() {
   Meteor.subscribe('posts');
+  Meteor.subscribe('flags');
 
   const handle = this.autorun(function () {
     debateTreeChanged(
@@ -80,6 +81,9 @@ Template.debate.helpers({
   },
   getElicitor() {
     return truncate(Posts.findOne({"_id": Template.instance().elicitor.get()}).content);
+  },
+  getFlags() {
+    return Flags.find({});
   }
 });
 

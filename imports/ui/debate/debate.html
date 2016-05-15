@@ -43,7 +43,9 @@
       {{/if}}
       <!-- -->
       <div class="flagChoice">
-      &nbsp;
+        {{ #each getFlags }}
+          {{ name }} <br>
+        {{ /each }}
       </div>
       <!-- -->
     </div>
