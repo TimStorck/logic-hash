@@ -6,10 +6,11 @@ import { Flags } from '../../api/collections/flags.js';
 
 import './debate.html';
 
+let flagSelected = "";
+
 Template.debate.onCreated(function() {
   this.elicitor = new ReactiveVar( "initialized, unassigned elicitor reactive var" );
   this.responseResponse = new ReactiveVar( false );
-  this.flagSelected = new ReactiveVar("");
 });
 
 Template.debate.onRendered(function() {
@@ -27,14 +28,13 @@ Template.debate.onRendered(function() {
 
 Template.debate.events({
   'click .post': function(event) {
-    console.log("click post " + event.target.id);
+    // console.log("click post " + event.target.id);
   },
   'click .flagBox': function(event) {
     event.stopPropagation();
     console.log("click flagbox " + event.currentTarget.parentNode.id);
   },
   'click .respondBtn': function(event, template) {
-    // event.stopPropagation();
     if (event.currentTarget.parentNode.id === FlowRouter.getParam("mId")) {
       template.responseResponse.set( false );
     } else {
@@ -45,7 +45,7 @@ Template.debate.events({
       comment below line out for easier testing
     */
     // document.getElementById("newResponse").reset();
-    template.flagSelected.get("");
+    flagSelected = "";
   },
   'mouseover .flagBox': function(event, template) {
     document.getElementById("fm-" + event.currentTarget.parentNode.id).style.display = "block";
@@ -66,14 +66,14 @@ Template.debate.events({
         content: content,
         author: author,
         elicitor: Template.instance().elicitor.get(),
-        flag: template.flagSelected.get()
+        flag: flagSelected
       }
     } else {
       newPost = {
         content: content,
         author: author,
         elicitor: FlowRouter.getParam("mId"),
-        flag: template.flagSelected.get()
+        flag: flagSelected
       }
     }
     Meteor.call('posts.insert', newPost);
@@ -81,19 +81,17 @@ Template.debate.events({
       comment below line out for easier testing
     */
     // document.getElementById("newResponse").reset();
-    template.flagSelected.set("");
+    flagSelected = "";
   },
   'click .logoDiv': function(event) {
     FlowRouter.go("home");
   },
   'click .flagName': function(event) {
-    console.log("click flagTDiv " + this._id + " " + this.name);
-    console.log(Template.instance().flagSelected.get());
-    if (Template.instance().flagSelected.get() === this._id) {
-      Template.instance().flagSelected.set("");
+    if (flagSelected === this._id) {
+      flagSelected = "";
       event.currentTarget.style.fontStyle = "normal";
     } else {
-      Template.instance().flagSelected.set(this._id);
+      flagSelected = this._id;
       event.currentTarget.style.fontStyle = "italic";
     }
   }
