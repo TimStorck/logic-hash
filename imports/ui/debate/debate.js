@@ -9,6 +9,7 @@ import './debate.html';
 Template.debate.onCreated(function() {
   this.elicitor = new ReactiveVar( "initialized, unassigned elicitor reactive var" );
   this.responseResponse = new ReactiveVar( false );
+  this.flagSelected = new ReactiveVar("");
 });
 
 Template.debate.onRendered(function() {
@@ -40,6 +41,11 @@ Template.debate.events({
       template.responseResponse.set( true );
       template.elicitor.set(event.currentTarget.parentNode.id);
     }
+    /*
+      comment below line out for easier testing
+    */
+    // document.getElementById("newResponse").reset();
+    template.flagSelected.get("");
   },
   'mouseover .flagBox': function(event, template) {
     document.getElementById("fm-" + event.currentTarget.parentNode.id).style.display = "block";
@@ -59,22 +65,37 @@ Template.debate.events({
       newPost = {
         content: content,
         author: author,
-        elicitor: Template.instance().elicitor.get()
+        elicitor: Template.instance().elicitor.get(),
+        flag: template.flagSelected.get()
       }
     } else {
       newPost = {
         content: content,
         author: author,
-        elicitor: FlowRouter.getParam("mId")
+        elicitor: FlowRouter.getParam("mId"),
+        flag: template.flagSelected.get()
       }
     }
     Meteor.call('posts.insert', newPost);
+    /*
+      comment below line out for easier testing
+    */
+    // document.getElementById("newResponse").reset();
+    template.flagSelected.set("");
   },
   'click .logoDiv': function(event) {
     FlowRouter.go("home");
   },
-  'click .flagTDiv': function(event) {
+  'click .flagName': function(event) {
     console.log("click flagTDiv " + this._id + " " + this.name);
+    console.log(Template.instance().flagSelected.get());
+    if (Template.instance().flagSelected.get() === this._id) {
+      Template.instance().flagSelected.set("");
+      event.currentTarget.style.fontStyle = "normal";
+    } else {
+      Template.instance().flagSelected.set(this._id);
+      event.currentTarget.style.fontStyle = "italic";
+    }
   }
 });
 

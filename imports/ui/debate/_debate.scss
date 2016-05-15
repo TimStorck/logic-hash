@@ -117,14 +117,18 @@
     text-align: left;
 
     .flagTDiv {
-      cursor: pointer;
       display: inline-block;
       margin: 1px;
-    }
 
-    .colorBlock {
-      display: inline-block;
-      width: 15px;
+      .flagName {
+        cursor: pointer;
+        display: inline-block;
+      }
+
+      .colorBlock {
+        display: inline-block;
+        width: 15px;
+      }
     }
   }
 
