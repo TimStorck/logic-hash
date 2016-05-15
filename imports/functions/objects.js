@@ -39,11 +39,12 @@ export function Coord(x, y) {
   };
 }
 
-export function PostOb(_id, author, content, responseNo) {
+export function PostOb(_id, author, content, responseNo, flag) {
   this._id = _id;
   this.content = content;
   this.author = author;
   this.responseNo = responseNo;
+  this.flag = flag;
 }
 
 export function Platform(coordA, coordB) {

@@ -64,7 +64,8 @@ function drawResponses(elicitorId, elicitorCenter, sideOscillator,  fSModel, eli
         fetchArray[i]._id,
         fetchArray[i].author,
         fetchArray[i].content,
-        Posts.find({"elicitor": fetchArray[i]._id}).count()
+        Posts.find({"elicitor": fetchArray[i]._id}).count(),
+        fetchArray[i].flag,
       ));
     }
     let responseCenter;

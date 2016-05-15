@@ -45,10 +45,13 @@ function createTextBoxElement(post, bucket) {
   let newElem = document.createElement("div");
     newElem.setAttribute("class", "post");
     newElem.setAttribute("id", post._id);
-      let flagDiv = document.createElement("div");
-      flagDiv.setAttribute("class", "flagBox");
-      flagDiv.innerHTML = "Flag";
-      newElem.appendChild(flagDiv);
+      if (hasFlag(post)) {
+        let flagDiv = document.createElement("div");
+        flagDiv.setAttribute("class", "flagBox");
+        flagDiv.setAttribute("style", "color='" + );
+        flagDiv.innerHTML = "&nbsp;";
+        newElem.appendChild(flagDiv);
+      }
 
       let authortDiv = document.createElement("div");
       authortDiv.setAttribute("class", "author");
@@ -152,4 +155,12 @@ function createFlagModal(post, bucket) {
   bucket.appendChild(newModal);
 
   return newModal;
+}
+
+function hasFlag(post) {
+  if(post.flag == "" || post.flag == null) {
+    return false;
+  } else {
+    return true;
+  }
 }
