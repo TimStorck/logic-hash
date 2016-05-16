@@ -41,14 +41,12 @@
             </div>
           </div>
         </div>
+        <div id="flagOptionBox">
+          {{ #each getFlags }}
+            {{>flag }} 
+          {{ /each }}
+        </div>
       </div>
-      <!-- -->
-      <div id="flagOptionBox">
-        {{ #each getFlags }}
-          {{>flag }} 
-        {{ /each }}
-      </div>
-      <!-- -->
       {{/if}}
     </div>
   </div>
