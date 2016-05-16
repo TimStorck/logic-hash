@@ -234,25 +234,35 @@
       left: 0;
 
       .flagBox {
-        cursor: pointer;
+        cursor: default;
         float: right;
         color: rgba(0,0,0,0.5);
         padding: 0 5px 0 5px;
-        border: 1px rgba(0,0,0,0.5) solid;
         margin-left: 1px;
+        
+        border-top: 1px rgba(0,0,0,0.3) solid;
+        border-right: 1px rgba(0,0,0,0.3) solid;
+        border-left: 1px rgba(0,0,0,0.3) solid;
+
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
       }
 
       .author, .content {
-        border: 1px rgba(0,0,0,0.3) solid;
-        border-radius: 2px;
         float: left;
         padding: 0 4px 0 4px;
-        background-color: white;
       }
 
       .author {
-        margin-bottom: 2px;
+        margin-bottom: 0;
         display: inline-block;
+        
+        border-top: 1px rgba(0,0,0,0.3) solid;
+        border-right: 1px rgba(0,0,0,0.3) solid;
+        border-left: 1px rgba(0,0,0,0.3) solid;
+
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
       }
 
       .content {
@@ -260,21 +270,29 @@
         width: calc(100% - 10px);
         clear: both;
         text-align: left;
+        
+        border-top: 1px rgba(0,0,0,0.3) solid;
+        border-right: 1px rgba(0,0,0,0.3) solid;
+        border-bottom: 1px rgba(0,0,0,0.3) solid;
+        border-left: 1px rgba(0,0,0,0.3) solid;
+
+        border-top-right-radius: 2px;
+        border-bottom-left-radius: 2px; 
       }
 
       .respondBtn {
-        color: rgba(0,0,0,0.5);
         display: inline-block;
         padding: 0 5px 0 5px;
         cursor: pointer;
         float: right;
-        margin-top: 2px;
-        border: 1px rgba(0,0,0,0.5) solid;
-      }
+        margin-top: 0;
 
-      .respondBtn:hover {
-        color: black;
-        border: 1px black solid;
+        border-right: 1px rgba(0,0,0,0.3) solid;
+        border-bottom: 1px rgba(0,0,0,0.3) solid;
+        border-left: 1px rgba(0,0,0,0.3) solid;
+
+        border-bottom-right-radius: 2px;
+        border-bottom-left-radius: 2px; 
       }
     }
   }
