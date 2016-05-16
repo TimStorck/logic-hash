@@ -197,7 +197,7 @@ function hasFlag(post) {
   }
 }
 
-function findFlagObject(name) {
+export function findFlagObject(name) {
   for(let i = 0; i < flagData.length; i++) {
     if(flagData[i].name === name) {
       return flagData[i];

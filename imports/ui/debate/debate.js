@@ -3,6 +3,7 @@ import { Posts } from '../../api/collections/posts.js';
 import { Meteor } from 'meteor/meteor';
 import { debateTreeChanged } from '../../functions/reactive.js';
 import { flagData } from '../../data/flag-data.js';
+import { findFlagObject } from '../../functions/drawing.js'
 
 import './debate.html';
 
@@ -43,6 +44,7 @@ Template.debate.events({
     flagSelected = "";
     resetFlagItalics();
     document.getElementById("flagOptionBox").style.display = "none";
+    clearFlagInResponseBox();
   },
   'mouseover .flagBox': function(event, template) {
     document.getElementById("fm-" + event.currentTarget.parentNode.id).style.display = "block";
@@ -90,6 +92,7 @@ Template.debate.events({
     flagSelected = "";
     resetFlagItalics();
     document.getElementById("flagOptionBox").style.display = "none";
+    clearFlagInResponseBox();
   },
   'click .logoDiv': function(event) {
     FlowRouter.go("home");
@@ -110,10 +113,12 @@ Template.debate.events({
     if (flagSelected === this.name) {
       flagSelected = "";
       event.currentTarget.style.fontStyle = "normal";
+      clearFlagInResponseBox();
     } else {
       flagSelected = this.name;
       resetFlagItalics();
       event.currentTarget.style.fontStyle = "italic";
+      drawFlagInResponseBox(flagSelected);
     }
   }
 });
@@ -158,4 +163,14 @@ function withinBoundsVert(event) {
     return true;
   }
   return false;
+}
+
+function drawFlagInResponseBox(flagName) {
+  document.getElementById("responseBoxFlag").style.border = "1px rgba(0,0,0,0.5) solid";
+  document.getElementById("responseBoxFlag").style.backgroundColor = findFlagObject(flagName).color;
+}
+
+function clearFlagInResponseBox() {
+  document.getElementById("responseBoxFlag").style.border = "none";
+  document.getElementById("responseBoxFlag").style.backgroundColor = "transparent";
 }
