@@ -175,6 +175,7 @@
     }
 
     .flagModal {
+      z-index: 2;
       display: none;
       position: absolute;
       background-color: white;
@@ -187,6 +188,7 @@
     }
 
     .post {
+      z-index: 1;
       background: white;
       position: absolute;
       border: 1px black solid;

@@ -50,8 +50,16 @@ Template.debate.events({
   },
   'mouseover .flagBox': function(event, template) {
     document.getElementById("fm-" + event.currentTarget.parentNode.id).style.display = "block";
-    document.getElementById("fm-" + event.currentTarget.parentNode.id).style.left = event.pageX + 'px';
-    document.getElementById("fm-" + event.currentTarget.parentNode.id).style.top = event.pageY + 'px';
+    if (withinBoundsHor(event)) {
+      document.getElementById("fm-" + event.currentTarget.parentNode.id).style.left = event.pageX + 'px';
+    } else {
+      document.getElementById("fm-" + event.currentTarget.parentNode.id).style.left = (event.pageX - 300) + 'px';
+    }
+    if (withinBoundsVert(event)) {
+      document.getElementById("fm-" + event.currentTarget.parentNode.id).style.top = event.pageY + 'px';
+    } else {
+      document.getElementById("fm-" + event.currentTarget.parentNode.id).style.top = (event.pageY - 100) + 'px';
+    }
   },
   'mouseout .flagBox': function(event, template) {
     document.getElementById("fm-" + event.currentTarget.parentNode.id).style.display = "none";
@@ -139,4 +147,18 @@ function resetFlagItalics() {
   for (iter=0; iter < fncLength; iter++) {
     flagNameColl[iter].style.fontStyle = "normal";
   }
+}
+
+function withinBoundsHor(event) {
+  if(event.pageX < document.getElementById("debateCanvas").width - 300) {
+    return true;
+  }
+  return false;
+}
+
+function withinBoundsVert(event) {
+  if(event.pageY < document.getElementById("debateCanvas").height - 100) {
+    return true;
+  }
+  return false;
 }

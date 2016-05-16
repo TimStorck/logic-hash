@@ -53,6 +53,8 @@ function createTextBoxElement(post, bucket) {
         flagDiv.setAttribute("style", "background-color: " + flag.color + ";");
         flagDiv.innerHTML = "&nbsp;";
         newElem.appendChild(flagDiv);
+
+        createFlagModal(post, bucket);
       }
 
       let authortDiv = document.createElement("div");
@@ -74,7 +76,6 @@ function createTextBoxElement(post, bucket) {
 
   bucket.appendChild(newElem);
 
-  createFlagModal(post, bucket);
 
   return newElem;
 }
