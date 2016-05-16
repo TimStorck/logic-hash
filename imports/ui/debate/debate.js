@@ -29,10 +29,6 @@ Template.debate.events({
   'click .post': function(event) {
     // console.log("click post " + event.target.id);
   },
-  'click .flagBox': function(event) {
-    event.stopPropagation();
-    console.log("click flagbox " + event.currentTarget.parentNode.id);
-  },
   'click .respondBtn': function(event, template) {
     if (event.currentTarget.parentNode.id === FlowRouter.getParam("mId")) {
       template.responseResponse.set( false );
@@ -151,7 +147,7 @@ function resetFlagItalics() {
 }
 
 function withinBoundsHor(event) {
-  if(event.pageX < document.getElementById("debateCanvas").width - 300) {
+  if(event.pageX < document.getElementById("debateCanvas").width - 250) {
     return true;
   }
   return false;
