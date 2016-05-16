@@ -43,10 +43,10 @@ Template.debate.events({
     /*
       comment below lines out for easier testing
     */
-    // document.getElementById("newResponse").reset();
-    // flagSelected = "";
-    // resetFlagItalics();
-    // document.getElementById("flagOptionBox").style.display = "none";
+    document.getElementById("newResponse").reset();
+    flagSelected = "";
+    resetFlagItalics();
+    document.getElementById("flagOptionBox").style.display = "none";
   },
   'mouseover .flagBox': function(event, template) {
     document.getElementById("fm-" + event.currentTarget.parentNode.id).style.display = "block";
@@ -89,10 +89,11 @@ Template.debate.events({
     /*
       comment below lines out for easier testing
     */
-    // document.getElementById("newResponse").reset();
-    // flagSelected = "";
-    // resetFlagItalics();
-    // document.getElementById("flagOptionBox").style.display = "none";
+    template.responseResponse.set( false );
+    document.getElementById("newResponse").reset();
+    flagSelected = "";
+    resetFlagItalics();
+    document.getElementById("flagOptionBox").style.display = "none";
   },
   'click .logoDiv': function(event) {
     FlowRouter.go("home");

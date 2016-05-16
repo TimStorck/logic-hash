@@ -51,7 +51,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     /*
       uncomment below line to view Filled Space Model boundaries
     */
-    drawFSModel(fSModel, canvas);
+    // drawFSModel(fSModel, canvas);
   }
 }
 
