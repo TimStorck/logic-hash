@@ -90,13 +90,33 @@
                 margin-bottom: 3px;
               }
 
-              #submitMotion {
-                background-color: white;
-                border: 1px black solid;
+              .formBtnShell {
+                position: relative;
                 display: block;
-                clear: left;
-                float: none;
-                margin: 0px auto;
+                width: 100%;
+
+                #submitMotion {
+                  background-color: white;
+                  border: 1px black solid;
+                  display: block;
+                  clear: left;
+                  float: center;
+                  margin: 0px auto;
+                }
+
+                #flagOptionBtn {
+                  position: absolute;
+                  right: 0;
+                  top: 1px;
+                  cursor: pointer;
+
+                  -webkit-touch-callout: none; 
+                  -webkit-user-select: none; 
+                  -khtml-user-select: none;
+                  -moz-user-select: none;  
+                  -ms-user-select: none; 
+                  user-select: none; 
+                }
               }
             }
           }
@@ -105,14 +125,14 @@
     }
   }
 
-  .flagOptionBox {
-    display: block;
-    position: absolute;
+  #flagOptionBox {
+    display: none;
+    position: fixed;
     background-color: white;
     box-shadow: -2px 2px 2px rgba(0,0,0,0.3);
     width: 200px;
     bottom: 10px;
-    left: 230px;
+    left: 220px;
     border: 1px black solid;
     text-align: left;
 

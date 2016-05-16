@@ -170,10 +170,8 @@ function hasFlag(post) {
 function findFlagObject(name) {
   for(let i = 0; i < flagData.length; i++) {
     if(flagData[i].name === name) {
-      console.log("found flag obj "+ flagData[i].color);
       return flagData[i];
     }
   }
-  console.log("flag obj not found " + name);
   return false;
 }

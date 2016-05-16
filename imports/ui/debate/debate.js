@@ -46,6 +46,7 @@ Template.debate.events({
     // document.getElementById("newResponse").reset();
     // flagSelected = "";
     // resetFlagItalics();
+    // document.getElementById("flagOptionBox").style.display = "none";
   },
   'mouseover .flagBox': function(event, template) {
     document.getElementById("fm-" + event.currentTarget.parentNode.id).style.display = "block";
@@ -83,9 +84,18 @@ Template.debate.events({
     // document.getElementById("newResponse").reset();
     // flagSelected = "";
     // resetFlagItalics();
+    // document.getElementById("flagOptionBox").style.display = "none";
   },
   'click .logoDiv': function(event) {
     FlowRouter.go("home");
+  },
+  'click #flagOptionBtn': function(event) {
+    let flagOptionPanel = document.getElementById("flagOptionBox");
+    if (flagOptionBox.style.display === "block") {
+      flagOptionBox.style.display = "none";
+    } else {
+      flagOptionBox.style.display = "block";
+    }
   }
 });
 
