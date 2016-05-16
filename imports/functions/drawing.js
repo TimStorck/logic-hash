@@ -57,6 +57,15 @@ function createTextBoxElement(post, bucket) {
         createFlagModal(post, bucket, flag);
       }
 
+      if (post.elicitor == null || post.elicitor == "") {
+        let motionFlagDiv = document.createElement("div");
+        motionFlagDiv.setAttribute("class", "flagBox");
+        motionFlagDiv.setAttribute("title", "Motion");
+        motionFlagDiv.setAttribute("style", "background-color: deepskyblue;");
+        motionFlagDiv.innerHTML = "&nbsp;";
+        newElem.appendChild(motionFlagDiv);
+      }
+
       let authortDiv = document.createElement("div");
       authortDiv.setAttribute("class", "author");
       authortDiv.innerHTML = post.author;

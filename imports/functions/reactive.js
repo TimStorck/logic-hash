@@ -26,7 +26,9 @@ export function debateTreeChanged(motionId, bucket, canvas) {
       Posts.findOne({"_id": motionId})._id, 
       Posts.findOne({"_id": motionId}).author, 
       Posts.findOne({"_id": motionId}).content,
-      Posts.find({"elicitor": motionId}).count()
+      Posts.find({"elicitor": motionId}).count(),
+      null,
+      Posts.findOne({"_id": motionId}).elicitor
     );
   } catch(e) {
     // this try catch put in place because of exception thrown by "Posts.findOne({"_id": motionId}).content" when page loading at meteor app startup. if debate page navigated to from landing page it would load fine, and if returned to by the url it would load fine
@@ -60,12 +62,13 @@ function drawResponses(elicitorId, elicitorCenter, sideOscillator,  fSModel, eli
   if (fetchArray.length > 0) {
     let responseArray = [];
     for(let i = 0; i < fetchArray.length; i++) {
-        responseArray.push(new PostOb(
+      responseArray.push(new PostOb(
         fetchArray[i]._id,
         fetchArray[i].author,
         fetchArray[i].content,
         Posts.find({"elicitor": fetchArray[i]._id}).count(),
         fetchArray[i].flag,
+        fetchArray[i].elicitor
       ));
     }
     let responseCenter;
