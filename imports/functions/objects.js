@@ -433,4 +433,11 @@ export function filledSpaceModel() {
       new Coord(topLeft.x - margin, bottomRight.y + margin)
     ));
   };
+
+  this.reset = function() {
+    this.topLine = [];
+    this.rightLine = [];
+    this.bottomLine = [];
+    this.leftLine = [];
+  }
 }

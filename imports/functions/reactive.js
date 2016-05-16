@@ -10,6 +10,8 @@ import { drawRadial } from './drawing.js';
 import { drawFSModel } from './drawing.js';
 import { centerOf } from './measurements.js';
 
+const fSModel = new filledSpaceModel();
+
 export function debateTreeChanged(motionId, bucket, canvas) {
   Meteor.subscribe('posts');  
 
@@ -22,13 +24,15 @@ export function debateTreeChanged(motionId, bucket, canvas) {
   let motion;
   
   try {
+    let motionQueryResult = Posts.findOne({"_id": motionId});
+
     motion = new PostOb(
-      Posts.findOne({"_id": motionId})._id, 
-      Posts.findOne({"_id": motionId}).author, 
-      Posts.findOne({"_id": motionId}).content,
+      motionQueryResult._id, 
+      motionQueryResult.author, 
+      motionQueryResult.content,
       Posts.find({"elicitor": motionId}).count(),
       null,
-      Posts.findOne({"_id": motionId}).elicitor
+      motionQueryResult.elicitor
     );
   } catch(e) {
     // this try catch put in place because of exception thrown by "Posts.findOne({"_id": motionId}).content" when page loading at meteor app startup. if debate page navigated to from landing page it would load fine, and if returned to by the url it would load fine
@@ -39,12 +43,11 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     while (bucket.firstChild) {
       bucket.removeChild(bucket.firstChild);
     }
+    fSModel.reset();
 
     //clear canvas
     canCtx.fillStyle = "white";
     canCtx.fillRect(0,0,canvas.width,canvas.height);
-
-    const fSModel = new filledSpaceModel();
 
     drawMotionTextBox(motion, bucket, motionCenter, fSModel);
 
