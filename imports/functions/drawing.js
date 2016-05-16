@@ -54,7 +54,7 @@ function createTextBoxElement(post, bucket) {
         flagDiv.innerHTML = "&nbsp;";
         newElem.appendChild(flagDiv);
 
-        createFlagModal(post, bucket);
+        createFlagModal(post, bucket, flag);
       }
 
       let authortDiv = document.createElement("div");
@@ -147,13 +147,42 @@ function drawLine(platform, canCtx) {
   canCtx.closePath();
 }
 
-function createFlagModal(post, bucket) {
-  // console.log("sup");
+function createFlagModal(post, bucket, flag) {
 
   let newModal = document.createElement("div");
     newModal.setAttribute("class", "flagModal");
     newModal.setAttribute("id", "fm-" + post._id);
-    newModal.innerHTML = "modal content for " + post._id;
+    newModal.setAttribute("style", "background-color: " + flag.color + ";");
+
+      let innerDiv = document.createElement("div");
+      innerDiv.setAttribute("class", "fmInnerDiv");
+
+        let headerDiv = document.createElement("div");
+        headerDiv.setAttribute("class", "fmHeader");
+
+          let authorSpan = document.createElement("span");
+          authorSpan.setAttribute("class", "author");
+          authorSpan.innerHTML = post.author;
+          headerDiv.appendChild(authorSpan);
+
+          let secondSpan = document.createElement("span");
+          secondSpan.setAttribute("class", "headerText");
+          secondSpan.innerHTML = " flagged elicitor for:";
+          headerDiv.appendChild(secondSpan);
+
+        innerDiv.appendChild(headerDiv);
+
+        let flagName = document.createElement("div");
+        flagName.setAttribute("class", "flagName");
+        flagName.innerHTML = flag.name;
+        innerDiv.appendChild(flagName);
+
+        let flagDesc = document.createElement("div");
+        flagDesc.setAttribute("class", "flagDesc");
+        flagDesc.innerHTML = flag.description;
+        innerDiv.appendChild(flagDesc);
+
+      newModal.appendChild(innerDiv);
 
   bucket.appendChild(newModal);
 

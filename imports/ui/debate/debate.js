@@ -58,7 +58,7 @@ Template.debate.events({
     if (withinBoundsVert(event)) {
       document.getElementById("fm-" + event.currentTarget.parentNode.id).style.top = event.pageY + 'px';
     } else {
-      document.getElementById("fm-" + event.currentTarget.parentNode.id).style.top = (event.pageY - 100) + 'px';
+      document.getElementById("fm-" + event.currentTarget.parentNode.id).style.top = (event.pageY - 150) + 'px';
     }
   },
   'mouseout .flagBox': function(event, template) {
