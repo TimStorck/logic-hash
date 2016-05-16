@@ -61,7 +61,7 @@ function createTextBoxElement(post, bucket) {
         let motionFlagDiv = document.createElement("div");
         motionFlagDiv.setAttribute("class", "flagBox");
         motionFlagDiv.setAttribute("title", "Motion");
-        motionFlagDiv.setAttribute("style", "background-color: deepskyblue;");
+        motionFlagDiv.setAttribute("style", "background-color: blue;");
         motionFlagDiv.innerHTML = "&nbsp;";
         newElem.appendChild(motionFlagDiv);
       }
