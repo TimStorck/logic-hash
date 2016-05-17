@@ -8,8 +8,9 @@ import { leftMost } from './measurements.js';
 import { topMost } from './measurements.js';
 import { bottomMost } from './measurements.js';
 import { flagData } from '../data/flag-data.js';
+import { fSModel } from './reactive.js';
 
-export function drawMotionTextBox(post, butcket, centerPos, fSModel) {
+export function drawMotionTextBox(post, butcket, centerPos) {
   let newElem = createTextBoxElement(post, bucket);
   let dimens = dimensOf(newElem);
   
@@ -20,16 +21,16 @@ export function drawMotionTextBox(post, butcket, centerPos, fSModel) {
   fSModel.addMotion(topLeftPos, topLeftPos.plus(dimens));
 }
 
-export function drawResponseTextBox(post, bucket, fSModel, sideOscillator) {
+export function drawResponseTextBox(post, bucket, sideOscillator) {
   let newElem = createTextBoxElement(post, bucket);
   let dimens = dimensOf(newElem);
 
-  let centerPos = getPosition(fSModel, sideOscillator, dimens);
+  let centerPos = getPosition(sideOscillator, dimens);
   let topLeftPos = centerPos.minus(centerOf(dimens))
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
 
-  updateFSM(topLeftPos, dimens, fSModel, sideOscillator);
+  updateFSM(topLeftPos, dimens, sideOscillator);
   return centerPos;
 }
 
@@ -89,7 +90,7 @@ function createTextBoxElement(post, bucket) {
   return newElem;
 }
 
-function getPosition(fSModel, sideOscillator, dimens) {
+function getPosition(sideOscillator, dimens) {
   switch(sideOscillator) {
     case 0:
       return fSModel.findSpotTop(dimens);
@@ -108,7 +109,7 @@ function getPosition(fSModel, sideOscillator, dimens) {
   }
 }
 
-function updateFSM(topLeftPos, dimens, fSModel, sideOscillator) {
+function updateFSM(topLeftPos, dimens, sideOscillator) {
   switch(sideOscillator) {
     case 0:
       fSModel.updateTopLine(topLeftPos, topLeftPos.plus(dimens), false);
@@ -130,7 +131,7 @@ function updateFSM(topLeftPos, dimens, fSModel, sideOscillator) {
 /*
   for development, to view filled space model boundaries
 */
-export function drawFSModel(fSModel, canvas) {
+export function drawFSModel(canvas) {
   let canCtx = canvas.getContext("2d");
 
   for (let i = 0; i < fSModel.topLine.length; i++) {

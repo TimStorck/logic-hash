@@ -10,7 +10,7 @@ import { drawRadial } from './drawing.js';
 import { drawFSModel } from './drawing.js';
 import { centerOf } from './measurements.js';
 
-const fSModel = new filledSpaceModel();
+export const fSModel = new filledSpaceModel();
 
 export function debateTreeChanged(motionId, bucket, canvas) {
   Meteor.subscribe('posts');  
@@ -49,18 +49,18 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     canCtx.fillStyle = "white";
     canCtx.fillRect(0,0,canvas.width,canvas.height);
 
-    drawMotionTextBox(motion, bucket, motionCenter, fSModel);
+    drawMotionTextBox(motion, bucket, motionCenter);
 
-    drawResponses(motionId, motionCenter, null, fSModel, true, canCtx);
+    drawResponses(motionId, motionCenter, null, true, canCtx);
 
     /*
       uncomment below line to view Filled Space Model boundaries
     */
-    // drawFSModel(fSModel, canvas);
+    // drawFSModel(canvas);
   }
 }
 
-function drawResponses(elicitorId, elicitorCenter, sideOscillator,  fSModel, elicitorIsMotion, canCtx) {
+function drawResponses(elicitorId, elicitorCenter, sideOscillator,  elicitorIsMotion, canCtx) {
   let fetchArray = Posts.find({"elicitor": elicitorId}).fetch();
   if (fetchArray.length > 0) {
     let responseArray = [];
@@ -80,11 +80,11 @@ function drawResponses(elicitorId, elicitorCenter, sideOscillator,  fSModel, eli
       sideOscillator = 0;
     }
     for (let i = 0; i < responseArray.length; i++) {
-      responseCenter = drawResponseTextBox(responseArray[i], bucket, fSModel, sideOscillator);
+      responseCenter = drawResponseTextBox(responseArray[i], bucket, sideOscillator);
       drawRadial(elicitorCenter, responseCenter, canCtx);
 
       if (responseArray[i].responseNo > 0) {
-        drawResponses(responseArray[i]._id, responseCenter, sideOscillator, fSModel, false, canCtx);
+        drawResponses(responseArray[i]._id, responseCenter, sideOscillator, false, canCtx);
       }
 
       if (elicitorIsMotion) {
