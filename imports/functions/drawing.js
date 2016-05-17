@@ -9,6 +9,7 @@ import { topMost } from './measurements.js';
 import { bottomMost } from './measurements.js';
 import { flagData } from '../data/flag-data.js';
 import { fSModel } from './reactive.js';
+import { findBestSpot } from './placement.js';
 
 export function drawMotionTextBox(post, butcket, centerPos, canvas) {
   let newElem = createTextBoxElement(post, bucket);
@@ -91,10 +92,6 @@ function createTextBoxElement(post, bucket) {
   return newElem;
 }
 
-function findBestSpot(dimens) {
-  return new Coord(0,0);
-}
-
 function updateFSM(topLeftPos, dimens, sideOscillator) {
   switch(sideOscillator) {
     case 0:
@@ -120,17 +117,17 @@ function updateFSM(topLeftPos, dimens, sideOscillator) {
 export function drawFSModel(canvas) {
   let canCtx = canvas.getContext("2d");
 
-  for (let i = 0; i < fSModel.topLine.length; i++) {
-    drawLine(fSModel.topLine[i], canCtx);
+  for (let i = 0; i < fSModel.topSkyLine.length; i++) {
+    drawLine(fSModel.topSkyLine[i], canCtx);
   }
-  for (let i = 0; i < fSModel.rightLine.length; i++) {
-    drawLine(fSModel.rightLine[i], canCtx);
+  for (let i = 0; i < fSModel.rightSkyLine.length; i++) {
+    drawLine(fSModel.rightSkyLine[i], canCtx);
   }
-  for (let i = 0; i < fSModel.bottomLine.length; i++) {
-    drawLine(fSModel.bottomLine[i], canCtx);
+  for (let i = 0; i < fSModel.bottomSkyLine.length; i++) {
+    drawLine(fSModel.bottomSkyLine[i], canCtx);
   }
-  for (let i = 0; i < fSModel.leftLine.length; i++) {
-    drawLine(fSModel.leftLine[i], canCtx);
+  for (let i = 0; i < fSModel.leftSkyLine.length; i++) {
+    drawLine(fSModel.leftSkyLine[i], canCtx);
   }
 }
 
