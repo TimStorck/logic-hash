@@ -1,6 +1,8 @@
 import { Coord } from './objects.js';
-import { Platform } from './objects.js';
+import { Line } from './objects.js';
 import { centerOf } from './measurements.js';
+import { centerVert } from './measurements.js';
+import { centerHor } from './measurements.js';
 import { dimensOf } from './measurements.js';
 import { widthFromChars } from './measurements.js';
 import { rightMost } from './measurements.js';
@@ -19,7 +21,7 @@ export function drawMotionTextBox(post, butcket, centerPos, canvas) {
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
 
-  fSModel.addMotion(topLeftPos, topLeftPos.plus(dimens), canvas);
+  fSModel.addMotion(topLeftPos, topLeftPos.plus(dimens));
 }
 
 export function drawResponseTextBox(post, bucket) {
@@ -117,27 +119,70 @@ function updateFSM(topLeftPos, dimens, sideOscillator) {
 export function drawFSModel(canvas) {
   let canCtx = canvas.getContext("2d");
 
-  for (let i = 0; i < fSModel.topSkyLine.length; i++) {
-    drawLine(fSModel.topSkyLine[i], canCtx);
-  }
-  for (let i = 0; i < fSModel.rightSkyLine.length; i++) {
-    drawLine(fSModel.rightSkyLine[i], canCtx);
-  }
-  for (let i = 0; i < fSModel.bottomSkyLine.length; i++) {
-    drawLine(fSModel.bottomSkyLine[i], canCtx);
-  }
-  for (let i = 0; i < fSModel.leftSkyLine.length; i++) {
-    drawLine(fSModel.leftSkyLine[i], canCtx);
+  let length = fSModel.lineArray.length;
+
+  for (let i=0;i<length;i++) {
+    drawLine(fSModel.lineArray[i], canCtx);
+    markLineSide(fSModel.lineArray[i], canCtx);
   }
 }
 
-function drawLine(platform, canCtx) {
+
+/*
+  for development, to view filled space model boundaries
+*/
+function drawLine(line, canCtx) {
   canCtx.beginPath();
   canCtx.strokeStyle = "red";
-  canCtx.moveTo(platform.a.x,platform.a.y);
-  canCtx.lineTo(platform.b.x,platform.b.y);
+  canCtx.moveTo(line.a.x,line.a.y);
+  canCtx.lineTo(line.b.x,line.b.y);
   canCtx.stroke();
   canCtx.closePath();
+}
+
+
+/*
+  for development, to view filled space model boundaries
+*/
+function markLineSide(line, canCtx) {
+  let middle;
+  switch(line.side) {
+    //top
+    case 0:
+      middle = centerHor(line);
+      drawLine(new Line(
+        new Coord(middle, line.a.y), 
+        new Coord(middle, line.a.y - 3)), 
+        canCtx
+      );
+      break;
+    //right
+    case 1:
+      middle = centerVert(line);
+      drawLine(new Line(
+        new Coord(line.a.x, middle), 
+        new Coord(line.a.x + 3, middle)), 
+        canCtx
+      );
+      break;
+    //bottom
+    case 2:
+      middle = centerHor(line);
+      drawLine(new Line(
+        new Coord(middle, line.a.y), 
+        new Coord(middle, line.a.y + 3)), 
+        canCtx
+      );
+      break;
+    //left
+    case 3:
+      middle = centerVert(line);
+      drawLine(new Line(
+        new Coord(line.a.x, middle), 
+        new Coord(line.a.x - 3, middle)), 
+        canCtx
+      );
+  }
 }
 
 function createFlagModal(post, bucket, flag) {

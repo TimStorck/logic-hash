@@ -8,12 +8,12 @@ export function centerOf(dimens) {
   return new Coord(dimens.x/2, dimens.y/2);
 }
 
-export function centerOfHor(left, right) {
-  return Math.floor((left + right) / 2);
+export function centerHor(line) {
+  return Math.floor((line.a.x + line.b.x) / 2);
 }
 
-export function centerOfVert(top, bottom) {
-  return Math.floor((top + bottom) / 2);
+export function centerVert(line) {
+  return Math.floor((line.a.y + line.b.y) / 2);
 }
 
 export function widthFromChars(charNo) {
@@ -24,14 +24,6 @@ export function widthFromChars(charNo) {
     return "170px";
   } 
   return (charNo / (Math.sqrt(charNo) / 18.9) ) + "px";
-}
-
-export function platformWidth(platform) {
-  return platform.b.x - platform.a.x;
-}
-
-export function platformHeight(platform) {
-  return platform.b.y - platform.a.y;
 }
 
 export function fitsHor(dimens, width) {
@@ -221,4 +213,12 @@ export function radiusBetween(referenceCenter, newCenter) {
   diffCoord = referenceCenter.minus(newCenter);
   //pythagorean theorem
   return new Coord(diffCoord.x * diffCoord.x + diffCoord.y * diffCoord.y);
+}
+
+export function lineWidth(line) {
+  return line.b.x - line.a.x;
+}
+
+export function lineHeight(line) {
+  return line.b.y - line.a.y;
 }
