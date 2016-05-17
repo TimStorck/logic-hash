@@ -209,10 +209,9 @@ export function platformRightMore(referencePlatform, platform) {
   return false;
 }
 
-export function radiusBetween(referenceCenter, newCenter) {
-  diffCoord = referenceCenter.minus(newCenter);
+export function radiusBetween(referencePoint, otherPoint) {
   //pythagorean theorem
-  return new Coord(diffCoord.x * diffCoord.x + diffCoord.y * diffCoord.y);
+  return new Coord(referencePoint.minus(otherPoint).x * referencePoint.minus(otherPoint).x + referencePoint.minus(otherPoint).y * referencePoint.minus(otherPoint).y);
 }
 
 export function lineWidth(line) {

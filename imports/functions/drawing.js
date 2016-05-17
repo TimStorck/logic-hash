@@ -24,11 +24,11 @@ export function drawMotionTextBox(post, butcket, centerPos, canvas) {
   fSModel.addMotion(topLeftPos, topLeftPos.plus(dimens));
 }
 
-export function drawResponseTextBox(post, bucket) {
+export function drawResponseTextBox(post, bucket, elicitorCenter) {
   let newElem = createTextBoxElement(post, bucket);
   let dimens = dimensOf(newElem);
 
-  let centerPos = findBestSpot(dimens);
+  let centerPos = findBestSpot(dimens, elicitorCenter);
   let topLeftPos = centerPos.minus(centerOf(dimens))
   // newElem.style.top = topLeftPos.yPx();
   // newElem.style.left = topLeftPos.xPx();
