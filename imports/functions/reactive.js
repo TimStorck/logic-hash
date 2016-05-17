@@ -49,14 +49,14 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     canCtx.fillStyle = "white";
     canCtx.fillRect(0,0,canvas.width,canvas.height);
 
-    drawMotionTextBox(motion, bucket, motionCenter);
+    drawMotionTextBox(motion, bucket, motionCenter, canvas);
 
     drawResponses(motionId, motionCenter, null, true, canCtx);
 
     /*
       uncomment below line to view Filled Space Model boundaries
     */
-    // drawFSModel(canvas);
+    drawFSModel(canvas);
   }
 }
 

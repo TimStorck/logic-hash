@@ -412,25 +412,25 @@ export function filledSpaceModel() {
     this.leftLine = sortRightToLeft(this.leftLine);
   };
 
-  this.addMotion = function(topLeft, bottomRight) {
+  this.addMotion = function(topLeft, bottomRight, canvas) {
     /*
       platform coordinates entered left to right or top to bottom.
     */
     this.topLine.push(new Platform(
-      new Coord(topLeft.x - margin, topLeft.y - margin), 
-      new Coord(bottomRight.x + margin, topLeft.y - margin)
+      new Coord(0, topLeft.y - margin), 
+      new Coord(canvas.width - 1, topLeft.y - margin)
     ));
     this.rightLine.push(new Platform(
-      new Coord(bottomRight.x + margin, topLeft.y - margin), 
-      new Coord(bottomRight.x + margin, bottomRight.y + margin)
+      new Coord(bottomRight.x + margin, 0), 
+      new Coord(bottomRight.x + margin, canvas.height - 1)
     ));
     this.bottomLine.push(new Platform(
-      new Coord(topLeft.x - margin, bottomRight.y + margin), 
-      new Coord(bottomRight.x + margin, bottomRight.y + margin)
+      new Coord(0, bottomRight.y + margin), 
+      new Coord(canvas.width - 1, bottomRight.y + margin)
     ));
     this.leftLine.push(new Platform(
-      new Coord(topLeft.x - margin, topLeft.y - margin), 
-      new Coord(topLeft.x - margin, bottomRight.y + margin)
+      new Coord(topLeft.x - margin, 0), 
+      new Coord(topLeft.x - margin, canvas.height - 1)
     ));
   };
 

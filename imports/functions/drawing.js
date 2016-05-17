@@ -10,7 +10,7 @@ import { bottomMost } from './measurements.js';
 import { flagData } from '../data/flag-data.js';
 import { fSModel } from './reactive.js';
 
-export function drawMotionTextBox(post, butcket, centerPos) {
+export function drawMotionTextBox(post, butcket, centerPos, canvas) {
   let newElem = createTextBoxElement(post, bucket);
   let dimens = dimensOf(newElem);
   
@@ -18,7 +18,7 @@ export function drawMotionTextBox(post, butcket, centerPos) {
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
 
-  fSModel.addMotion(topLeftPos, topLeftPos.plus(dimens));
+  fSModel.addMotion(topLeftPos, topLeftPos.plus(dimens), canvas);
 }
 
 export function drawResponseTextBox(post, bucket, sideOscillator) {
