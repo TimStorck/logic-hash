@@ -21,16 +21,17 @@ export function drawMotionTextBox(post, butcket, centerPos, canvas) {
   fSModel.addMotion(topLeftPos, topLeftPos.plus(dimens), canvas);
 }
 
-export function drawResponseTextBox(post, bucket, sideOscillator) {
+export function drawResponseTextBox(post, bucket) {
   let newElem = createTextBoxElement(post, bucket);
   let dimens = dimensOf(newElem);
 
-  let centerPos = getPosition(sideOscillator, dimens);
+  let centerPos = findBestSpot(dimens);
   let topLeftPos = centerPos.minus(centerOf(dimens))
-  newElem.style.top = topLeftPos.yPx();
-  newElem.style.left = topLeftPos.xPx();
+  // newElem.style.top = topLeftPos.yPx();
+  // newElem.style.left = topLeftPos.xPx();
+  newElem.style.display = "none";
 
-  updateFSM(topLeftPos, dimens, sideOscillator);
+  // updateFSM(topLeftPos, dimens, sideOscillator);
   return centerPos;
 }
 
@@ -90,23 +91,8 @@ function createTextBoxElement(post, bucket) {
   return newElem;
 }
 
-function getPosition(sideOscillator, dimens) {
-  switch(sideOscillator) {
-    case 0:
-      return fSModel.findSpotTop(dimens);
-      break;
-    case 1:
-      return fSModel.findSpotRight(dimens);
-      break;
-    case 2:
-      return fSModel.findSpotBottom(dimens);
-      break;
-    case 3:
-      return fSModel.findSpotLeft(dimens);
-      break;
-    default:
-      console.log("sideOscillator invalid");
-  }
+function findBestSpot(dimens) {
+  return new Coord(0,0);
 }
 
 function updateFSM(topLeftPos, dimens, sideOscillator) {

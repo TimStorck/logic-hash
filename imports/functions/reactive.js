@@ -51,7 +51,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
 
     drawMotionTextBox(motion, bucket, motionCenter, canvas);
 
-    drawResponses(motionId, motionCenter, null, true, canCtx);
+    drawResponses(motionId, motionCenter, true, canCtx);
 
     /*
       uncomment below line to view Filled Space Model boundaries
@@ -60,7 +60,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
   }
 }
 
-function drawResponses(elicitorId, elicitorCenter, sideOscillator,  elicitorIsMotion, canCtx) {
+function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx) {
   let fetchArray = Posts.find({"elicitor": elicitorId}).fetch();
   if (fetchArray.length > 0) {
     let responseArray = [];
@@ -75,21 +75,13 @@ function drawResponses(elicitorId, elicitorCenter, sideOscillator,  elicitorIsMo
       ));
     }
     let responseCenter;
-    // if elicitor is motion
-    if (sideOscillator == null) {
-      sideOscillator = 0;
-    }
     for (let i = 0; i < responseArray.length; i++) {
-      responseCenter = drawResponseTextBox(responseArray[i], bucket, sideOscillator);
-      drawRadial(elicitorCenter, responseCenter, canCtx);
+      responseCenter = drawResponseTextBox(responseArray[i], bucket);
+      // drawRadial(elicitorCenter, responseCenter, canCtx);
 
-      if (responseArray[i].responseNo > 0) {
-        drawResponses(responseArray[i]._id, responseCenter, sideOscillator, false, canCtx);
-      }
-
-      if (elicitorIsMotion) {
-        sideOscillator === 3 ? sideOscillator = 0 : sideOscillator++;
-      }
+      // if (responseArray[i].responseNo > 0) {
+      //   drawResponses(responseArray[i]._id, responseCenter, false, canCtx);
+      // }
     }
   }
 }
