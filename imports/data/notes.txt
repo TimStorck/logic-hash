@@ -4,6 +4,7 @@ performance boost from fsmodel methods being external functions?
 if there are no spaces in a post then the text doesnt wrap
   even very long words in the wrong place can make a textbox bigger than anticipated[?]
 optimizations
+  remove variable declaration from radiusBetween, other frequently used functions
   do i even need the postob object or can i use whatever the query returns?
   pass measurement functions more specific variables where possible [instead of objects]
 
@@ -11,3 +12,14 @@ optimizations in filled space model
   if a short text box spawns next to a tall one it trims the overhanging platform a little
   fsm doesnt always center 
   fsm doesnt seek closest spot by radius
+
+
+
+
+
+box sliding right along top skyline
+  first platform gives initial y
+    if it can drop down before hitting obstruction, it gets new y
+    first obstruction gives x, and we have new possibleCenter
+    if it reaches alignedx, we have x and new possibleCenter
+    after reaching obstruction, we have new y

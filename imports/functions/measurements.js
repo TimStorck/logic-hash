@@ -171,3 +171,54 @@ export function adjacentBottom(i, line) {
     }
   }
 }
+
+//////////// functions afer this point added after 5-16 refactoring
+
+export function allignedX(referenceCenter, newCenter) {
+  if (referenceCenter.x == newCenter.x) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export function allignedY(referenceCenter, newCenter) {
+  if (referenceCenter.y == newCenter.y) {
+    return true;
+  }
+  return false;
+}
+
+export function platformHigher(referencePlatform, platform) {
+  if (referencePlatform.a.y < platform.a.y) {
+    return true;
+  } 
+  return false;
+}
+
+export function platformHigher(referencePlatform, platform) {
+  if (referencePlatform.a.y < platform.a.y) {
+    return true;
+  } 
+  return false;
+}
+
+export function platformLeftMore(referencePlatform, platform) {
+  if (platform.a.x < referencePlatform.a.x) {
+    return true;
+  } 
+  return false;
+}
+
+export function platformRightMore(referencePlatform, platform) {
+  if (referencePlatform.a.x < platform.a.x) {
+    return true;
+  } 
+  return false;
+}
+
+export function radiusBetween(referenceCenter, newCenter) {
+  diffCoord = referenceCenter.minus(newCenter);
+  //pythagorean theorem
+  return new Coord(diffCoord.x * diffCoord.x + diffCoord.y * diffCoord.y);
+}
