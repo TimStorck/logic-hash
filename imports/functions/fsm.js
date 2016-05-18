@@ -17,27 +17,41 @@ export function filledSpaceModel() {
   }
 
   this.addMotion = function(topLeft, bottomRight) {
-    this.lineArray.push(new Line(
-      new Coord(topLeft.x - margin, topLeft.y - margin), 
-      new Coord(bottomRight.x + margin, topLeft.y - margin),
-      0
-    ));
-    this.lineArray.push(new Line(
-      new Coord(bottomRight.x + margin, topLeft.y - margin), 
-      new Coord(bottomRight.x + margin, bottomRight.y + margin),
-      1
-    ));
-    this.lineArray.push(new Line(
-      new Coord(bottomRight.x + margin, bottomRight.y + margin), 
-      new Coord(topLeft.x - margin, bottomRight.y + margin),
-      2
-    ));
-    this.lineArray.push(new Line(
-      new Coord(topLeft.x - margin, bottomRight.y + margin), 
-      new Coord(topLeft.x - margin, topLeft.y - margin),
-      3
-    ));
+    let marginBox = getMarginBox(topLeft, bottomRight, margin);
+
+    for (let i = 0; i < marginBox.length; i++) {
+      this.lineArray.push(marginBox[i]);
+    }
   };
+
+  this.addResponse = function(topLeft,bottomRight) {
+    let marginBox = getMarginBox(topLeft, bottomRight, margin);
+  }
+}
+
+function getMarginBox(topLeft, bottomRight, margin) {
+  let marginBox = [];
+  marginBox.push(new Line(
+    new Coord(topLeft.x - margin, topLeft.y - margin), 
+    new Coord(bottomRight.x + margin, topLeft.y - margin),
+    0
+  ));
+  marginBox.push(new Line(
+    new Coord(bottomRight.x + margin, topLeft.y - margin), 
+    new Coord(bottomRight.x + margin, bottomRight.y + margin),
+    1
+  ));
+  marginBox.push(new Line(
+    new Coord(bottomRight.x + margin, bottomRight.y + margin), 
+    new Coord(topLeft.x - margin, bottomRight.y + margin),
+    2
+  ));
+  marginBox.push(new Line(
+    new Coord(topLeft.x - margin, bottomRight.y + margin), 
+    new Coord(topLeft.x - margin, topLeft.y - margin),
+    3
+  ));
+  return marginBox;
 }
 
 function linesArePerpendicular(firstLine, secondLine) {
