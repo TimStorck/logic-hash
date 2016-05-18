@@ -6,6 +6,7 @@ import { fitsVert } from './measurements.js';
 import { Coord } from './objects.js';
 import { Line } from './objects.js';
 import { PostOb } from './objects.js';
+import { Area } from './objects.js';
 
 
 export function filledSpaceModel() {
@@ -22,10 +23,186 @@ export function filledSpaceModel() {
     for (let i = 0; i < marginBox.length; i++) {
       this.lineArray.push(marginBox[i]);
     }
+    return marginBox;
   };
 
   this.addResponse = function(topLeft,bottomRight) {
-    this.addBox(topLeft,bottomRight);
+    let marginBox = this.addBox(topLeft,bottomRight);
+    this.trimOverlap(marginBox);
+  }
+
+  this.trimOverlap = function(marginBox) {
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < this.lineArray.length; j++) {
+        if (linesCross(marginBox[i], this.lineArray[j])) {
+          truncateOrSplit(marginBox[i], this.lineArray[j], this.lineArray);
+          truncateOrSplit(this.lineArray[j], marginBox[i], this.lineArray);
+        }
+      }
+    }
+    removeOrphanLine(this.lineArray);
+  }
+}
+
+function linesMeet(firstLine, secondLine) {
+  if ((firstLine.a.x == secondLine.b.x && firstLine.a.y == secondLine.b.y) || 
+      (firstLine.a.x == secondLine.a.x && firstLine.a.y == secondLine.a.y) ||
+      (firstLine.b.x == secondLine.b.x && firstLine.b.y == secondLine.b.y) || 
+      (firstLine.b.x == secondLine.a.x && firstLine.b.y == secondLine.a.y) ) {
+    return true
+  }
+  return false;
+}
+
+function removeOrphanLine(lineArray) {
+  let orphan;
+  for (let i = lineArray.length - 1; i >= 0; i--){
+    orphan = true;
+    for (let j = lineArray.length - 1; j >= 0; j--) {
+      if (i != j) {
+        if (linesMeet(lineArray[i], lineArray[j])) {
+          orphan = false;
+          break;
+        }
+      }
+    }
+    if (orphan) {
+      lineArray.splice(i, 1);
+      break;
+    }
+  }
+}
+
+function truncateOrSplit(lineToCross, lineDefiningSide, lineArray) {
+  insideCrossingLine = closestCrossingLineOnInsideSide(lineToCross, lineDefiningSide, lineArray);
+  if (typeof insideCrossingLine != "undefined") {
+    switch (lineDefiningSide.side) {
+      case 0:
+        lineArray.push(new Line(new Coord(lineToCross.a.x, insideCrossingLine.a.y), new Coord(lineToCross.b.x, lineToCross.b.y), lineToCross.side));
+        //trim insideCrossingLine
+        if (lineToCross.side == 1) {
+          insideCrossingLine.a.x = lineToCross.a.x;
+        } else {
+          insideCrossingLine.b.x = lineToCross.a.x;
+        }
+        break;
+      case 1:
+        lineArray.push(new Line(new Coord(lineToCross.a.x, lineToCross.a.y), new Coord(insideCrossingLine.a.x, lineToCross.a.y), lineToCross.side));
+        //trim insideCrossingLine
+        if (lineToCross.side == 0) {
+          insideCrossingLine.b.y = lineToCross.a.y;
+        } else {
+          insideCrossingLine.a.y = lineToCross.a.y;
+        }
+        break;
+      case 2:
+        lineArray.push(new Line(new Coord(lineToCross.a.x, lineToCross.a.y), new Coord(lineToCross.a.x, insideCrossingLine.a.y), lineToCross.side));
+        //trim insideCrossingLine
+        if (lineToCross.side == 1) {
+          insideCrossingLine.a.x = lineToCross.a.x;
+        } else {
+          insideCrossingLine.b.x = lineToCross.a.x;
+        }
+        break;
+      case 3:
+        lineArray.push(new Line(new Coord(insideCrossingLine.a.x, lineToCross.a.y), new Coord(lineToCross.b.x, lineToCross.b.y), lineToCross.side));
+        //trim insideCrossingLine
+        if (lineToCross.side == 0) {
+          insideCrossingLine.b.y = lineToCross.a.y;
+        } else {
+          insideCrossingLine.a.y = lineToCross.a.y;
+        }
+        break;
+    }
+  }
+  switch (lineDefiningSide.side) {
+    case 0:
+      lineToCross.b.y = lineDefiningSide.a.y;
+      break;
+    case 1:
+      lineToCross.a.x = lineDefiningSide.a.x;
+      break;
+    case 2:
+      lineToCross.a.y = lineDefiningSide.a.y;
+      break;
+    case 3:
+      lineToCross.b.x = lineDefiningSide.a.x;
+      break;
+  }
+}
+
+function closestCrossingLineOnInsideSide(lineToCross, lineDefiningSide, lineArray) {
+  let side = oppositeSide(lineDefiningSide);
+  let lineToReturn;
+  for (let i = 0; i < lineArray.length; i ++) {
+    if (lineArray[i].side === side) {
+      if (linesCross(lineArray[i], lineToCross)) {
+        switch (lineDefiningSide.side) {
+          case 0:
+            if (lineDefiningSide.a.y < lineArray[i].a.y) {
+              if (typeof lineToReturn == "undefined") {
+                lineToReturn = lineArray[i];
+              } else {
+                if (lineToReturn.a.y > lineArray[i].a.y) {
+                  lineToReturn = lineArray[i];
+                }
+              }
+            }
+            break;
+          case 1:
+            if (lineDefiningSide.a.x > lineArray[i].a.x) {
+              if (typeof lineToReturn == "undefined") {
+                lineToReturn = lineArray[i];
+                console.log(lineToReturn);
+              } else {
+                if (lineToReturn.a.x < lineArray[i].a.x) {
+                  lineToReturn = lineArray[i];
+                }
+              }
+            }
+            break;
+          case 2:
+            if (lineDefiningSide.a.y > lineArray[i].a.y) {
+              if (typeof lineToReturn == "undefined") {
+                lineToReturn = lineArray[i];
+              } else {
+                if (lineToReturn.a.y < lineArray[i].a.y) {
+                  lineToReturn = lineArray[i];
+                }
+              }
+            }
+            break;
+          case 3:
+            if (lineDefiningSide.a.x < lineArray[i].a.x) {
+              if (typeof lineToReturn == "undefined") {
+                lineToReturn = lineArray[i];
+              } else {
+                if (lineToReturn.a.x > lineArray[i].a.x) {
+                  lineToReturn = lineArray[i];
+                }
+              }
+            }
+            break;
+        }
+      }
+    } 
+  }
+  return lineToReturn;
+}
+
+function oppositeSide(line) {
+  switch (line.side) {
+    case 0:
+      return 2;
+      break;
+    case 1:
+      return 3;
+      break;
+    case 2:
+      return 0;
+      break;
+    case 3:
+      return 1;
   }
 }
 
@@ -70,6 +247,7 @@ function linesArePerpendicular(firstLine, secondLine) {
   }
 }
 
+//only compare perpendicular lines
 function linesCross(firstLine, secondLine) {
   //if firstLine is horizontal
   if (firstLine.a.y == firstLine.b.y) {
