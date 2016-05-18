@@ -17,7 +17,7 @@ export function drawMotionTextBox(post, butcket, centerPos) {
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
 
-  fSModel.addMotion(topLeftPos, topLeftPos.plus(dimens));
+  fSModel.addBox(topLeftPos, topLeftPos.plus(dimens));
 }
 
 export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx) {
@@ -26,11 +26,11 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx) {
 
   let centerPos = findBestSpot(dimens, elicitorCenter, canCtx);
   let topLeftPos = centerPos.minus(centerOf(dimens))
-  // newElem.style.top = topLeftPos.yPx();
-  // newElem.style.left = topLeftPos.xPx();
-  newElem.style.display = "none";
+  newElem.style.top = topLeftPos.yPx();
+  newElem.style.left = topLeftPos.xPx();
+  // newElem.style.display = "none";
 
-  // updateFSM(topLeftPos, dimens, sideOscillator);
+  fSModel.addResponse(topLeftPos, topLeftPos.plus(dimens));
   return centerPos;
 }
 
@@ -115,9 +115,7 @@ function updateFSM(topLeftPos, dimens, sideOscillator) {
 export function drawFSModel(canvas) {
   let canCtx = canvas.getContext("2d");
 
-  let length = fSModel.lineArray.length;
-
-  for (let i=0;i<length;i++) {
+  for (let i=0;i<fSModel.lineArray.length;i++) {
     drawLine(fSModel.lineArray[i], canCtx, "red");
     markLineSide(fSModel.lineArray[i], canCtx);
   }

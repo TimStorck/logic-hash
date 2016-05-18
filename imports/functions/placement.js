@@ -107,28 +107,28 @@ function getSpotOnLine(line, dimens, elicitorCenter) {
   switch(line.side) {
     case 0:
       if (lineCrossesPointX(line, elicitorCenter)) {
-        return new Coord(elicitorCenter.x, line.a.y - dimens.y);
+        return new Coord(elicitorCenter.x, line.a.y - centerOf(dimens).y);
       } else {
         console.log("you didnt code what to do if the area doesnt line up with elicitorCenter yet");
       }
       break;
     case 1:
       if (lineCrossesPointY(line, elicitorCenter)) {
-        return new Coord(line.a.x + dimens.x, elicitorCenter.y);
+        return new Coord(line.a.x + centerOf(dimens).x, elicitorCenter.y);
       } else {
         console.log("you didnt code what to do if the area doesnt line up with elicitorCenter yet");
       }
       break;
     case 2:
       if (lineCrossesPointX(line, elicitorCenter)) {
-        return new Coord(elicitorCenter.x, line.a.y + dimens.y);
+        return new Coord(elicitorCenter.x, line.a.y + centerOf(dimens).y);
       } else {
         console.log("you didnt code what to do if the area doesnt line up with elicitorCenter yet");
       }
       break;
     case 3:
       if (lineCrossesPointY(line, elicitorCenter)) {
-        return new Coord(line.a.x - dimens.x, elicitorCenter.y);
+        return new Coord(line.a.x - centerOf(dimens).x, elicitorCenter.y);
       } else {
         console.log("you didnt code what to do if the area doesnt line up with elicitorCenter yet");
       }

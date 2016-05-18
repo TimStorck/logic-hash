@@ -16,7 +16,7 @@ export function filledSpaceModel() {
     this.lineArray = [];
   }
 
-  this.addMotion = function(topLeft, bottomRight) {
+  this.addBox = function(topLeft, bottomRight) {
     let marginBox = getMarginBox(topLeft, bottomRight, margin);
 
     for (let i = 0; i < marginBox.length; i++) {
@@ -25,7 +25,7 @@ export function filledSpaceModel() {
   };
 
   this.addResponse = function(topLeft,bottomRight) {
-    let marginBox = getMarginBox(topLeft, bottomRight, margin);
+    this.addBox(topLeft,bottomRight);
   }
 }
 
