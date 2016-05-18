@@ -62,3 +62,34 @@ function possiblePlacementZone(line, dimens) {
       break;
   }
 }
+
+function linePassesThrough(line, area) {
+  switch (line.side) {
+    case 0:
+    case 2:
+      if (
+        //if line y is above area bottom and below area top
+        line.a.y < area.bottomRight.y && 
+        line.a.y > area.topLeft.y && (
+          //and either end is inside area or they straddle it
+          (line.a.x > area.topLeft.x && line.a.x < area.bottomRight.x) || 
+          (line.b.x > area.topLeft.x && line.b.x < area.bottomRight.x) || 
+          (line.a.x < area.topLeft.x && line.b.x > area.bottomRight.x)) {
+        return true;
+      }
+      break;
+    case 1:
+    case 3:
+      if (
+        //if line x is right of area left edge and left of area right edge
+        line.a.x > area.topLeft.x && 
+        line.a.x < area.bottomRight.x && (
+          //and either end is inside area or they straddle it
+          (line.a.y > area.topLeft.y && line.a.y < area.bottomRight.y) || 
+          (line.b.y > area.topLeft.y && line.b.y < area.bottomRight.y) || 
+          (line.a.y < area.topLeft.y && line.b.y > area.bottomRight.y)) {
+        return true;
+      }
+  }
+  return false;
+}
