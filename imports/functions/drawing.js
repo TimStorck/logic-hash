@@ -9,7 +9,7 @@ import { flagData } from '../data/flag-data.js';
 import { fSModel } from './reactive.js';
 import { findBestSpot } from './placement.js';
 
-export function drawMotionTextBox(post, butcket, centerPos, canvas) {
+export function drawMotionTextBox(post, butcket, centerPos) {
   let newElem = createTextBoxElement(post, bucket);
   let dimens = dimensOf(newElem);
   
@@ -20,11 +20,11 @@ export function drawMotionTextBox(post, butcket, centerPos, canvas) {
   fSModel.addMotion(topLeftPos, topLeftPos.plus(dimens));
 }
 
-export function drawResponseTextBox(post, bucket, elicitorCenter) {
+export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx) {
   let newElem = createTextBoxElement(post, bucket);
   let dimens = dimensOf(newElem);
 
-  let centerPos = findBestSpot(dimens, elicitorCenter);
+  let centerPos = findBestSpot(dimens, elicitorCenter, canCtx);
   let topLeftPos = centerPos.minus(centerOf(dimens))
   // newElem.style.top = topLeftPos.yPx();
   // newElem.style.left = topLeftPos.xPx();
@@ -118,7 +118,7 @@ export function drawFSModel(canvas) {
   let length = fSModel.lineArray.length;
 
   for (let i=0;i<length;i++) {
-    drawLine(fSModel.lineArray[i], canCtx);
+    drawLine(fSModel.lineArray[i], canCtx, "red");
     markLineSide(fSModel.lineArray[i], canCtx);
   }
 }
@@ -127,9 +127,9 @@ export function drawFSModel(canvas) {
 /*
   for development, to view filled space model boundaries
 */
-function drawLine(line, canCtx) {
+export function drawLine(line, canCtx, color) {
   canCtx.beginPath();
-  canCtx.strokeStyle = "red";
+  canCtx.strokeStyle = color;
   canCtx.moveTo(line.a.x,line.a.y);
   canCtx.lineTo(line.b.x,line.b.y);
   canCtx.stroke();
@@ -149,7 +149,8 @@ function markLineSide(line, canCtx) {
       drawLine(new Line(
         new Coord(middle, line.a.y), 
         new Coord(middle, line.a.y - 3)), 
-        canCtx
+        canCtx,
+        "red"
       );
       break;
     //right
@@ -158,7 +159,8 @@ function markLineSide(line, canCtx) {
       drawLine(new Line(
         new Coord(line.a.x, middle), 
         new Coord(line.a.x + 3, middle)), 
-        canCtx
+        canCtx,
+        "red"
       );
       break;
     //bottom
@@ -167,7 +169,8 @@ function markLineSide(line, canCtx) {
       drawLine(new Line(
         new Coord(middle, line.a.y), 
         new Coord(middle, line.a.y + 3)), 
-        canCtx
+        canCtx,
+        "red"
       );
       break;
     //left
@@ -176,9 +179,20 @@ function markLineSide(line, canCtx) {
       drawLine(new Line(
         new Coord(line.a.x, middle), 
         new Coord(line.a.x - 3, middle)), 
-        canCtx
+        canCtx,
+        "red"
       );
   }
+}
+
+/*
+  for development, to view filled space model boundaries
+*/
+export function drawArea(area, canCtx) {
+  drawLine(new Line(new Coord(area.topLeft.x, area.topLeft.y), new Coord(area.bottomRight.x, area.topLeft.y)), canCtx, "yellow");
+  drawLine(new Line(new Coord(area.bottomRight.x, area.topLeft.y), new Coord(area.bottomRight.x, area.bottomRight.y)), canCtx, "yellow");
+  drawLine(new Line(new Coord(area.bottomRight.x, area.bottomRight.y), new Coord(area.topLeft.x, area.bottomRight.y)), canCtx, "yellow");
+  drawLine(new Line(new Coord(area.topLeft.x, area.bottomRight.y), new Coord(area.topLeft.x, area.topLeft.y)), canCtx, "yellow");
 }
 
 function createFlagModal(post, bucket, flag) {

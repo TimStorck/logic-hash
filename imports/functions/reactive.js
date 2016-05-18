@@ -49,7 +49,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     canCtx.fillStyle = "white";
     canCtx.fillRect(0,0,canvas.width,canvas.height);
 
-    drawMotionTextBox(motion, bucket, motionCenter, canvas);
+    drawMotionTextBox(motion, bucket, motionCenter);
 
     drawResponses(motionId, motionCenter, true, canCtx);
 
@@ -76,7 +76,7 @@ function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx) {
     }
     let responseCenter;
     for (let i = 0; i < responseArray.length; i++) {
-      responseCenter = drawResponseTextBox(responseArray[i], bucket, elicitorCenter);
+      responseCenter = drawResponseTextBox(responseArray[i], bucket, elicitorCenter, canCtx);
       // drawRadial(elicitorCenter, responseCenter, canCtx);
 
       // if (responseArray[i].responseNo > 0) {
