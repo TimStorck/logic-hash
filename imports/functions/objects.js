@@ -24,8 +24,33 @@ export function PostOb(_id, author, content, responseNo, flag, elicitor) {
   this.elicitor = elicitor;
 }
 
+//vertical or horizontal
 export function Line(coordA, coordB, side) {
-  this.a = coordA;
-  this.b = coordB;
+  //if horizontal
+  if(coordA.y == coordB.y) {
+    //if first coordinate is left end
+    if(coordA.x < coordB.x) {
+      this.a = coordA;
+      this.b = coordB;
+    } else {
+      this.a = coordB;
+      this.b = coordA;
+    }
+  //if vertical
+  } else { 
+    //if first coordinate is top end
+    if(coordA.y < coordB.y) {
+      this.a = coordA;
+      this.b = coordB;
+    } else {
+      this.a = coordB;
+      this.b = coordA;
+    }
+  }
   this.side = side;
+}
+
+export function Area(topLeft, dimens) {
+  this.topLeft = topLeft;
+  this.bottomRight = topLeft.plus(dimens);
 }
