@@ -1,7 +1,7 @@
 export const postsArray = [
   {
     author: "Joe",
-    content: "Global warming is the most important issue facing civilization."
+    content: "Global warming is the most important issue people should be talking about."
   },
   {
     author: "Ben",
@@ -9,7 +9,7 @@ export const postsArray = [
   },
   {
     author: "Jennifer",
-    content: "NASA should receive 10x more funding in order to protect Earth from asteroids."
+    content: "NASA should receive 10x more funding so they can protect Earth from asteroids."
   },
   {
     author: "Melissa",
@@ -21,7 +21,7 @@ export const postsArray = [
   },
   {
     author: "Ben From CT",
-    content: "Congress needs to do something about the use of anti-biotics on livestock."
+    content: "Congress should do something about the use of anti-biotics on livestock."
   },
   {
     author: "Joanne",
@@ -29,7 +29,7 @@ export const postsArray = [
   },
   {
     author: "Bethany",
-    content: "The alternative energy movement is a conspiracy."
+    content: "The NSA should not have access to phone company data."
   },
   {
     author: "Fred",
@@ -67,25 +67,27 @@ export const globalWarmingResponses = [
 export const nukesResponses = [
  {
   author: "Max",
-  content: "Nuclear weapons are not a threat anymore because of the United Nations."
+  content: "Global warming will almost certainly take out hundreds of coastal cities and annihilate the economy, nuclear weapons are unlikely to do that level of damage."
  },
  {
   author: "Mark",
-  content: "Yeah, nukes will knock us off the horse before anything."
+  content: "Good point."
  },
  {
   author: "Mike",
-  content: "Global warming is more dangerous than nuclear weapons because it is very unlikely the nuclear weapons would be used against multiple cities. Global warming, however, will almost certainly result in the destruction of a great number of citiies, in that coastal cities will have to be abandoned in something like a hundred years."
+  content: "Global warming is is also dangerous because the fossil fuel industry is extremely powerful and it is in their interest to dissuade people from the dangers of global warming."
  }
 ];
 
 export const defeatistResponses = [
  {
   author: "Kevin",
-  content: "That doesn't actually address the point of the motion. You are asserting a separate but somewhat related motion, which is that it doesn't matter if global warming is the most important thing."
+  content: "That doesn't actually address the point of the motion. You are asserting a separate but somewhat related motion, which is that it doesn't matter if global warming is the most important thing.",
+  flag: "Red Herring"
  },
  {
   author: "Ken",
-  content: "What if you are wrong and there is still a chance to save civilization, but we don't because you convinced people that there was no hope?"
+  content: "What if you are wrong and there is still a chance to save civilization, but we don't because you convinced people that there was no hope?",
+  flag: "Troll"
  }
 ];

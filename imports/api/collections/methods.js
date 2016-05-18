@@ -28,7 +28,7 @@ Meteor.methods({
       Meteor.call('posts.insert', postsArray[i]);
     }
 
-    let globalWarmingId = Posts.findOne({content: "Global warming is the most important issue facing civilization."})._id;
+    let globalWarmingId = Posts.findOne({content: "Global warming is the most important issue people should be talking about."})._id;
     globalResponsesLength = globalWarmingResponses.length;
     for (let i = 0; i < globalResponsesLength; i++) {
       globalWarmingResponses[i].elicitor = globalWarmingId;
