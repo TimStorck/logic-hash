@@ -2,7 +2,7 @@ import { fSModel } from './reactive.js';
 import { Coord } from './objects.js';
 import { Line } from './objects.js';
 import { Area } from './objects.js';
-import { radiusBetween } from './measurements';
+import { radialDistance } from './measurements';
 import { centerOf } from './measurements.js';
 import { drawArea } from './drawing.js';
 
@@ -37,12 +37,14 @@ function sortFSMLinesByCloseness(centerPoint) {
 
 //for vertical or horizontal lines
 function closestDistance(refPoint, line) {
-  return Math.min(
-    Math.abs(refPoint.x - line.a.x),
-    Math.abs(refPoint.x - line.b.x),
-    Math.abs(refPoint.y - line.a.y),
-    Math.abs(refPoint.y - line.b.y)
-  );
+  if (lineCrossesPointX(line, refPoint)) {
+    return (Math.abs(refPoint.y - line.a.y));
+  } else {
+    if (lineCrossesPointY(line, refPoint)) {
+      return (Math.abs(refPoint.x - line.a.x));
+    }
+  }
+  return Math.min(radialDistance(refPoint, line.a), radialDistance(refPoint, line.b));
 }
 
 function possiblePlacementZone(line, dimens) {
@@ -138,6 +140,7 @@ function getSpotOnLine(line, dimens, elicitorCenter) {
 
 function lineCrossesPointX(line, point) {
   if (line.a.x < point.x && line.b.x > point.x) {
+    console.log("line cross x fires");
     return true;
   }
   return false;
@@ -145,6 +148,7 @@ function lineCrossesPointX(line, point) {
 
 function lineCrossesPointY(line, point) {
   if (line.a.y < point.y && line.b.y > point.y) {
+    console.log("line cross y fires");
     return true;
   }
   return false;

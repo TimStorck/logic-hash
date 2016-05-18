@@ -153,7 +153,6 @@ function closestCrossingLineOnInsideSide(lineToCross, lineDefiningSide, lineArra
             if (lineDefiningSide.a.x > lineArray[i].a.x) {
               if (typeof lineToReturn == "undefined") {
                 lineToReturn = lineArray[i];
-                console.log(lineToReturn);
               } else {
                 if (lineToReturn.a.x < lineArray[i].a.x) {
                   lineToReturn = lineArray[i];
