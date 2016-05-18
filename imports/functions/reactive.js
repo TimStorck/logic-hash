@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Posts } from '../api/collections/posts.js';
 import { PostOb } from './objects.js';
 import { Coord } from './objects.js';
-import { filledSpaceModel } from './objects.js';
+import { filledSpaceModel } from './fsm.js';
 import { drawMotionTextBox } from './drawing.js';
 import { drawResponseTextBox } from './drawing.js';
 import { drawRadial } from './drawing.js';
