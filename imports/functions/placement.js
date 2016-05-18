@@ -9,23 +9,18 @@ import { drawArea } from './drawing.js';
 export function findBestSpot(dimens, elicitorCenter, canCtx) {
   sortFSMLinesByCloseness(elicitorCenter);
 
-  // for (let i = 0; i < fSModel.lineArray.length; i++) {
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < fSModel.lineArray.length; i++) {
     let area = possiblePlacementZone(fSModel.lineArray[i], dimens);
+
+    /*
+      uncomment below line for testing
+    */
     drawArea(area, canCtx);
-    switch(fSModel.lineArray.side) {
-      case 0:
 
-        break;
-      case 1:
-
-        break;
-      case 2:
-
-        break;
-      case 3:
-
-        break;
+    linesInArea = getLinesPassingThrough(area);
+    if (linesInArea.length == 0) {
+      return getSpotOnLine(fSModel.lineArray[i], dimens, elicitorCenter);
+      break;
     }
   }
 
@@ -94,6 +89,63 @@ function linePassesThrough(line, area) {
           (line.a.y < area.topLeft.y && line.b.y > area.bottomRight.y)) ) {
         return true;
       }
+  }
+  return false;
+}
+
+function getLinesPassingThrough(area) {
+  let linesInArea = [];
+  for (let i = 0; i < fSModel.lineArray.length; i++) {
+    if (linePassesThrough(fSModel.lineArray[i], area)) {
+      linesInArea.push(fSModel.lineArray[i]);
+    } 
+  }
+  return linesInArea;
+}
+
+function getSpotOnLine(line, dimens, elicitorCenter) {
+  switch(line.side) {
+    case 0:
+      if (lineCrossesPointX(line, elicitorCenter)) {
+        return new Coord(elicitorCenter.x, line.a.y - dimens.y);
+      } else {
+
+      }
+      break;
+    case 1:
+      if (lineCrossesPointY(line, elicitorCenter)) {
+        return new Coord(line.a.x + dimens.x, elicitorCenter.y);
+      } else {
+        
+      }
+      break;
+    case 2:
+      if (lineCrossesPointX(line, elicitorCenter)) {
+        return new Coord(elicitorCenter.x, line.a.y + dimens.y);
+      } else {
+        
+      }
+      break;
+    case 3:
+      if (lineCrossesPointY(line, elicitorCenter)) {
+        return new Coord(line.a.x - dimens.x, elicitorCenter.y);
+      } else {
+        
+      }
+      break;
+  }
+}
+
+function lineCrossesPointX(line, point) {
+  if (line.a.x < point.x && line.b.x > point.x) {
+    return true;
+  }
+  return false;
+}
+
+function lineCrossesPointY(line, point) {
+  if (line.a.y < point.y && line.b.y > point.y) {
+    return true;
   }
   return false;
 }
