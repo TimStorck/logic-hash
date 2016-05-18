@@ -40,8 +40,93 @@ export function filledSpaceModel() {
   };
 }
 
+function linesArePerpendicular(firstLine, secondLine) {
+  if (firstLine.side == 0 || firstLine.side == 2) {
+    if (secondLine.side == 1 || secondLine.side == 3) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    if (secondLine.side == 0 || secondLine.side == 2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
 
+function linesCross(firstLine, secondLine) {
+  //if firstLine is horizontal
+  if (firstLine.a.y == firstLine.b.y) {
+    if (firstLine.a.x < secondLine.a.x && firstLine.b.x > secondLine.a.x && secondLine.a.y < firstLine.a.y && secondLine.b.y > firstLine.a.y) {
+      return true;
+    } else {
+      return false;
+    }
+  //firstLine is vertical
+  } else {
+    if (secondLine.a.x < firstLine.a.x && secondLine.b.x > firstLine.a.x && firstLine.a.y < secondLine.a.y && firstLine.b.y > secondLine.a.y) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
 
+function linesOverlap(firstLine, secondLine) {
+  //if lines are horizontal
+  if (firstLine.side == 0 || firstLine.side == 2) {
+    //if same y value
+    if (firstLine.a.y == secondLine.a.y) {
+      //if firstLine is left more
+      if (firstLine.a.x < secondLine.a.x) {
+        //if secondLine starts before firstLine ends
+        if (firstLine.b.x > secondLine.a.x) {
+          return true;
+        } else {
+          return false;
+        }
+      //secondLine is left more
+      } else {
+        //if firstLine starts before secondLine ends
+        if (secondLine.b.x > firstLine.a.x) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    //different y value
+    } else {
+      return false;
+    }
+  //lines are vertical
+  } else {
+    //if same x value
+    if (firstLine.a.x == secondLine.a.x) {
+      //if firstLine is higher
+      if (firstLine.a.y < secondLine.a.y) {
+        //if secondLine starts before firstLine ends
+        if (firstLine.b.y > secondLine.a.y) {
+          return true;
+        } else {
+          return false;
+        }
+      //secondLine is higher
+      } else {
+        //if firstLine starts before secondLine ends
+        if (secondLine.b.y > firstLine.a.y) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    //different x value
+    } else {
+      return false;
+    }
+  }
+}
 
 
 
