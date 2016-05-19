@@ -54,7 +54,7 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     drawResponses(motionId, motionCenter, true, canCtx);
 
     /*
-      uncomment below line to view Filled Space Model boundaries
+      for development
     */
     drawFSModel(canvas);
   }
@@ -77,7 +77,7 @@ function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx) {
     let responseCenter;
     for (let i = 0; i < responseArray.length; i++) {
       responseCenter = drawResponseTextBox(responseArray[i], bucket, elicitorCenter, canCtx);
-      // drawRadial(elicitorCenter, responseCenter, canCtx);
+      drawRadial(elicitorCenter, responseCenter, canCtx);
 
       // if (responseArray[i].responseNo > 0) {
       //   drawResponses(responseArray[i]._id, responseCenter, false, canCtx);

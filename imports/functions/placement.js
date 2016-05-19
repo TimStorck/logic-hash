@@ -5,15 +5,21 @@ import { Area } from './objects.js';
 import { radialDistance } from './measurements';
 import { centerOf } from './measurements.js';
 import { drawArea } from './drawing.js';
+import { drawCircle } from './drawing.js';
 
 export function findBestSpot(dimens, elicitorCenter, canCtx) {
   sortFSMLinesByCloseness(elicitorCenter);
+  /*
+    for development
+  */
+  // drawCircle(elicitorCenter, canCtx);
+  // console.log("elicitorCenter: " + elicitorCenter.x + ", " + elicitorCenter.y);
 
   for (let i = 0; i < fSModel.lineArray.length; i++) {
     let area = possiblePlacementZone(fSModel.lineArray[i], dimens);
 
     /*
-      uncomment below line for testing
+      for development
     */
     drawArea(area, canCtx);
 
@@ -37,14 +43,32 @@ function sortFSMLinesByCloseness(centerPoint) {
 
 //for vertical or horizontal lines
 function closestDistance(refPoint, line) {
+  // console.log("line " + line.a.x + ", " + line.a.y + " to " + line.b.x + ", " + line.b.y);
   if (lineCrossesPointX(line, refPoint)) {
-    return (Math.abs(refPoint.y - line.a.y));
+    // console.log("crosses refPoint along x, closest distance: " + Math.abs(refPoint.y - line.a.y));
+    return Math.abs(refPoint.y - line.a.y);
   } else {
     if (lineCrossesPointY(line, refPoint)) {
-      return (Math.abs(refPoint.x - line.a.x));
+      // console.log("crosses refPoint along y, closest distance: " + Math.abs(refPoint.x - line.a.x));
+      return Math.abs(refPoint.x - line.a.x);
     }
   }
+  // console.log("doesnt cross refPoint, closest distance: " + Math.min(radialDistance(refPoint, line.a), radialDistance(refPoint, line.b)));
   return Math.min(radialDistance(refPoint, line.a), radialDistance(refPoint, line.b));
+}
+
+function lineCrossesPointX(line, point) {
+  if (line.a.x < point.x && point.x < line.b.x) {
+    return true;
+  }
+  return false;
+}
+
+function lineCrossesPointY(line, point) {
+  if (line.a.y < point.y && point.y < line.b.y) {
+    return true;
+  }
+  return false;
 }
 
 function possiblePlacementZone(line, dimens) {
@@ -136,20 +160,4 @@ function getSpotOnLine(line, dimens, elicitorCenter) {
       }
       break;
   }
-}
-
-function lineCrossesPointX(line, point) {
-  if (line.a.x < point.x && line.b.x > point.x) {
-    console.log("line cross x fires");
-    return true;
-  }
-  return false;
-}
-
-function lineCrossesPointY(line, point) {
-  if (line.a.y < point.y && line.b.y > point.y) {
-    console.log("line cross y fires");
-    return true;
-  }
-  return false;
 }

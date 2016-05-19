@@ -211,7 +211,7 @@ export function platformRightMore(referencePlatform, platform) {
 
 export function radialDistance(referencePoint, otherPoint) {
   //pythagorean theorem
-  return new Coord(referencePoint.minus(otherPoint).x * referencePoint.minus(otherPoint).x + referencePoint.minus(otherPoint).y * referencePoint.minus(otherPoint).y);
+  return referencePoint.minus(otherPoint).x * referencePoint.minus(otherPoint).x + referencePoint.minus(otherPoint).y * referencePoint.minus(otherPoint).y;
 }
 
 export function lineWidth(line) {

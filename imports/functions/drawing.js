@@ -16,6 +16,9 @@ export function drawMotionTextBox(post, butcket, centerPos) {
   let topLeftPos = centerPos.minus(centerOf(dimens));
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
+/*
+  for development
+*/
   // newElem.style.display = "none";
 
   fSModel.addBox(topLeftPos, topLeftPos.plus(dimens));
@@ -25,10 +28,18 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx) {
   let newElem = createTextBoxElement(post, bucket);
   let dimens = dimensOf(newElem);
 
+/*
+  for development
+*/
+  // drawCircle(elicitorCenter, canCtx);
+
   let centerPos = findBestSpot(dimens, elicitorCenter, canCtx);
   let topLeftPos = centerPos.minus(centerOf(dimens))
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
+/*
+  for development
+*/
   // newElem.style.display = "none";
 
   fSModel.addResponse(topLeftPos, topLeftPos.plus(dimens));
@@ -111,7 +122,7 @@ function updateFSM(topLeftPos, dimens, sideOscillator) {
 }
 
 /*
-  for development, to view filled space model boundaries
+  for development
 */
 export function drawFSModel(canvas) {
   let canCtx = canvas.getContext("2d");
@@ -124,7 +135,7 @@ export function drawFSModel(canvas) {
 
 
 /*
-  for development, to view filled space model boundaries
+  for development
 */
 export function drawLine(line, canCtx, color) {
   canCtx.beginPath();
@@ -137,7 +148,7 @@ export function drawLine(line, canCtx, color) {
 
 
 /*
-  for development, to view filled space model boundaries
+  for development
 */
 function markLineSide(line, canCtx) {
   let middle;
@@ -185,13 +196,24 @@ function markLineSide(line, canCtx) {
 }
 
 /*
-  for development, to view filled space model boundaries
+  for development
 */
 export function drawArea(area, canCtx) {
   drawLine(new Line(new Coord(area.topLeft.x, area.topLeft.y), new Coord(area.bottomRight.x, area.topLeft.y)), canCtx, "yellow");
   drawLine(new Line(new Coord(area.bottomRight.x, area.topLeft.y), new Coord(area.bottomRight.x, area.bottomRight.y)), canCtx, "yellow");
   drawLine(new Line(new Coord(area.bottomRight.x, area.bottomRight.y), new Coord(area.topLeft.x, area.bottomRight.y)), canCtx, "yellow");
   drawLine(new Line(new Coord(area.topLeft.x, area.bottomRight.y), new Coord(area.topLeft.x, area.topLeft.y)), canCtx, "yellow");
+}
+
+/*
+  for development
+*/
+export function drawCircle(coord, canCtx) {
+  canCtx.beginPath();
+  canCtx.fillStyle = "red";
+  canCtx.arc(coord.x, coord.y, 1,0,Math.PI*2,true);
+  canCtx.fill();
+  canCtx.closePath();
 }
 
 function createFlagModal(post, bucket, flag) {
