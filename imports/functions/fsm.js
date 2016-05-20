@@ -32,15 +32,28 @@ export function filledSpaceModel() {
   }
 
   this.trimOverlap = function(marginBox) {
+    let lineToSpliceOut = false;
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < this.lineArray.length; j++) {
         if (linesCross(marginBox[i], this.lineArray[j])) {
           truncateOrSplit(marginBox[i], this.lineArray[j], this.lineArray, marginBox);
-          truncateOrSplit(this.lineArray[j], marginBox[i], this.lineArray, marginBox);
+          //this is the one you get lineToSpliceOut from because the marginBox line is the second variable, which is line lineDefining Side in truncateOrSplit
+          lineToSpliceOut = truncateOrSplit(this.lineArray[j], marginBox[i], this.lineArray, marginBox);
         }
       }
     }
-    removeOrphanLine(this.lineArray);
+    //remove orphan line
+    if (lineToSpliceOut !== false) {
+      for (let i = 0; i < 4; i++) {
+        if (marginBox[i].side == lineToSpliceOut) {
+          for (let j = 0; j < this.lineArray.length; j++) {
+            if (this.lineArray[j] == marginBox[i]) {
+              this.lineArray.splice(j,1);
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -54,63 +67,54 @@ function linesMeet(firstLine, secondLine) {
   return false;
 }
 
-function removeOrphanLine(lineArray) {
-  let orphan;
-  for (let i = lineArray.length - 1; i >= 0; i--){
-    orphan = true;
-    for (let j = lineArray.length - 1; j >= 0; j--) {
-      if (i != j) {
-        if (linesMeet(lineArray[i], lineArray[j])) {
-          orphan = false;
-          break;
-        }
-      }
-    }
-    if (orphan) {
-      lineArray.splice(i, 1);
-      break;
-    }
-  }
-}
-
 function truncateOrSplit(lineToCross, lineDefiningSide, lineArray, marginBox) {
-  insideCrossingLine = closestCrossingLineOnInsideSide(lineToCross, lineDefiningSide, lineArray, marginBox);
-  if (typeof insideCrossingLine != "undefined") {
+  let lineToSpliceOut = false;
+  //handles if two lines of new marginBox cross same line
+  otherCrossingLine = getOtherCrossingLine(lineToCross, lineDefiningSide, lineArray, marginBox);
+  if (typeof otherCrossingLine != "undefined") {
     switch (lineDefiningSide.side) {
       case 0:
-        lineArray.push(new Line(new Coord(lineToCross.a.x, insideCrossingLine.a.y), new Coord(lineToCross.b.x, lineToCross.b.y), lineToCross.side));
-        //trim insideCrossingLine
+        lineArray.push(new Line(new Coord(lineToCross.a.x, otherCrossingLine.a.y), new Coord(lineToCross.b.x, lineToCross.b.y), lineToCross.side));
+        //trim otherCrossingLine
         if (lineToCross.side == 1) {
-          insideCrossingLine.a.x = lineToCross.a.x;
+          lineToSpliceOut = 3;
+          otherCrossingLine.a.x = lineToCross.a.x;
         } else {
-          insideCrossingLine.b.x = lineToCross.a.x;
+          lineToSpliceOut = 1;
+          otherCrossingLine.b.x = lineToCross.a.x;
         }
         break;
       case 1:
-        lineArray.push(new Line(new Coord(lineToCross.a.x, lineToCross.a.y), new Coord(insideCrossingLine.a.x, lineToCross.a.y), lineToCross.side));
-        //trim insideCrossingLine
+        lineArray.push(new Line(new Coord(lineToCross.a.x, lineToCross.a.y), new Coord(otherCrossingLine.a.x, lineToCross.a.y), lineToCross.side));
+        //trim otherCrossingLine
         if (lineToCross.side == 0) {
-          insideCrossingLine.b.y = lineToCross.a.y;
+          lineToSpliceOut = 2;
+          otherCrossingLine.b.y = lineToCross.a.y;
         } else {
-          insideCrossingLine.a.y = lineToCross.a.y;
+          lineToSpliceOut = 0;
+          otherCrossingLine.a.y = lineToCross.a.y;
         }
         break;
       case 2:
-        lineArray.push(new Line(new Coord(lineToCross.a.x, lineToCross.a.y), new Coord(lineToCross.a.x, insideCrossingLine.a.y), lineToCross.side));
-        //trim insideCrossingLine
+        lineArray.push(new Line(new Coord(lineToCross.a.x, lineToCross.a.y), new Coord(lineToCross.a.x, otherCrossingLine.a.y), lineToCross.side));
+        //trim otherCrossingLine
         if (lineToCross.side == 1) {
-          insideCrossingLine.a.x = lineToCross.a.x;
+          lineToSpliceOut = 3;
+          otherCrossingLine.a.x = lineToCross.a.x;
         } else {
-          insideCrossingLine.b.x = lineToCross.a.x;
+          lineToSpliceOut = 1;
+          otherCrossingLine.b.x = lineToCross.a.x;
         }
         break;
       case 3:
-        lineArray.push(new Line(new Coord(insideCrossingLine.a.x, lineToCross.a.y), new Coord(lineToCross.b.x, lineToCross.b.y), lineToCross.side));
-        //trim insideCrossingLine
+        lineArray.push(new Line(new Coord(otherCrossingLine.a.x, lineToCross.a.y), new Coord(lineToCross.b.x, lineToCross.b.y), lineToCross.side));
+        //trim otherCrossingLine
         if (lineToCross.side == 0) {
-          insideCrossingLine.b.y = lineToCross.a.y;
+          lineToSpliceOut = 2;
+          otherCrossingLine.b.y = lineToCross.a.y;
         } else {
-          insideCrossingLine.a.y = lineToCross.a.y;
+          lineToSpliceOut = 0;
+          otherCrossingLine.a.y = lineToCross.a.y;
         }
         break;
     }
@@ -129,17 +133,10 @@ function truncateOrSplit(lineToCross, lineDefiningSide, lineArray, marginBox) {
       lineToCross.b.x = lineDefiningSide.a.x;
       break;
   }
+  return lineToSpliceOut;
 }
 
-function spliceMarginBoxSide(marginBox, side) {
-  for (let i = 0; i < 4; i++) {
-    if (marginBox[i].side == side) {
-      return marginBox[i];
-    }
-  }
-}
-
-function closestCrossingLineOnInsideSide(lineToCross, lineDefiningSide, lineArray, marginBox) {
+function getOtherCrossingLine(lineToCross, lineDefiningSide, lineArray, marginBox) {
   let side = oppositeSide(lineDefiningSide);
   let lineToReturn;
   for (let i = 0; i < marginBox.length; i ++) {
@@ -148,46 +145,22 @@ function closestCrossingLineOnInsideSide(lineToCross, lineDefiningSide, lineArra
         switch (lineDefiningSide.side) {
           case 0:
             if (lineDefiningSide.a.y < marginBox[i].a.y) {
-              if (typeof lineToReturn == "undefined") {
-                lineToReturn = marginBox[i];
-              } else {
-                if (lineToReturn.a.y > marginBox[i].a.y) {
-                  lineToReturn = marginBox[i];
-                }
-              }
+              lineToReturn = marginBox[i];
             }
             break;
           case 1:
             if (lineDefiningSide.a.x > marginBox[i].a.x) {
-              if (typeof lineToReturn == "undefined") {
-                lineToReturn = marginBox[i];
-              } else {
-                if (lineToReturn.a.x < marginBox[i].a.x) {
-                  lineToReturn = marginBox[i];
-                }
-              }
+              lineToReturn = marginBox[i];
             }
             break;
           case 2:
             if (lineDefiningSide.a.y > marginBox[i].a.y) {
-              if (typeof lineToReturn == "undefined") {
-                lineToReturn = marginBox[i];
-              } else {
-                if (lineToReturn.a.y < marginBox[i].a.y) {
-                  lineToReturn = marginBox[i];
-                }
-              }
+              lineToReturn = marginBox[i];
             }
             break;
           case 3:
             if (lineDefiningSide.a.x < marginBox[i].a.x) {
-              if (typeof lineToReturn == "undefined") {
-                lineToReturn = marginBox[i];
-              } else {
-                if (lineToReturn.a.x > marginBox[i].a.x) {
-                  lineToReturn = marginBox[i];
-                }
-              }
+              lineToReturn = marginBox[i];
             }
             break;
         }

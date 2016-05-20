@@ -19,7 +19,7 @@ export function drawMotionTextBox(post, butcket, centerPos) {
 /*
   for development
 */
-  // newElem.style.display = "none";
+  newElem.style.display = "none";
 
   fSModel.addBox(topLeftPos, topLeftPos.plus(dimens));
 }
@@ -40,7 +40,7 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx) {
 /*
   for development
 */
-  // newElem.style.display = "none";
+  newElem.style.display = "none";
 
   fSModel.addResponse(topLeftPos, topLeftPos.plus(dimens));
   return centerPos;
