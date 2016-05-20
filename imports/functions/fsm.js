@@ -35,8 +35,8 @@ export function filledSpaceModel() {
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < this.lineArray.length; j++) {
         if (linesCross(marginBox[i], this.lineArray[j])) {
-          truncateOrSplit(marginBox[i], this.lineArray[j], this.lineArray);
-          truncateOrSplit(this.lineArray[j], marginBox[i], this.lineArray);
+          truncateOrSplit(marginBox[i], this.lineArray[j], this.lineArray, marginBox);
+          truncateOrSplit(this.lineArray[j], marginBox[i], this.lineArray, marginBox);
         }
       }
     }
@@ -73,8 +73,8 @@ function removeOrphanLine(lineArray) {
   }
 }
 
-function truncateOrSplit(lineToCross, lineDefiningSide, lineArray) {
-  insideCrossingLine = closestCrossingLineOnInsideSide(lineToCross, lineDefiningSide, lineArray);
+function truncateOrSplit(lineToCross, lineDefiningSide, lineArray, marginBox) {
+  insideCrossingLine = closestCrossingLineOnInsideSide(lineToCross, lineDefiningSide, lineArray, marginBox);
   if (typeof insideCrossingLine != "undefined") {
     switch (lineDefiningSide.side) {
       case 0:
@@ -131,53 +131,61 @@ function truncateOrSplit(lineToCross, lineDefiningSide, lineArray) {
   }
 }
 
-function closestCrossingLineOnInsideSide(lineToCross, lineDefiningSide, lineArray) {
+function spliceMarginBoxSide(marginBox, side) {
+  for (let i = 0; i < 4; i++) {
+    if (marginBox[i].side == side) {
+      return marginBox[i];
+    }
+  }
+}
+
+function closestCrossingLineOnInsideSide(lineToCross, lineDefiningSide, lineArray, marginBox) {
   let side = oppositeSide(lineDefiningSide);
   let lineToReturn;
-  for (let i = 0; i < lineArray.length; i ++) {
-    if (lineArray[i].side === side) {
-      if (linesCross(lineArray[i], lineToCross)) {
+  for (let i = 0; i < marginBox.length; i ++) {
+    if (marginBox[i].side === side) {
+      if (linesCross(marginBox[i], lineToCross)) {
         switch (lineDefiningSide.side) {
           case 0:
-            if (lineDefiningSide.a.y < lineArray[i].a.y) {
+            if (lineDefiningSide.a.y < marginBox[i].a.y) {
               if (typeof lineToReturn == "undefined") {
-                lineToReturn = lineArray[i];
+                lineToReturn = marginBox[i];
               } else {
-                if (lineToReturn.a.y > lineArray[i].a.y) {
-                  lineToReturn = lineArray[i];
+                if (lineToReturn.a.y > marginBox[i].a.y) {
+                  lineToReturn = marginBox[i];
                 }
               }
             }
             break;
           case 1:
-            if (lineDefiningSide.a.x > lineArray[i].a.x) {
+            if (lineDefiningSide.a.x > marginBox[i].a.x) {
               if (typeof lineToReturn == "undefined") {
-                lineToReturn = lineArray[i];
+                lineToReturn = marginBox[i];
               } else {
-                if (lineToReturn.a.x < lineArray[i].a.x) {
-                  lineToReturn = lineArray[i];
+                if (lineToReturn.a.x < marginBox[i].a.x) {
+                  lineToReturn = marginBox[i];
                 }
               }
             }
             break;
           case 2:
-            if (lineDefiningSide.a.y > lineArray[i].a.y) {
+            if (lineDefiningSide.a.y > marginBox[i].a.y) {
               if (typeof lineToReturn == "undefined") {
-                lineToReturn = lineArray[i];
+                lineToReturn = marginBox[i];
               } else {
-                if (lineToReturn.a.y < lineArray[i].a.y) {
-                  lineToReturn = lineArray[i];
+                if (lineToReturn.a.y < marginBox[i].a.y) {
+                  lineToReturn = marginBox[i];
                 }
               }
             }
             break;
           case 3:
-            if (lineDefiningSide.a.x < lineArray[i].a.x) {
+            if (lineDefiningSide.a.x < marginBox[i].a.x) {
               if (typeof lineToReturn == "undefined") {
-                lineToReturn = lineArray[i];
+                lineToReturn = marginBox[i];
               } else {
-                if (lineToReturn.a.x > lineArray[i].a.x) {
-                  lineToReturn = lineArray[i];
+                if (lineToReturn.a.x > marginBox[i].a.x) {
+                  lineToReturn = marginBox[i];
                 }
               }
             }
