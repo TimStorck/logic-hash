@@ -32,27 +32,120 @@ export function filledSpaceModel() {
   }
 
   this.trimOverlap = function(marginBox) {
-    let lineToSpliceOut = false;
-    for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < this.lineArray.length; j++) {
-        if (linesCross(marginBox[i], this.lineArray[j])) {
-          truncateOrSplit(marginBox[i], this.lineArray[j], this.lineArray, marginBox);
-          //this is the one you get lineToSpliceOut from because the marginBox line is the second variable, which is line lineDefining Side in truncateOrSplit
-          lineToSpliceOut = truncateOrSplit(this.lineArray[j], marginBox[i], this.lineArray, marginBox);
-        }
+    //array of lines intersecting for each side of marginBox
+    let linesIntersecting = [[],[],[],[]];
+    let marginBoxSideCrossed
+    for (let i = 0; i < this.lineArray.length; i++) {
+      //returns -1 if false, or side / index if true
+      marginBoxSideCrossed = lineEnters(line, marginBox);
+      if (marginBoxSideCrossed >=0) {
+        truncate(this.lineArray[i], marginBox[marginBoxSideCrossed]);
+        linesIntersecting[marginBoxSideCrossed].push(this.lineArray[i]);
       }
     }
-    //remove orphan line
-    if (lineToSpliceOut !== false) {
-      for (let i = 0; i < 4; i++) {
-        if (marginBox[i].side == lineToSpliceOut) {
-          for (let j = 0; j < this.lineArray.length; j++) {
-            if (this.lineArray[j] == marginBox[i]) {
-              this.lineArray.splice(j,1);
+    //sort arrays of lines intersecting margin box sides from left to right or top to bottom
+    linesIntersecting[0].sort(function(first, second) {
+      if (first.b.x > second.b.x) {
+        return 1;
+      } 
+      return -1;
+    });
+    linesIntersecting[1].sort(function(first, second) {
+      if (first.b.y > second.b.y) {
+        return 1;
+      } 
+      return -1;
+    });
+    linesIntersecting[2].sort(function(first, second) {
+      if (first.b.x > second.b.x) {
+        return 1;
+      } 
+      return -1;
+    });
+    linesIntersecting[3].sort(function(first, second) {
+      if (first.b.y > second.b.y) {
+        return 1;
+      } 
+      return -1;
+    });
+    //if first line intersecting top of margin box faces right
+    if (linesIntersecting[0][0].side == 1) {
+      //starting at second, for all lines intersecting top of margin box
+      for (let i = 1; i < linesIntersecting[0].length; i++) {
+        //if drawing first line, use existing marginBox line
+        if (i == 1) {
+          marginBox[0].a.x = linesIntersecting[0][i-1].b.x;
+          marginBox[0].b.x = linesIntersecting[0][i].b.x;
+        } else {
+          //for every other one, draw line from previous one to that one
+          if (i%2 == 1) {
+            //draw a line from previous one
+            this.lineArray.push(new Line(new Coord(linesIntersecting[0][i-1].b.x, linesIntersecting[0][i-1].b.y), new Coord(linesIntersecting[0][i].b.x, linesIntersecting[0][i].b.y)))
+          } else {
+            if (i == linesIntersecting[0].length-1) {
+              marginBox.a.x = linesIntersecting[0][i].b.x;
             }
           }
         }
       }
+    } else {
+      for (let i = 0; i < linesIntersecting[0].length; i++) {
+        if (i == 0) {
+          marginBox[0].b.x = linesIntersecting[0][i].b.x;
+        } else {
+          if (i%2 == 0) {
+            this.lineArray.push(new Line(new Coord(linesIntersecting[0][i-1].b.x, linesIntersecting[0][i-1].b.y), new Coord(linesIntersecting[0][i].b.x, linesIntersecting[0][i].b.y)))
+          }else {
+            if (i == linesIntersecting[0].length-1) {
+              marginBox[0].a.x = linesIntersecting[0][i].b.x;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+truncate(line, marginBoxSide) {
+  switch(marginBoxSide.side) {
+    case 0:
+      line.b.y = marginBoxSide.a.y;
+      break;
+    case 1:
+      line.a.x = marginBoxSide.a.x;
+      break;
+    case 2:
+      line.a.y = marginBoxSide.a.y;
+      break;
+    case 3:
+      line.b.x = marginBoxSide.a.x;
+      break;
+  }
+}
+
+function lineEnters(line, marginBox) {
+  for(let i=0; i < marginBox.length; i++) {
+    if (linesCross(line, marginBox[i])) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+function linesCross(firstLine, secondLine) {
+  //if firstLine is horizontal
+  if (firstLine.a.y == firstLine.b.y) {
+    if (firstLine.a.x < secondLine.a.x && secondLine.a.x < firstLine.b.x && secondLine.a.y < firstLine.a.y && firstLine.a.y < secondLine.b.y) {
+      return true;
+    } else {
+      return false;
+    }
+  //firstLine is vertical
+  } else {
+    if (secondLine.a.x < firstLine.a.x && firstLine.a.x < secondLine.b.x && firstLine.a.y < secondLine.a.y && secondLine.a.y < firstLine.b.y) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
@@ -227,25 +320,6 @@ function linesArePerpendicular(firstLine, secondLine) {
   }
 }
 
-//only compare perpendicular lines
-function linesCross(firstLine, secondLine) {
-  //if firstLine is horizontal
-  if (firstLine.a.y == firstLine.b.y) {
-    if (firstLine.a.x < secondLine.a.x && firstLine.b.x > secondLine.a.x && secondLine.a.y < firstLine.a.y && secondLine.b.y > firstLine.a.y) {
-      return true;
-    } else {
-      return false;
-    }
-  //firstLine is vertical
-  } else {
-    if (secondLine.a.x < firstLine.a.x && secondLine.b.x > firstLine.a.x && firstLine.a.y < secondLine.a.y && firstLine.b.y > secondLine.a.y) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
-
 function linesOverlap(firstLine, secondLine) {
   //if lines are horizontal
   if (firstLine.side == 0 || firstLine.side == 2) {
@@ -309,401 +383,3 @@ function linesOverlap(firstLine, secondLine) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-// export function filledSpaceModel() {
-//   const margin = 17;
-//   this.topLine = [];
-//   this.rightLine = [];
-//   this.bottomLine = [];
-//   this.leftLine = [];
-
-//   this.findSpotTop = function(dimens) {
-//     let spot;
-//     // for each platform in topLine
-//     for (let i = 0; i < this.topLine.length; i++) {
-//       //if textbox narrower
-//       if (fitsHor(dimens, platformWidth(this.topLine[i]))) {
-//         spot = new Coord(centerOfHor(this.topLine[i].a.x, this.topLine[i].b.x), this.topLine[i].a.y - centerOf(dimens).y);
-//         break;
-//       } 
-//       //if only platform
-//       if (this.topLine.length === 1) {
-//         spot = new Coord(centerOfHor(this.topLine[i].a.x, this.topLine[i].b.x), this.topLine[i].a.y - centerOf(dimens).y);
-//         break;
-//       } 
-//       //if left edge
-//       if (platformIsLeftMost(i, this.topLine)) {
-//         spot = new Coord(this.topLine[i].b.x - centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
-//         break;
-//       } 
-//       //if right edge
-//       if (platformIsRightMost(i, this.topLine)) {
-//         spot = new Coord(this.topLine[i].a.x + centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
-//         break;
-//       }
-//       //if lowest platform
-//       if (i === 0) {
-//         continue;
-//       }
-//       //if adjacent left not protruding
-//       if (fitsHor(dimens, widthWithAdjacentLeft(i, this.topLine))) {
-//         spot = new Coord(this.topLine[i].b.x - centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
-//         break;
-//       } 
-//       //if adjacent right not protruding
-//       if (fitsHor(dimens, widthWithAdjacentRight(i, this.topLine))) {
-//         spot = new Coord(this.topLine[i].a.x + centerOf(dimens).x, this.topLine[i].a.y - centerOf(dimens).y);
-//         break;
-//       } 
-//       //if highest platform
-//       if (i === this.topLine.length - 1) {
-//         spot = new Coord(centerOfHor(this.topLine[i].a.x, this.topLine[i].b.x), this.topLine[i].a.y - centerOf(dimens).y);
-//         break;
-//       }
-//     }
-//     return spot;
-//   };
-
-//   this.findSpotBottom = function(dimens) {
-//     let spot;
-//     // for each platform in bottomLine
-//     for (let i = 0; i < this.bottomLine.length; i++) {
-//       //if textbox narrower
-//       if (fitsHor(dimens, platformWidth(this.bottomLine[i]))) {
-//         spot = new Coord(centerOfHor(this.bottomLine[i].a.x, this.bottomLine[i].b.x), this.bottomLine[i].a.y + centerOf(dimens).y);
-//         break;
-//       } 
-//       //if only platform
-//       if (this.bottomLine.length === 1) {
-//         spot = new Coord(centerOfHor(this.bottomLine[i].a.x, this.bottomLine[i].b.x), this.bottomLine[i].a.y + centerOf(dimens).y);
-//         break;
-//       } 
-//       //if left edge
-//       if (platformIsLeftMost(i, this.bottomLine)) {
-//         spot = new Coord(this.bottomLine[i].b.x - centerOf(dimens).x, this.bottomLine[i].a.y + centerOf(dimens).y);
-//         break;
-//       } 
-//       //if right edge
-//       if (platformIsRightMost(i, this.bottomLine)) {
-//         spot = new Coord(this.bottomLine[i].a.x + centerOf(dimens).x, this.bottomLine[i].a.y + centerOf(dimens).y);
-//         break;
-//       }
-//       //if highest platform
-//       if (i === 0) {
-//         continue;
-//       }
-//       //if adjacent left not protruding
-//       if (fitsHor(dimens, widthWithAdjacentLeft(i, this.bottomLine))) {
-//         spot = new Coord(this.bottomLine[i].b.x - centerOf(dimens).x, this.bottomLine[i].a.y + centerOf(dimens).y);
-//         break;
-//       } 
-//       //if adjacent right not protruding
-//       if (fitsHor(dimens, widthWithAdjacentRight(i, this.bottomLine))) {
-//         spot = new Coord(this.bottomLine[i].a.x + centerOf(dimens).x, this.bottomLine[i].a.y + centerOf(dimens).y);
-//         break;
-//       } 
-//       //if lowest platform
-//       if (i === this.bottomLine.length - 1) {
-//         spot = new Coord(centerOfHor(this.bottomLine[i].a.x, this.bottomLine[i].b.x), this.bottomLine[i].a.y + centerOf(dimens).y);
-//         break;
-//       }
-//     }
-//     return spot;
-//   };
-
-//   this.findSpotRight = function(dimens) {
-//     let spot;
-//     // for each platform in rightLine
-//     for (let i = 0; i < this.rightLine.length; i++) {
-//       //if text box shorter
-//       if (fitsVert(dimens, platformHeight(this.rightLine[i]))) {
-//         spot = new Coord(this.rightLine[i].a.x + centerOf(dimens).x, centerOfVert(this.rightLine[i].a.y, this.rightLine[i].b.y));
-//         break;
-//       } 
-//       //if only platform
-//       if (this.rightLine.length === 1) {
-//         spot = new Coord(this.rightLine[i].a.x + centerOf(dimens).x, centerOfVert(this.rightLine[i].a.y, this.rightLine[i].b.y));
-//         break;
-//       } 
-//       //if top edge
-//       if (platformIsTopMost(i, this.rightLine)) {
-//         spot = new Coord(this.rightLine[i].a.x + centerOf(dimens).x, this.rightLine[i].b.y - centerOf(dimens).y);
-//         break;
-//       } 
-//       //if bottom edge
-//       if (platformIsBottomMost(i, this.rightLine)) {
-//         spot = new Coord(this.rightLine[i].a.x + centerOf(dimens).x, this.rightLine[i].a.y + centerOf(dimens).y);
-//         break;
-//       }
-//       //if left-most platform
-//       if (i === 0) {
-//         continue;
-//       }
-//       //if adjacent top not protruding
-//       if (fitsVert(dimens, heightWithAdjacentTop(i, this.rightLine))) {
-//         spot = new Coord(this.rightLine[i].a.x + centerOf(dimens).x, this.rightLine[i].b.y - centerOf(dimens).y);
-//         break;
-//       } 
-//       //if adjacent bottom not protruding
-//       if (fitsVert(dimens, heightWithAdjacentBottom(i, this.rightLine))) {
-//         spot = new Coord(this.rightLine[i].a.x + centerOf(dimens).x, this.rightLine[i].a.y + centerOf(dimens).y);
-//         break;
-//       } 
-//       //if right-most platform
-//       if (i === this.rightLine.length - 1) {
-//         spot = new Coord(this.rightLine[i].a.x + centerOf(dimens).x, centerOfVert(this.rightLine[i].a.y, this.rightLine[i].b.y));
-//         break;
-//       }
-//     }
-//     return spot;
-//   };
-
-//   this.findSpotLeft = function(dimens) {
-//     let spot;
-//     // for each platform in leftLine
-//     for (let i = 0; i < this.leftLine.length; i++) {
-//       //if text box shorter
-//       if (fitsVert(dimens, platformHeight(this.leftLine[i]))) {
-//         spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, centerOfVert(this.leftLine[i].a.y, this.leftLine[i].b.y));
-//         break;
-//       } 
-//       //if only platform
-//       if (this.leftLine.length === 1) {
-//         spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, centerOfVert(this.leftLine[i].a.y, this.leftLine[i].b.y));
-//         break;
-//       } 
-//       //if top edge
-//       if (platformIsTopMost(i, this.leftLine)) {
-//         spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, this.leftLine[i].b.y - centerOf(dimens).y);
-//         break;
-//       } 
-//       //if bottom edge
-//       if (platformIsBottomMost(i, this.leftLine)) {
-//         spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, this.leftLine[i].a.y + centerOf(dimens).y);
-//         break;
-//       }
-//       //if right-most platform
-//       if (i === 0) {
-//         continue;
-//       }
-//       //if adjacent top not protruding
-//       if (fitsVert(dimens, heightWithAdjacentTop(i, this.leftLine))) {
-//         spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, this.leftLine[i].b.y - centerOf(dimens).y);
-//         break;
-//       } 
-//       //if adjacent bottom not protruding
-//       if (fitsVert(dimens, heightWithAdjacentBottom(i, this.leftLine))) {
-//         spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, this.leftLine[i].a.y + centerOf(dimens).y);
-//         break;
-//       } 
-//       //if left-most platform
-//       if (i === this.leftLine.length - 1) {
-//         spot = new Coord(this.leftLine[i].a.x - centerOf(dimens).x, centerOfVert(this.leftLine[i].a.y, this.leftLine[i].b.y));
-//         break;
-//       }
-//     }
-//     return spot;
-//   };
-
-//   this.updateTopLine = function(topLeft, bottomRight, referredByAdjacent) {
-//     let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
-//     let topRightMargin = new Coord(bottomRight.x + margin, topLeft.y - margin);
-//     for (let i=0; i < this.topLine.length; i++) {
-//       //remove any lower platforms within width
-//       if (this.topLine[i].a.x >= topLeftMargin.x && this.topLine[i].b.x <= topRightMargin.x) {
-//         this.topLine.splice(i, 1);
-//         i--;
-//         continue;
-//       }
-//       //split lower platform that is wider
-//       if (this.topLine[i].a.x < topLeftMargin.x && this.topLine[i].b.x > topRightMargin.x) {
-//         this.topLine.push(new Platform(
-//           new Coord(topRightMargin.x, this.topLine[i].b.y), 
-//           new Coord(this.topLine[i].b.x, this.topLine[i].b.y)
-//         ));
-//         this.topLine[i].b.x = topLeftMargin.x;
-//       }
-//       //clip any lower platforms crossing left edge
-//       if (this.topLine[i].b.x > topLeftMargin.x && this.topLine[i].b.x < topRightMargin.x) {
-//         this.topLine[i].b = new Coord(topLeftMargin.x, this.topLine[i].b.y);
-//       }
-//       //clip any lower platforms crossing right edge
-//       if (this.topLine[i].a.x < topRightMargin.x && this.topLine[i].a.x > topLeftMargin.x) {
-//         this.topLine[i].a = new Coord(topRightMargin.x, this.topLine[i].a.y);
-//       }
-//     }
-//     this.topLine.push(new Platform(topLeftMargin, topRightMargin));
-//     //check if over edge, and if so, have adjacent side update too
-//     if (!referredByAdjacent) {
-//       if (platformIsRightMost(this.topLine.length-1, this.topLine)) {
-//         this.updateRightLine(topLeft, bottomRight, true);
-//       }
-//       if (platformIsLeftMost(this.topLine.length-1, this.topLine)) {
-//         this.updateLeftLine(topLeft, bottomRight, true);
-//       }
-//     } 
-//     //referral block must be after push and before sort
-//     this.topLine = sortBottomToTop(this.topLine);
-//   };
-
-//   this.updateBottomLine = function(topLeft, bottomRight, referredByAdjacent) {
-//     let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
-//     let bottomRightMargin = new Coord(bottomRight.x + margin, bottomRight.y + margin);
-//     for (let i=0; i < this.bottomLine.length; i++) {
-//       //remove any higher platforms within width
-//       if (this.bottomLine[i].a.x >= bottomLeftMargin.x && this.bottomLine[i].b.x <= bottomRightMargin.x) {
-//         this.bottomLine.splice(i, 1);
-//         i--;
-//         continue;
-//       }
-//       //split higher platform that is wider
-//       if (this.bottomLine[i].a.x < bottomLeftMargin.x && this.bottomLine[i].b.x > bottomRightMargin.x) {
-//         this.bottomLine.push(new Platform(
-//           new Coord(bottomRightMargin.x, this.bottomLine[i].b.y), 
-//           new Coord(this.bottomLine[i].b.x, this.bottomLine[i].b.y)
-//         ));
-//         this.bottomLine[i].b.x = bottomLeftMargin.x;
-//       }
-//       //clip any higher platforms crossing left edge
-//       if (this.bottomLine[i].b.x > bottomLeftMargin.x && this.bottomLine[i].b.x < bottomRightMargin.x) {
-//         this.bottomLine[i].b = new Coord(bottomLeftMargin.x, this.bottomLine[i].b.y);
-//       }
-//       //clip any higher platforms crossing right edge
-//       if (this.bottomLine[i].a.x < bottomRightMargin.x && this.bottomLine[i].a.x > bottomLeftMargin.x) {
-//         this.bottomLine[i].a = new Coord(bottomRightMargin.x, this.bottomLine[i].a.y);
-//       }
-//     }
-//     this.bottomLine.push(new Platform(bottomLeftMargin, bottomRightMargin));
-//     //check if over edge, and if so, have adjacent side update too
-//     if (!referredByAdjacent) {
-//       if (platformIsRightMost(this.bottomLine.length-1, this.bottomLine)) {
-//         this.updateRightLine(topLeft, bottomRight, true);
-//       }
-//       if (platformIsLeftMost(this.bottomLine.length-1, this.bottomLine)) {
-//         this.updateLeftLine(topLeft, bottomRight, true);
-//       }
-//     } 
-//     //referral block must be after push and before sort
-//     this.bottomLine = sortTopToBottom(this.bottomLine);
-//   };
-
-//   this.updateRightLine = function(topLeft, bottomRight, referredByAdjacent) {
-//     let topRightMargin = new Coord(bottomRight.x + margin, topLeft.y - margin);
-//     let bottomRightMargin = new Coord(bottomRight.x + margin, bottomRight.y + margin);
-//     for (let i=0; i < this.rightLine.length; i++) {
-//       //remove any left-more platforms within height
-//       if (this.rightLine[i].a.y >= topRightMargin.y && this.rightLine[i].b.y <= bottomRightMargin.y) {
-//         this.rightLine.splice(i, 1);
-//         i--;
-//         continue;
-//       }
-//       //split left-more platform that is taller
-//       if (this.rightLine[i].a.y < topRightMargin.y && this.rightLine[i].b.y > bottomRightMargin.y) {
-//         this.rightLine.push(new Platform(
-//           new Coord(this.rightLine[i].b.x, bottomRightMargin.y), 
-//           new Coord(this.rightLine[i].b.x, this.rightLine[i].b.y)
-//         ));
-//         this.rightLine[i].b.y = topRightMargin.y;
-//       }
-//       //clip left-more platform crossing top edge
-//       if (this.rightLine[i].b.y > topRightMargin.y && this.rightLine[i].b.y < bottomRightMargin.y) {
-//         this.rightLine[i].b = new Coord(this.rightLine[i].b.x, topRightMargin.y);
-//       }
-//       //clip left-more platform crossing lower edge
-//       if (this.rightLine[i].a.y < bottomRightMargin.y && this.rightLine[i].a.y > topRightMargin.y) {
-//         this.rightLine[i].a = new Coord(this.rightLine[i].a.x, bottomRightMargin.y);
-//       }
-//     }
-//     this.rightLine.push(new Platform(topRightMargin, bottomRightMargin));
-//     //check if over edge, and if so, have adjacent side update too
-//     if (!referredByAdjacent) {
-//       if (platformIsTopMost(this.rightLine.length-1, this.rightLine)) {
-//         this.updateTopLine(topLeft, bottomRight, true);
-//       }
-//       if (platformIsBottomMost(this.rightLine.length-1, this.rightLine)) {
-//         this.updateBottomLine(topLeft, bottomRight, true);
-//       }
-//     } 
-//     //referral block must be after push and before sort
-//     this.rightLine = sortLeftToRight(this.rightLine);
-//   };
-
-//   this.updateLeftLine = function(topLeft, bottomRight, referredByAdjacent) {
-//     let topLeftMargin = new Coord(topLeft.x - margin, topLeft.y - margin);
-//     let bottomLeftMargin = new Coord(topLeft.x - margin, bottomRight.y + margin);
-//     for (let i=0; i < this.leftLine.length; i++) {
-//       //remove any right-more platforms within height
-//       if (this.leftLine[i].a.y >= topLeftMargin.y && this.leftLine[i].b.y <= bottomLeftMargin.y) {
-//         this.leftLine.splice(i, 1);
-//         i--;
-//         continue;
-//       }
-//       //split right-more platform that is taller
-//       if (this.leftLine[i].a.y < topLeftMargin.y && this.leftLine[i].b.y > bottomLeftMargin.y) {
-//         this.leftLine.push(new Platform(
-//           new Coord(this.leftLine[i].b.x, bottomLeftMargin.y), 
-//           new Coord(this.leftLine[i].b.x, this.leftLine[i].b.y)
-//         ));
-//         this.leftLine[i].b.y = topLeftMargin.y;
-//       }
-//       //clip right-more platform crossing top edge
-//       if (this.leftLine[i].b.y > topLeftMargin.y && this.leftLine[i].b.y < bottomLeftMargin.y) {
-//         this.leftLine[i].b = new Coord(this.leftLine[i].b.x, topLeftMargin.y);
-//       }
-//       //clip right-more platform crossing lower edge
-//       if (this.leftLine[i].a.y < bottomLeftMargin.y && this.leftLine[i].a.y > topLeftMargin.y) {
-//         this.leftLine[i].a = new Coord(this.leftLine[i].a.x, bottomLeftMargin.y);
-//       }
-//     }
-//     this.leftLine.push(new Platform(topLeftMargin, bottomLeftMargin));
-//     //check if over edge, and if so, have adjacent side update too
-//     if (!referredByAdjacent) {
-//       if (platformIsTopMost(this.leftLine.length-1, this.leftLine)) {
-//         this.updateTopLine(topLeft, bottomRight, true);
-//       }
-//       if (platformIsBottomMost(this.leftLine.length-1, this.leftLine)) {
-//         this.updateBottomLine(topLeft, bottomRight, true);
-//       }
-//     } 
-//     //referral block must be after push and before sort
-//     this.leftLine = sortRightToLeft(this.leftLine);
-//   };
-
-//   this.addMotion = function(topLeft, bottomRight, canvas) {
-//     /*
-//       platform coordinates entered left to right or top to bottom.
-//     */
-//     this.topLine.push(new Platform(
-//       new Coord(0, topLeft.y - margin), 
-//       new Coord(canvas.width - 1, topLeft.y - margin)
-//     ));
-//     this.rightLine.push(new Platform(
-//       new Coord(bottomRight.x + margin, 0), 
-//       new Coord(bottomRight.x + margin, canvas.height - 1)
-//     ));
-//     this.bottomLine.push(new Platform(
-//       new Coord(0, bottomRight.y + margin), 
-//       new Coord(canvas.width - 1, bottomRight.y + margin)
-//     ));
-//     this.leftLine.push(new Platform(
-//       new Coord(topLeft.x - margin, 0), 
-//       new Coord(topLeft.x - margin, canvas.height - 1)
-//     ));
-//   };
-
-//   this.reset = function() {
-//     this.topLine = [];
-//     this.rightLine = [];
-//     this.bottomLine = [];
-//     this.leftLine = [];
-//   }
-// }
