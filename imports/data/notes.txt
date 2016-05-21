@@ -23,3 +23,7 @@ box sliding right along top skyline
     first obstruction gives x, and we have new possibleCenter
     if it reaches alignedx, we have x and new possibleCenter
     after reaching obstruction, we have new y
+
+
+todo
+  make meteor method part that updates last discussed recursive
