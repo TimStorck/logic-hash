@@ -35,12 +35,13 @@ export function filledSpaceModel() {
     //array of lines intersecting for each side of marginBox
     let linesIntersecting = [[],[],[],[]];
     let marginBoxSideCrossed
-    for (let i = 0; i < this.lineArray.length; i++) {
-      //returns -1 if false, or side / index if true
-      marginBoxSideCrossed = lineEnters(this.lineArray[i], marginBox);
-      if (marginBoxSideCrossed >=0) {
-        truncate(this.lineArray[i], marginBox[marginBoxSideCrossed]);
-        linesIntersecting[marginBoxSideCrossed].push(this.lineArray[i]);
+    //use this length that way when we add new lines they dont have to get checked
+    let length = this.lineArray.length;
+    for (let i = 0; i < length; i++) {
+      //lineEnters returns -1 if false, or side / index of marginBox if true
+      sideCrossed = lineEnters(this.lineArray[i], marginBox);
+      if (sideCrossed >=0) {
+        truncateOrSplit(this.lineArray[i], sideCrossed, marginBox, this.lineArray, linesIntersecting);
       }
     }
     //sort arrays of lines intersecting margin box sides from left to right or top to bottom
@@ -69,41 +70,41 @@ export function filledSpaceModel() {
       return -1;
     });
     if (linesIntersecting[0].length > 1) {
-      //if first line intersecting top of margin box faces right
-      if (linesIntersecting[0][0].side == 1) {
-        //starting at second, for all lines intersecting top of margin box
-        for (let i = 1; i < linesIntersecting[0].length; i++) {
-          //if drawing first line, use existing marginBox line
-          if (i == 1) {
-            marginBox[0].a.x = linesIntersecting[0][i-1].b.x;
-            marginBox[0].b.x = linesIntersecting[0][i].b.x;
-          } else {
-            //for every other one, draw line from previous one to that one
-            if (i%2 == 1) {
-              //draw a line from previous one
-              this.lineArray.push(new Line(new Coord(linesIntersecting[0][i-1].b.x, linesIntersecting[0][i-1].b.y), new Coord(linesIntersecting[0][i].b.x, linesIntersecting[0][i].b.y)))
-            } else {
-              if (i == linesIntersecting[0].length-1) {
-                marginBox.a.x = linesIntersecting[0][i].b.x;
-              }
-            }
-          }
-        }
-      } else {
-        for (let i = 0; i < linesIntersecting[0].length; i++) {
-          if (i == 0) {
-            marginBox[0].b.x = linesIntersecting[0][i].b.x;
-          } else {
-            if (i%2 == 0) {
-              this.lineArray.push(new Line(new Coord(linesIntersecting[0][i-1].b.x, linesIntersecting[0][i-1].b.y), new Coord(linesIntersecting[0][i].b.x, linesIntersecting[0][i].b.y)))
-            }else {
-              if (i == linesIntersecting[0].length-1) {
-                marginBox[0].a.x = linesIntersecting[0][i].b.x;
-              }
-            }
-          }
-        }
-      }
+      // //if first line intersecting top of margin box faces right
+      // if (linesIntersecting[0][0].side == 1) {
+      //   //starting at second, for all lines intersecting top of margin box
+      //   for (let i = 1; i < linesIntersecting[0].length; i++) {
+      //     //if drawing first line, use existing marginBox line
+      //     if (i == 1) {
+      //       marginBox[0].a.x = linesIntersecting[0][i-1].b.x;
+      //       marginBox[0].b.x = linesIntersecting[0][i].b.x;
+      //     } else {
+      //       //for every other one, draw line from previous one to that one
+      //       if (i%2 == 1) {
+      //         //draw a line from previous one
+      //         this.lineArray.push(new Line(new Coord(linesIntersecting[0][i-1].b.x, linesIntersecting[0][i-1].b.y), new Coord(linesIntersecting[0][i].b.x, linesIntersecting[0][i].b.y)))
+      //       } else {
+      //         if (i == linesIntersecting[0].length-1) {
+      //           marginBox.a.x = linesIntersecting[0][i].b.x;
+      //         }
+      //       }
+      //     }
+      //   }
+      // } else {
+      //   for (let i = 0; i < linesIntersecting[0].length; i++) {
+      //     if (i == 0) {
+      //       marginBox[0].b.x = linesIntersecting[0][i].b.x;
+      //     } else {
+      //       if (i%2 == 0) {
+      //         this.lineArray.push(new Line(new Coord(linesIntersecting[0][i-1].b.x, linesIntersecting[0][i-1].b.y), new Coord(linesIntersecting[0][i].b.x, linesIntersecting[0][i].b.y)))
+      //       }else {
+      //         if (i == linesIntersecting[0].length-1) {
+      //           marginBox[0].a.x = linesIntersecting[0][i].b.x;
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
     }
     if (linesIntersecting[1].length > 1) {
       
@@ -117,19 +118,47 @@ export function filledSpaceModel() {
   }
 }
 
-function truncate(line, marginBoxSide) {
-  switch(marginBoxSide.side) {
+function truncateOrSplit(line, sideCrossed, marginBox, lineArray, linesIntersecting) {
+  switch(sideCrossed) {
     case 0:
-      line.b.y = marginBoxSide.a.y;
+      //if line also crosses marginBox bottom
+      if (linesCross(line, marginBox[2])) {
+        //add new line below marginBox
+        let newLength = lineArray.push(new Line(new Coord(line.b.x, marginBox[2].a.y), new Coord(line.b.x, line.b.y), line.side));
+        //add new line to array of lines intersecting marginBox bottom
+        linesIntersecting[2].push(lineArray[newLength - 1]);
+      }
+      //truncate line to be above marginBox
+      line.b.y = marginBox[0].a.y;
+      //add line to array of lines intersecting marginBox top
+      linesIntersecting[0].push(line);
       break;
     case 1:
-      line.a.x = marginBoxSide.a.x;
+      if (linesCross(line, marginBox[3])) {
+        //add new line to left of marginBox
+        let newLength = lineArray.push(new Line(new Coord(line.a.x,line.a.y), new Coord(marginBox[3].b.x, line.b.y), line.side));
+        linesIntersecting[3].push(lineArray[newLength - 1]);
+      }
+      line.a.x = marginBox[1].a.x;
+      linesIntersecting[1].push(line);
       break;
     case 2:
-      line.a.y = marginBoxSide.a.y;
+      if (linesCross(line, marginBox[0])) {
+        //add new line above marginBox
+        let newLength = lineArray.push(new Line(new Coord(line.a.x,line.a.y), new Coord(line.b.x, marginBox[0].b.y), line.side));
+        linesIntersecting[0].push(lineArray[newLength - 1]);
+      }
+      line.a.y = marginBox[2].a.y;
+      linesIntersecting[2].push(line);
       break;
     case 3:
-      line.b.x = marginBoxSide.a.x;
+      if (linesCross(line, marginBox[1])) {
+        //add new line to right of marginBox
+        let newLength = lineArray.push(new Line(new Coord(marginBox[1].a.x, line.a.y), new Coord(line.b.x, line.b.y), line.side));
+        linesIntersecting[1].push(lineArray[newLength - 1]);
+      }
+      line.b.x = marginBox[3].a.x;
+      linesIntersecting[3].push(line);
       break;
   }
 }
@@ -141,6 +170,10 @@ function lineEnters(line, marginBox) {
     }
   }
   return -1;
+}
+
+function oppositeSide(side) {
+  return (side + 2) % 4;
 }
 
 function linesCross(firstLine, secondLine) {
@@ -171,7 +204,7 @@ function linesMeet(firstLine, secondLine) {
   return false;
 }
 
-function truncateOrSplit(lineToCross, lineDefiningSide, lineArray, marginBox) {
+function truncateOrSplitDEPRECATED(lineToCross, lineDefiningSide, lineArray, marginBox) {
   let lineToSpliceOut = false;
   //handles if two lines of new marginBox cross same line
   otherCrossingLine = getOtherCrossingLine(lineToCross, lineDefiningSide, lineArray, marginBox);
@@ -241,7 +274,7 @@ function truncateOrSplit(lineToCross, lineDefiningSide, lineArray, marginBox) {
 }
 
 function getOtherCrossingLine(lineToCross, lineDefiningSide, lineArray, marginBox) {
-  let side = oppositeSide(lineDefiningSide);
+  let side = oppositeSideFromLine(lineDefiningSide);
   let lineToReturn;
   for (let i = 0; i < marginBox.length; i ++) {
     if (marginBox[i].side === side) {
@@ -274,7 +307,7 @@ function getOtherCrossingLine(lineToCross, lineDefiningSide, lineArray, marginBo
   return lineToReturn;
 }
 
-function oppositeSide(line) {
+function oppositeSideFromLine(line) {
   switch (line.side) {
     case 0:
       return 2;
