@@ -82,7 +82,7 @@ export function filledSpaceModel() {
     /*
         REMOVAL
 
-        remove lines embedded within outline
+        remove marginBox lines embedded within outline
     */
     for (let i = 0; i < 4; i++) {
       //if nothing intersects this side of the marginBox
@@ -120,25 +120,56 @@ export function filledSpaceModel() {
 
         consolidate overlapping lines and remove lines that the removal section can't take care of due to overlaps
     */
+    let lolArray = [{},{},{},{}];
     for (let i = 0; i < 4; i++) {
+      //removal section above could have removed a line
       if (typeof marginBox[i] != "undefined") {
         for (let j = 0; j < this.lineArray.length; j++) {
+          //dont compare line to itself
           if (marginBox[i] != this.lineArray[j]) {
             if (linesOverlap(marginBox[i], this.lineArray[j])) {
-              console.log("lines overlap");
-              console.log(marginBox[i].a.x + ", " + marginBox[i].a.y + " - " + marginBox[i].b.x + ", " + marginBox[i].b.y);
-              console.log(this.lineArray[j].a.x + ", " + this.lineArray[j].a.y + " - " + this.lineArray[j].b.x + ", " + this.lineArray[j].b.y);
               //lineArray line A coordinate comes first
               if (marginBox[i].a.x > this.lineArray[j].a.x || marginBox[i].a.y > this.lineArray[j].a.y) {
+                //mark the points being cut out so they can be used to check for lines that should be removed
+                lolArray[i] = {
+                  "mBPtRemd": new Coord(marginBox[i].a.x, marginBox[i].a.y), 
+                  "lAPtRemd": new Coord(this.lineArray[j].b.x, this.lineArray[j].b.y)
+                };
                 marginBox[i].a.x = this.lineArray[j].a.x;
                 marginBox[i].a.y = this.lineArray[j].a.y;
               } else {
+                lolArray[i] = {
+                  "mBPtRemd": new Coord(marginBox[i].b.x, marginBox[i].b.y), 
+                  "lAPtRemd": new Coord(this.lineArray[j].a.x, this.lineArray[j].a.y)
+                };
                 marginBox[i].b.x = this.lineArray[j].b.x;
                 marginBox[i].b.y = this.lineArray[j].b.y;
               }
               this.lineArray.splice(j, 1);
               j--;
             }
+          }
+        }
+      }
+    }
+    //check for lines that should be removed
+    for (let i = 0; i < 4; i++) {
+      //check if object is not empty and object of opposite side is also not empty
+      if (typeof lolArray[i].mBPtRemd != "undefined" && typeof lolArray[oppositeSide(i)].mBPtRemd != "undefined") {
+        for (let j = 0; j < 4; j++) {
+          //find marginBox line that matches points removed from marginBox overlapping lines
+          if (marginBox[j].a.equals(lolArray[i].mBPtRemd) && marginBox[j].b.equals(lolArray[oppositeSide(i)].mBPtRemd)  || 
+            marginBox[j].b.equals(lolArray[i].mBPtRemd) && marginBox[j].a.equals(lolArray[oppositeSide(i)].mBPtRemd) ) {
+            findAndRemoveLine(this.lineArray, marginBox[j]);
+            break;
+          }
+        }
+        //find lineArray line that maches points removed from marginBox overlapping lines
+        for (let j = 0; j < this.lineArray.length; j++) {
+          if (this.lineArray[j].a.equals(lolArray[i].lAPtRemd) && this.lineArray[j].b.equals(lolArray[oppositeSide(i)].lAPtRemd) ||
+            this.lineArray[j].b.equals(lolArray[i].lAPtRemd) && this.lineArray[j].a.equals(lolArray[oppositeSide(i)].lAPtRemd) ) {
+            this.lineArray.splice(j, 1);
+            break;
           }
         }
       }
@@ -294,6 +325,10 @@ export function filledSpaceModel() {
       }
     }
   }
+}
+
+function oppositeSide(side) {
+  return (side + 2) % 4;
 }
 
 function findAndRemoveLine(lineArray, line) {

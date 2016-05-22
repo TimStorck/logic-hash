@@ -13,6 +13,12 @@ export function Coord(x, y) {
   this.minus = function(coord) {
     return new Coord(this.x - coord.x, this.y - coord.y);
   };
+  this.equals = function(coord) {
+    if (coord.x === this.x && coord.y === this.y) {
+      return true;
+    }
+    return false;
+  };
 }
 
 export function PostOb(_id, author, content, responseNo, flag, elicitor) {
