@@ -108,7 +108,41 @@ export function filledSpaceModel() {
       }
     }
     if (linesInter[1].length > 0) {
-      
+      let mbb = new Coord(marginBox[1].b.x, marginBox[1].b.y);
+      if (firstFacesOthers(marginBox[1], linesInter[1][0])){
+        for (let i = 0; i < linesInter[1].length; i++) {
+          if (i%2 === 0) {
+            //for first line, use existing line object in marginBox
+            if (i === 0) {
+              //if more intersecting lines after current
+              if (i+1 < linesInter[1].length) {
+                marginBox[1].a.y = linesInter[1][0].b.y;
+                marginBox[1].b.y = linesInter[1][1].b.y;
+              } else {
+                marginBox[1].a.y = linesInter[1][0].b.y;
+              }
+            } else {
+              if (i+1 < linesInter[1].length) {
+                this.lineArray.push(new Line(new Coord(linesInter[1][i].a.x, linesInter[1][i].a.y), new Coord(linesInter[1][i+1].a.x, linesInter[1][i+1].a.y), marginBox[1].side));
+              } else {
+                this.lineArray.push(new Line(new Coord(linesInter[1][i].a.x, linesInter[1][i].a.y), new Coord(mbb.x, mbb.y), marginBox[1].side));
+              }
+            }
+          }
+        }
+      } else {
+        //if first line doesn't face others
+        marginBox[1].b.y = linesInter[1][0].b.y;
+        for (let i = 1; i < linesInter[1].length; i++) {
+          if (i%2 === 1) {
+            if (i+1 < linesInter[1].length) {
+              this.lineArray.push(new Line(new Coord(linesInter[1][i].a.x, linesInter[1][i].a.y), new Coord(linesInter[1][i+1].a.x, linesInter[1][i+1].a.y), marginBox[1].side));
+            } else {
+              this.lineArray.push(new Line(new Coord(linesInter[1][i].a.x, linesInter[1][i].a.y), new Coord(mbb.x, mbb.y), marginBox[1].side));
+            }
+          }
+        }
+      }
     }
     if (linesInter[2].length > 0) {
       let mbb = new Coord(marginBox[2].b.x, marginBox[2].b.y);
@@ -120,7 +154,7 @@ export function filledSpaceModel() {
                 marginBox[2].a.x = linesInter[2][0].a.x;
                 marginBox[2].b.x = linesInter[2][1].a.x;
               } else {
-                marginBox[2].b.x = linesInter[2][0].a.x;
+                marginBox[2].a.x = linesInter[2][0].a.x;
               }
             } else {
               if (i+1 < linesInter[2].length) {
@@ -132,7 +166,7 @@ export function filledSpaceModel() {
           }
         }
       } else {
-        marginBox[2].a.x = linesInter[2][0].a.x;
+        marginBox[2].b.x = linesInter[2][0].a.x;
         for (let i = 1; i < linesInter[2].length; i++) {
           if (i%2 === 1) {
             if (i+1 < linesInter[2].length) {
@@ -145,7 +179,41 @@ export function filledSpaceModel() {
       }
     }
     if (linesInter[3].length > 0) {
-      
+      let mbb = new Coord(marginBox[3].b.x, marginBox[3].b.y);
+      if (firstFacesOthers(marginBox[3], linesInter[3][0])){
+        for (let i = 0; i < linesInter[3].length; i++) {
+          if (i%2 === 0) {
+            //for first line, use existing line object in marginBox
+            if (i === 0) {
+              //if more intersecting lines after current
+              if (i+1 < linesInter[3].length) {
+                marginBox[3].a.y = linesInter[3][0].b.y;
+                marginBox[3].b.y = linesInter[3][1].b.y;
+              } else {
+                marginBox[3].a.y = linesInter[3][0].b.y;
+              }
+            } else {
+              if (i+1 < linesInter[3].length) {
+                this.lineArray.push(new Line(new Coord(linesInter[3][i].b.x, linesInter[3][i].b.y), new Coord(linesInter[3][i+1].b.x, linesInter[3][i+1].b.y), marginBox[3].side));
+              } else {
+                this.lineArray.push(new Line(new Coord(linesInter[3][i].b.x, linesInter[3][i].b.y), new Coord(mbb.x, mbb.y), marginBox[3].side));
+              }
+            }
+          }
+        }
+      } else {
+        //if first line doesn't face others
+        marginBox[3].b.y = linesInter[3][0].b.y;
+        for (let i = 1; i < linesInter[3].length; i++) {
+          if (i%2 === 1) {
+            if (i+1 < linesInter[3].length) {
+              this.lineArray.push(new Line(new Coord(linesInter[3][i].b.x, linesInter[3][i].b.y), new Coord(linesInter[3][i+1].b.x, linesInter[3][i+1].b.y), marginBox[3].side));
+            } else {
+              this.lineArray.push(new Line(new Coord(linesInter[3][i].b.x, linesInter[3][i].b.y), new Coord(mbb.x, mbb.y), marginBox[3].side));
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -153,9 +221,31 @@ export function filledSpaceModel() {
 //to test first intersecting line in array of intersecting lines sorted from left to right or top to bottom
 function firstFacesOthers(lineToSegment, intersectingLine) {
   //a right side line (side 1) intersecting a top side line (side 0) faces to the right
-  if (lineToSegment.side + 1 === intersectingLine.side) {
-    return true;
+  switch(lineToSegment.side) {
+    case 0:
+      if (intersectingLine.side === 1) {
+        return true;
+      }
+      break;
+    case 1:
+      if (intersectingLine.side === 2) {
+        return true;
+      }
+      break;
+    case 2:
+      if (intersectingLine.side === 1) {
+        return true;
+      }
+      break;
+    case 3:
+      if (intersectingLine.side === 2) {
+        return true;
+      }
+      break;
   }
+  // if (lineToSegment.side + 1 === intersectingLine.side) {
+  //   return true;
+  // }
   return false;
 }
 
