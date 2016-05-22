@@ -37,6 +37,12 @@ export function filledSpaceModel() {
     let marginBoxSideCrossed
     //use this length that way when we add new lines they dont have to get checked
     let length = this.lineArray.length;
+
+    /*
+        LOOP
+
+        loop through lineArray lines
+    */
     for (let i = 0; i < length; i++) {
       //lineEnters returns -1 if false, or side / index of marginBox if true
       sideCrossed = lineEnters(this.lineArray[i], marginBox);
@@ -74,13 +80,49 @@ export function filledSpaceModel() {
       return -1;
     });
     /*
+        REMOVING
+
+        remove lines embedded within outline
+    */
+    for (let i = 0; i < 4; i++) {
+      //if nothing intersects this side of the marginBox
+      if (linesInter[i].length === 0) {
+        //if that sides adjacent sides are intersected
+        if (linesInter[adjCCW(i)].length > 0 && linesInter[adjCW(i)].length > 0) {
+          //if the adjacent sides' closest intersecting lines face away
+          switch(i) {
+            case 0:
+              if (firstFacesOthers(linesInter[adjCCW(i)][0]) && firstFacesOthers(linesInter[adjCW(i)][0])) {
+                findAndRemoveLine(this.lineArray, marginBox[i]);
+              }
+              break;
+            case 1:
+              if (lastFacesOthers(linesInter[adjCCW(i)][linesInter[adjCCW(i)].length - 1]) && lastFacesOthers(linesInter[adjCW(i)][linesInter[adjCW(i)].length - 1])) {
+                findAndRemoveLine(this.lineArray, marginBox[i]);
+              }
+              break;
+            case 2:
+              if (lastFacesOthers(linesInter[adjCCW(i)][linesInter[adjCCW(i)].length - 1]) && lastFacesOthers(linesInter[adjCW(i)][linesInter[adjCW(i)].length - 1])) {
+                findAndRemoveLine(this.lineArray, marginBox[i]);
+              }
+              break;
+            case 3:
+              if (firstFacesOthers(linesInter[adjCCW(i)][0]) && firstFacesOthers(linesInter[adjCW(i)][0])) {
+                findAndRemoveLine(this.lineArray, marginBox[i]);
+              }
+              break;
+          }
+        }
+      }
+    }
+    /*
         SEGMENTING
 
         segment each side of marginBox if one or more lines intersect it
     */
     if (linesInter[0].length > 0) {
       let mbb = new Coord(marginBox[0].b.x, marginBox[0].b.y);
-      if (firstFacesOthers(marginBox[0], linesInter[0][0])){
+      if (firstFacesOthers(linesInter[0][0])){
         for (let i = 0; i < linesInter[0].length; i++) {
           if (i%2 === 0) {
             //for first line, use existing line object in marginBox
@@ -117,7 +159,7 @@ export function filledSpaceModel() {
     }
     if (linesInter[1].length > 0) {
       let mbb = new Coord(marginBox[1].b.x, marginBox[1].b.y);
-      if (firstFacesOthers(marginBox[1], linesInter[1][0])){
+      if (firstFacesOthers(linesInter[1][0])){
         for (let i = 0; i < linesInter[1].length; i++) {
           if (i%2 === 0) {
             //for first line, use existing line object in marginBox
@@ -154,7 +196,7 @@ export function filledSpaceModel() {
     }
     if (linesInter[2].length > 0) {
       let mbb = new Coord(marginBox[2].b.x, marginBox[2].b.y);
-      if (firstFacesOthers(marginBox[2], linesInter[2][0])){
+      if (firstFacesOthers(linesInter[2][0])){
         for (let i = 0; i < linesInter[2].length; i++) {
           if (i%2 === 0) {
             if (i === 0) {
@@ -188,7 +230,7 @@ export function filledSpaceModel() {
     }
     if (linesInter[3].length > 0) {
       let mbb = new Coord(marginBox[3].b.x, marginBox[3].b.y);
-      if (firstFacesOthers(marginBox[3], linesInter[3][0])){
+      if (firstFacesOthers(linesInter[3][0])){
         for (let i = 0; i < linesInter[3].length; i++) {
           if (i%2 === 0) {
             //for first line, use existing line object in marginBox
@@ -226,34 +268,38 @@ export function filledSpaceModel() {
   }
 }
 
-//to test first intersecting line in array of intersecting lines sorted from left to right or top to bottom
-function firstFacesOthers(lineToSegment, intersectingLine) {
-  //a right side line (side 1) intersecting a top side line (side 0) faces to the right
-  switch(lineToSegment.side) {
-    case 0:
-      if (intersectingLine.side === 1) {
-        return true;
-      }
+function findAndRemoveLine(lineArray, line) {
+  for (let j = lineArray.length-1; j >= 0; j--) {
+    if (lineArray[j] == line) {
+      lineArray.splice(j, 1);
       break;
-    case 1:
-      if (intersectingLine.side === 2) {
-        return true;
-      }
-      break;
-    case 2:
-      if (intersectingLine.side === 1) {
-        return true;
-      }
-      break;
-    case 3:
-      if (intersectingLine.side === 2) {
-        return true;
-      }
-      break;
+    }
   }
-  // if (lineToSegment.side + 1 === intersectingLine.side) {
-  //   return true;
-  // }
+}
+
+//for use with marginBox
+function adjCCW(side) {
+  return (side + 3) % 4;
+}
+
+//for use with marginBox
+function adjCW(side) {
+  return (side + 1) % 4;
+}
+
+//to test last intersecting line in array of intersecting lines sorted from left to right or top to bottom
+function lastFacesOthers(intersectingLine) {
+  if (intersectingLine.side === 3 || intersectingLine.side === 0) {
+    return true;
+  }
+  return false;
+}
+
+//to test first intersecting line in array of intersecting lines sorted from left to right or top to bottom
+function firstFacesOthers(intersectingLine) {
+  if (intersectingLine.side === 1 || intersectingLine.side === 2) {
+    return true;
+  }
   return false;
 }
 
