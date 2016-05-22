@@ -44,7 +44,11 @@ export function filledSpaceModel() {
         truncateOrSplit(this.lineArray[i], sideCrossed, marginBox, this.lineArray, linesInter);
       }
     }
-    //sort arrays of lines intersecting margin box sides from left to right or top to bottom
+    /*
+        SORTING
+    
+        sort arrays of lines intersecting margin box sides from left to right or top to bottom
+    */
     linesInter[0].sort(function(first, second) {
       if (first.b.x > second.b.x) {
         return 1;
@@ -69,7 +73,11 @@ export function filledSpaceModel() {
       } 
       return -1;
     });
-    //segment each side of marginBox if one or more lines intersect it
+    /*
+        SEGMENTING
+
+        segment each side of marginBox if one or more lines intersect it
+    */
     if (linesInter[0].length > 0) {
       let mbb = new Coord(marginBox[0].b.x, marginBox[0].b.y);
       if (firstFacesOthers(marginBox[0], linesInter[0][0])){
@@ -303,10 +311,6 @@ function lineEnters(line, marginBox) {
   return -1;
 }
 
-function oppositeSide(side) {
-  return (side + 2) % 4;
-}
-
 function linesCross(firstLine, secondLine) {
   //if firstLine is horizontal
   if (firstLine.a.y == firstLine.b.y) {
@@ -333,125 +337,6 @@ function linesMeet(firstLine, secondLine) {
     return true
   }
   return false;
-}
-
-function truncateOrSplitDEPRECATED(lineToCross, lineDefiningSide, lineArray, marginBox) {
-  let lineToSpliceOut = false;
-  //handles if two lines of new marginBox cross same line
-  otherCrossingLine = getOtherCrossingLine(lineToCross, lineDefiningSide, lineArray, marginBox);
-  if (typeof otherCrossingLine != "undefined") {
-    switch (lineDefiningSide.side) {
-      case 0:
-        lineArray.push(new Line(new Coord(lineToCross.a.x, otherCrossingLine.a.y), new Coord(lineToCross.b.x, lineToCross.b.y), lineToCross.side));
-        //trim otherCrossingLine
-        if (lineToCross.side == 1) {
-          lineToSpliceOut = 3;
-          otherCrossingLine.a.x = lineToCross.a.x;
-        } else {
-          lineToSpliceOut = 1;
-          otherCrossingLine.b.x = lineToCross.a.x;
-        }
-        break;
-      case 1:
-        lineArray.push(new Line(new Coord(lineToCross.a.x, lineToCross.a.y), new Coord(otherCrossingLine.a.x, lineToCross.a.y), lineToCross.side));
-        //trim otherCrossingLine
-        if (lineToCross.side == 0) {
-          lineToSpliceOut = 2;
-          otherCrossingLine.b.y = lineToCross.a.y;
-        } else {
-          lineToSpliceOut = 0;
-          otherCrossingLine.a.y = lineToCross.a.y;
-        }
-        break;
-      case 2:
-        lineArray.push(new Line(new Coord(lineToCross.a.x, lineToCross.a.y), new Coord(lineToCross.a.x, otherCrossingLine.a.y), lineToCross.side));
-        //trim otherCrossingLine
-        if (lineToCross.side == 1) {
-          lineToSpliceOut = 3;
-          otherCrossingLine.a.x = lineToCross.a.x;
-        } else {
-          lineToSpliceOut = 1;
-          otherCrossingLine.b.x = lineToCross.a.x;
-        }
-        break;
-      case 3:
-        lineArray.push(new Line(new Coord(otherCrossingLine.a.x, lineToCross.a.y), new Coord(lineToCross.b.x, lineToCross.b.y), lineToCross.side));
-        //trim otherCrossingLine
-        if (lineToCross.side == 0) {
-          lineToSpliceOut = 2;
-          otherCrossingLine.b.y = lineToCross.a.y;
-        } else {
-          lineToSpliceOut = 0;
-          otherCrossingLine.a.y = lineToCross.a.y;
-        }
-        break;
-    }
-  }
-  switch (lineDefiningSide.side) {
-    case 0:
-      lineToCross.b.y = lineDefiningSide.a.y;
-      break;
-    case 1:
-      lineToCross.a.x = lineDefiningSide.a.x;
-      break;
-    case 2:
-      lineToCross.a.y = lineDefiningSide.a.y;
-      break;
-    case 3:
-      lineToCross.b.x = lineDefiningSide.a.x;
-      break;
-  }
-  return lineToSpliceOut;
-}
-
-function getOtherCrossingLine(lineToCross, lineDefiningSide, lineArray, marginBox) {
-  let side = oppositeSideFromLine(lineDefiningSide);
-  let lineToReturn;
-  for (let i = 0; i < marginBox.length; i ++) {
-    if (marginBox[i].side === side) {
-      if (linesCross(marginBox[i], lineToCross)) {
-        switch (lineDefiningSide.side) {
-          case 0:
-            if (lineDefiningSide.a.y < marginBox[i].a.y) {
-              lineToReturn = marginBox[i];
-            }
-            break;
-          case 1:
-            if (lineDefiningSide.a.x > marginBox[i].a.x) {
-              lineToReturn = marginBox[i];
-            }
-            break;
-          case 2:
-            if (lineDefiningSide.a.y > marginBox[i].a.y) {
-              lineToReturn = marginBox[i];
-            }
-            break;
-          case 3:
-            if (lineDefiningSide.a.x < marginBox[i].a.x) {
-              lineToReturn = marginBox[i];
-            }
-            break;
-        }
-      }
-    } 
-  }
-  return lineToReturn;
-}
-
-function oppositeSideFromLine(line) {
-  switch (line.side) {
-    case 0:
-      return 2;
-      break;
-    case 1:
-      return 3;
-      break;
-    case 2:
-      return 0;
-      break;
-    case 3:
-      return 1;
-  }
 }
 
 function getMarginBox(topLeft, bottomRight, margin) {
@@ -548,13 +433,3 @@ function linesOverlap(firstLine, secondLine) {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
