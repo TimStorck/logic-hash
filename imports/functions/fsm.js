@@ -80,7 +80,7 @@ export function filledSpaceModel() {
       return -1;
     });
     /*
-        REMOVING
+        REMOVAL
 
         remove lines embedded within outline
     */
@@ -111,6 +111,34 @@ export function filledSpaceModel() {
                 findAndRemoveLine(this.lineArray, marginBox[i]);
               }
               break;
+          }
+        }
+      }
+    }
+    /*
+        LINE OVERLAP
+
+        consolidate overlapping lines and remove lines that the removal section can't take care of due to overlaps
+    */
+    for (let i = 0; i < 4; i++) {
+      if (typeof marginBox[i] != "undefined") {
+        for (let j = 0; j < this.lineArray.length; j++) {
+          if (marginBox[i] != this.lineArray[j]) {
+            if (linesOverlap(marginBox[i], this.lineArray[j])) {
+              console.log("lines overlap");
+              console.log(marginBox[i].a.x + ", " + marginBox[i].a.y + " - " + marginBox[i].b.x + ", " + marginBox[i].b.y);
+              console.log(this.lineArray[j].a.x + ", " + this.lineArray[j].a.y + " - " + this.lineArray[j].b.x + ", " + this.lineArray[j].b.y);
+              //lineArray line A coordinate comes first
+              if (marginBox[i].a.x > this.lineArray[j].a.x || marginBox[i].a.y > this.lineArray[j].a.y) {
+                marginBox[i].a.x = this.lineArray[j].a.x;
+                marginBox[i].a.y = this.lineArray[j].a.y;
+              } else {
+                marginBox[i].b.x = this.lineArray[j].b.x;
+                marginBox[i].b.y = this.lineArray[j].b.y;
+              }
+              this.lineArray.splice(j, 1);
+              j--;
+            }
           }
         }
       }
@@ -410,72 +438,24 @@ function getMarginBox(topLeft, bottomRight, margin) {
   return marginBox;
 }
 
-function linesArePerpendicular(firstLine, secondLine) {
-  if (firstLine.side == 0 || firstLine.side == 2) {
-    if (secondLine.side == 1 || secondLine.side == 3) {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    if (secondLine.side == 0 || secondLine.side == 2) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
-
 function linesOverlap(firstLine, secondLine) {
-  //if lines are horizontal
-  if (firstLine.side == 0 || firstLine.side == 2) {
-    //if same y value
-    if (firstLine.a.y == secondLine.a.y) {
-      //if firstLine is left more
-      if (firstLine.a.x < secondLine.a.x) {
-        //if secondLine starts before firstLine ends
-        if (firstLine.b.x > secondLine.a.x) {
-          return true;
-        } else {
-          return false;
-        }
-      //secondLine is left more
-      } else {
-        //if firstLine starts before secondLine ends
-        if (secondLine.b.x > firstLine.a.x) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    //different y value
+  if (firstLine.a.y === secondLine.a.y && firstLine.b.y === secondLine.b.y && firstLine.a.y === firstLine.b.y) {
+    if (firstLine.a.x < secondLine.a.x && secondLine.a.x < firstLine.b.x) {
+      return true;
     } else {
-      return false;
-    }
-  //lines are vertical
-  } else {
-    //if same x value
-    if (firstLine.a.x == secondLine.a.x) {
-      //if firstLine is higher
-      if (firstLine.a.y < secondLine.a.y) {
-        //if secondLine starts before firstLine ends
-        if (firstLine.b.y > secondLine.a.y) {
-          return true;
-        } else {
-          return false;
-        }
-      //secondLine is higher
-      } else {
-        //if firstLine starts before secondLine ends
-        if (secondLine.b.y > firstLine.a.y) {
-          return true;
-        } else {
-          return false;
-        }
+      if (secondLine.a.x < firstLine.a.x && firstLine.a.x < secondLine.b.x) {
+        return true;
       }
-    //different x value
-    } else {
-      return false;
     }
   }
+  if (firstLine.a.x === secondLine.a.x && firstLine.b.x === secondLine.b.x && firstLine.a.x === firstLine.b.x) {
+    if (firstLine.a.y < secondLine.a.y && secondLine.a.y < firstLine.b.y) {
+      return true;
+    } else {
+      if (secondLine.a.y < firstLine.a.y && firstLine.a.y < secondLine.b.y) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
