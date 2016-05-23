@@ -134,7 +134,7 @@ export function filledSpaceModel() {
         consolidate overlapping lines and remove lines orphaned by line overlap consolidation
         (removal section doesn't test for lines that intersect edges, only lines within)
     */
-    //line overlap array
+    //line overlap array holds objects describing line overlap consolidation that may have occurred for marginBox
     let lolArray = [{},{},{},{}];
     //for each marginBox side
     for (let i = 0; i < 4; i++) {
@@ -202,7 +202,7 @@ export function filledSpaceModel() {
       }
     }
     //check for lines orphaned by overlapping line consolidation
-    //for each side of line overlap Array, which holds an object describing any line overlap consolidation that may have occurred
+    //for each side of line overlap Array
     for (let i = 0; i < 4; i++) {
       //check if object is not empty and object of opposite side is also not empty
       if (typeof lolArray[i].mBPtRemd != "undefined" && typeof lolArray[oppositeSide(i)].mBPtRemd != "undefined") {
