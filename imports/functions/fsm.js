@@ -33,6 +33,11 @@ export function filledSpaceModel() {
     this.trimOverlap(marginBox);
   }
 
+  /*
+    a new marginBox being added to the outline would overlap the edges of the prior 
+    filled space outline. this method takes care of that overlap to maintain a 
+    cohesive outline of the filled space
+  */
   this.trimOverlap = function(marginBox) {
     //array of lines intersecting for each side of marginBox
     let linesInter = [[],[],[],[]];
@@ -43,7 +48,7 @@ export function filledSpaceModel() {
     /*
         TRUNCATE OR SPLIT
 
-        any line from lineArray crossing a marginBox line gets truncated, 
+        any line from prior filled space outline crossing a marginBox line gets truncated, 
         or split if it passes all the way through, and added to list
         of intersecting lines
     */
@@ -86,7 +91,7 @@ export function filledSpaceModel() {
     /*
         REMOVAL
 
-        remove marginBox lines within outline, and outline lines within marginBox
+        remove marginBox lines totally within outline, and outline lines totally within marginBox
     */
     //remove lineArray lines within marginBox
     for (let i = 0; i < this.lineArray.length; i++) {
