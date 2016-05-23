@@ -147,7 +147,7 @@ export function filledSpaceModel() {
             //if lines overlap
             if (linesOverlap(marginBox[i], this.lineArray[j])) {
               //if lineArray line coordinate A comes first
-              if (marginBox[i].a.x > this.lineArray[j].a.x || marginBox[i].a.y > this.lineArray[j].a.y) {
+              if (this.lineArray[j].a.x < marginBox[i].a.x || this.lineArray[j].a.y < marginBox[i].a.y) {
                 //mark the points being cut out so they can be used to check for lines that should be removed
                 lolArray[i] = {
                   "mBPtRemd": new Coord(marginBox[i].a.x, marginBox[i].a.y), 
@@ -158,13 +158,40 @@ export function filledSpaceModel() {
                 marginBox[i].a.y = this.lineArray[j].a.y;
               //if marginBox line coordinate A comes first
               } else {
-                lolArray[i] = {
-                  "mBPtRemd": new Coord(marginBox[i].b.x, marginBox[i].b.y), 
-                  "lAPtRemd": new Coord(this.lineArray[j].a.x, this.lineArray[j].a.y)
-                };
-                //stretch marginBox line to end at lineArray line coordinate B
-                marginBox[i].b.x = this.lineArray[j].b.x;
-                marginBox[i].b.y = this.lineArray[j].b.y;
+                //if lineArray coordinate B comes last
+                if (marginBox[i].b.x < this.lineArray[j].b.x || marginBox[i].b.y < this.lineArray[j].b.y) {
+                  lolArray[i] = {
+                    "mBPtRemd": new Coord(marginBox[i].b.x, marginBox[i].b.y), 
+                    "lAPtRemd": new Coord(this.lineArray[j].a.x, this.lineArray[j].a.y)
+                  };
+                  //stretch marginBox line to end at lineArray line coordinate B
+                  marginBox[i].b.x = this.lineArray[j].b.x;
+                  marginBox[i].b.y = this.lineArray[j].b.y;
+                //if marginBox line coordinate B comes last, i.e. lineArray line is short little line
+                } else {
+                  //if overlapping lineArray line is within margin's length from right edge or bottom edge
+                  if (marginBox[i].a.x !== marginBox[i].b.x && marginBox[i].b.x - this.lineArray[j].a.x <= margin ||
+                    marginBox[i].a.y !== marginBox[i].b.y && marginBox[i].b.y - this.lineArray[j].a.y <= margin) {
+                      //mark the points being cut out so they can be used to check for lines that should be removed
+                      lolArray[i] = {
+                        "mBPtRemd": new Coord(marginBox[i].b.x, marginBox[i].b.y), 
+                        "lAPtRemd": new Coord(this.lineArray[j].a.x, this.lineArray[j].a.y)
+                      };
+                      //stretch marginBox line to end at lineArray line coordinate B
+                      marginBox[i].b.x = this.lineArray[j].b.x;
+                      marginBox[i].b.y = this.lineArray[j].b.y;
+                  //overlapping lineArray line must be within margin's length from left or top edge
+                  } else {
+                    //mark the points being cut out so they can be used to check for lines that should be removed
+                    lolArray[i] = {
+                      "mBPtRemd": new Coord(marginBox[i].a.x, marginBox[i].a.y), 
+                      "lAPtRemd": new Coord(this.lineArray[j].b.x, this.lineArray[j].b.y)
+                    };
+                    //stretch marginBox line to begin at lineArray line coordinate A
+                    marginBox[i].a.x = this.lineArray[j].a.x;
+                    marginBox[i].a.y = this.lineArray[j].a.y;
+                  }
+                }
               }
               //remove lineArray line
               this.lineArray.splice(j, 1);
