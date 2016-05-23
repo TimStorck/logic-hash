@@ -11,12 +11,14 @@ import { Area } from './objects.js';
 
 export function filledSpaceModel() {
   const margin = 17;
+  //this is the outline of the filled space
   this.lineArray = [];
 
   this.reset = function() {
     this.lineArray = [];
   }
 
+  //marginBox is perimeter coordinates of post div with margin space added
   this.addBox = function(topLeft, bottomRight) {
     let marginBox = getMarginBox(topLeft, bottomRight, margin);
 
@@ -39,9 +41,11 @@ export function filledSpaceModel() {
     let length = this.lineArray.length;
 
     /*
-        LOOP
+        TRUNCATE OR SPLIT
 
-        loop through lineArray lines
+        any line from lineArray crossing a marginBox line gets truncated, 
+        or split if it passes all the way through, and added to list
+        of intersecting lines
     */
     for (let i = 0; i < length; i++) {
       //lineEnters returns -1 if false, or side / index of marginBox if true
@@ -82,8 +86,17 @@ export function filledSpaceModel() {
     /*
         REMOVAL
 
-        remove marginBox lines embedded within outline
+        remove marginBox lines within outline, and outline lines within marginBox
     */
+    //remove lineArray lines within marginBox
+    for (let i = 0; i < this.lineArray.length; i++) {
+      if (this.lineArray[i].a.x > marginBox[0].a.x && this.lineArray[i].b.x < marginBox[0].b.x &&
+        this.lineArray[i].a.y > marginBox[1].a.y && this.lineArray[i].b.y < marginBox[1].b.y) {
+        this.lineArray.splice(i, 1);
+        i--;
+      }
+    }
+    //remove marginBox lines within lineArray outline
     for (let i = 0; i < 4; i++) {
       //if nothing intersects this side of the marginBox
       if (linesInter[i].length === 0) {
@@ -118,33 +131,42 @@ export function filledSpaceModel() {
     /*
         LINE OVERLAP
 
-        consolidate overlapping lines and remove lines that the removal section can't take care of due to overlaps
+        consolidate overlapping lines and remove lines orphaned by line overlap consolidation
+        (removal section doesn't test for lines that intersect edges, only lines within)
     */
+    //line overlap array
     let lolArray = [{},{},{},{}];
+    //for each marginBox side
     for (let i = 0; i < 4; i++) {
-      //removal section above could have removed a line
+      //skip removed sides
       if (typeof marginBox[i] != "undefined") {
+        //for each lineArray line
         for (let j = 0; j < this.lineArray.length; j++) {
           //dont compare line to itself
           if (marginBox[i] != this.lineArray[j]) {
+            //if lines overlap
             if (linesOverlap(marginBox[i], this.lineArray[j])) {
-              //lineArray line A coordinate comes first
+              //if lineArray line coordinate A comes first
               if (marginBox[i].a.x > this.lineArray[j].a.x || marginBox[i].a.y > this.lineArray[j].a.y) {
                 //mark the points being cut out so they can be used to check for lines that should be removed
                 lolArray[i] = {
                   "mBPtRemd": new Coord(marginBox[i].a.x, marginBox[i].a.y), 
                   "lAPtRemd": new Coord(this.lineArray[j].b.x, this.lineArray[j].b.y)
                 };
+                //stretch marginBox line to begin at lineArray line coordinate A
                 marginBox[i].a.x = this.lineArray[j].a.x;
                 marginBox[i].a.y = this.lineArray[j].a.y;
+              //if marginBox line coordinate A comes first
               } else {
                 lolArray[i] = {
                   "mBPtRemd": new Coord(marginBox[i].b.x, marginBox[i].b.y), 
                   "lAPtRemd": new Coord(this.lineArray[j].a.x, this.lineArray[j].a.y)
                 };
+                //stretch marginBox line to end at lineArray line coordinate B
                 marginBox[i].b.x = this.lineArray[j].b.x;
                 marginBox[i].b.y = this.lineArray[j].b.y;
               }
+              //remove lineArray line
               this.lineArray.splice(j, 1);
               j--;
             }
@@ -152,22 +174,26 @@ export function filledSpaceModel() {
         }
       }
     }
-    //check for lines that should be removed
+    //check for lines orphaned by overlapping line consolidation
+    //for each side of line overlap Array, which holds an object describing any line overlap consolidation that may have occurred
     for (let i = 0; i < 4; i++) {
       //check if object is not empty and object of opposite side is also not empty
       if (typeof lolArray[i].mBPtRemd != "undefined" && typeof lolArray[oppositeSide(i)].mBPtRemd != "undefined") {
+        //for each side of marginBox
         for (let j = 0; j < 4; j++) {
           //find marginBox line that matches points removed from marginBox overlapping lines
           if (marginBox[j].a.equals(lolArray[i].mBPtRemd) && marginBox[j].b.equals(lolArray[oppositeSide(i)].mBPtRemd)  || 
             marginBox[j].b.equals(lolArray[i].mBPtRemd) && marginBox[j].a.equals(lolArray[oppositeSide(i)].mBPtRemd) ) {
+            //remove orphaned line
             findAndRemoveLine(this.lineArray, marginBox[j]);
             break;
           }
         }
-        //find lineArray line that maches points removed from marginBox overlapping lines
+        //find lineArray line that maches points removed from lineArray overlapping lines
         for (let j = 0; j < this.lineArray.length; j++) {
           if (this.lineArray[j].a.equals(lolArray[i].lAPtRemd) && this.lineArray[j].b.equals(lolArray[oppositeSide(i)].lAPtRemd) ||
             this.lineArray[j].b.equals(lolArray[i].lAPtRemd) && this.lineArray[j].a.equals(lolArray[oppositeSide(i)].lAPtRemd) ) {
+            //remove orphaned line
             this.lineArray.splice(j, 1);
             break;
           }
@@ -178,11 +204,22 @@ export function filledSpaceModel() {
         SEGMENTING
 
         segment each side of marginBox if one or more lines intersect it
+
+        explaining this algorithm is hard. if the first intersecting line faces the others,
+        the segments are drawn one way, and otherwise they are drawn another way. the existing marginBox line
+        should be used, rather than removing it and adding another line, so that adds a complication. 
+        also, the end of a segment may be the next intersecting line, or it may be the end of what was the 
+        marginBox line.
+        this algorithm allows for any number of intersecting lines.
     */
+    //if side 0 of marginBox has lines intersecting it from lineArray
     if (linesInter[0].length > 0) {
+      //record second coordinate of marginBox side 0
       let mbb = new Coord(marginBox[0].b.x, marginBox[0].b.y);
+      //if leftmost line intersecting side 0 (top) faces right
       if (firstFacesOthers(linesInter[0][0])){
         for (let i = 0; i < linesInter[0].length; i++) {
+          //for even loop iterations only
           if (i%2 === 0) {
             //for first line, use existing line object in marginBox
             if (i === 0) {
@@ -193,6 +230,7 @@ export function filledSpaceModel() {
               } else {
                 marginBox[0].a.x = linesInter[0][0].b.x;
               }
+            //after first segment drawn
             } else {
               if (i+1 < linesInter[0].length) {
                 this.lineArray.push(new Line(new Coord(linesInter[0][i].b.x, linesInter[0][i].b.y), new Coord(linesInter[0][i+1].b.x, linesInter[0][i+1].b.y), marginBox[0].side));
@@ -340,12 +378,12 @@ function findAndRemoveLine(lineArray, line) {
   }
 }
 
-//for use with marginBox
+//for use with marginBox - adjacent side counter-clockwise
 function adjCCW(side) {
   return (side + 3) % 4;
 }
 
-//for use with marginBox
+//for use with marginBox - adjacent side clockwise
 function adjCW(side) {
   return (side + 1) % 4;
 }
