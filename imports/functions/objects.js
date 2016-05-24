@@ -56,7 +56,9 @@ export function Line(coordA, coordB, side) {
   this.side = side;
 }
 
-export function Area(topLeft, bottomRight) {
-  this.topLeft = topLeft;
-  this.bottomRight = bottomRight;
+export function Area(topLeft, bottomRight, side) {
+  this.a = topLeft;
+  this.b = bottomRight;
+  this.dimens = bottomRight.minus(topLeft);
+  this.side = side;
 }
