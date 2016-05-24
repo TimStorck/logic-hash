@@ -23,8 +23,8 @@ export function findBestSpot(dimens, elicitorCenter, canCtx) {
     */
     drawArea(area, canCtx);
 
-    areaUsable = checkAndRefineArea(area, dimens);
-    if (areaUsable) {
+    usableAreas = checkAndRefineArea(area, dimens);
+    if (usableAreas.length > 0) {
       return getSpotInArea(area, dimens, elicitorCenter);
       break;
     } 
@@ -155,15 +155,17 @@ function lineTraversesArea(line, area) {
 }
 
 function checkAndRefineArea(area, dimens) {
+  let usableAreas = [];
+  usableAreas.push(area);
   for (let i = 0; i < fSModel.lineArray.length; i++) {
     if (lineTraversesArea(fSModel.lineArray[i], area)) {
-      return false;
+      return [];
     }
     if (lineGoesInto(fSModel.lineArray[i], area)) {
-      return false;
+      return [];
     } 
   }
-  return true;
+  return usableAreas;
 }
 
 function getSpotInArea(area, dimens, elicitorCenter) {
