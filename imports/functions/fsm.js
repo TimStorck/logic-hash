@@ -1,12 +1,5 @@
-import { centerOf } from './measurements.js';
-import { centerOfHor } from './measurements.js';
-import { centerOfVert } from './measurements.js';
-import { fitsHor } from './measurements.js';
-import { fitsVert } from './measurements.js';
 import { Coord } from './objects.js';
 import { Line } from './objects.js';
-import { PostOb } from './objects.js';
-import { Area } from './objects.js';
 
 
 export function filledSpaceModel() {
@@ -41,10 +34,6 @@ export function filledSpaceModel() {
   this.trimOverlap = function(marginBox) {
     //array of lines intersecting for each side of marginBox
     let linesInter = [[],[],[],[]];
-    let marginBoxSideCrossed
-    //use this length that way when we add new lines they dont have to get checked
-    let length = this.lineArray.length;
-
     /*
         TRUNCATE OR SPLIT
 
@@ -52,6 +41,8 @@ export function filledSpaceModel() {
         or split if it passes all the way through, and added to list
         of intersecting lines
     */
+    //use this length that way when we add new lines they dont have to get checked
+    let length = this.lineArray.length;
     for (let i = 0; i < length; i++) {
       //lineEnters returns -1 if false, or side / index of marginBox if true
       sideCrossed = lineEnters(this.lineArray[i], marginBox);
