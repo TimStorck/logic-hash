@@ -77,11 +77,11 @@ function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx) {
     let responseCenter;
     for (let i = 0; i < responseArray.length; i++) {
       responseCenter = drawResponseTextBox(responseArray[i], bucket, elicitorCenter, canCtx);
-      // drawRadial(elicitorCenter, responseCenter, canCtx);
+      drawRadial(elicitorCenter, responseCenter, canCtx);
 
-      // if (responseArray[i].responseNo > 0) {
-      //   drawResponses(responseArray[i]._id, responseCenter, false, canCtx);
-      // }
+      if (responseArray[i].responseNo > 0) {
+        drawResponses(responseArray[i]._id, responseCenter, false, canCtx);
+      }
     }
   }
 }

@@ -112,9 +112,10 @@ function lineGoesInto(line, area) {
       if (
         //if line y is above area bottom and below area top
         line.a.y < area.b.y && area.a.y < line.a.y && (
-          //and either end is inside area
+          //and either end is inside area or line spans area
           (area.a.x < line.a.x && line.a.x < area.b.x) || 
-          (area.a.x < line.b.x && line.b.x < area.b.x)) ) {
+          (area.a.x < line.b.x && line.b.x < area.b.x) ||
+          (line.a.x <= area.a.x && area.b.x <= line.b.x)) ) {
         return true;
       }
       break;
@@ -123,9 +124,10 @@ function lineGoesInto(line, area) {
       if (
         //if line x is right of area left edge and left of area right edge
         area.a.x < line.a.x && line.a.x < area.b.x && (
-          //and either end is inside area
+          //and either end is inside area or line spans area
           (area.a.y < line.a.y && line.a.y < area.b.y) || 
-          (area.a.y < line.b.y && line.b.y < area.b.y)) ) {
+          (area.a.y < line.b.y && line.b.y < area.b.y) ||
+          (line.a.y <= area.a.y && area.b.y <= line.b.y)) ) {
         return true;
       }
   }
@@ -134,20 +136,20 @@ function lineGoesInto(line, area) {
 
 //line traverses parallel to orientation of area
 function lineTraversesArea(line, area) {
-  switch (line.side) {
+  switch (area.side) {
     case 0:
     case 2:
-      //if line y is above area bottom and below area top and points straddle area
+      //if line y is above area bottom and below area top and points span area
       if (line.a.y < area.b.y && area.a.y < line.a.y && 
-          line.a.x < area.a.x && area.b.x < line.b.x)  {
+          line.a.x <= area.a.x && area.b.x <= line.b.x)  {
         return true;
       }
       break;
     case 1:
     case 3:
-      //if line x is right of area left edge and left of area right edge and points straddle area
+      //if line x is right of area left edge and left of area right edge and points span area
       if (area.a.x < line.a.x && line.a.x < area.b.x && 
-          line.a.y < area.a.y && area.b.y < line.b.y)  {
+          line.a.y <= area.a.y && area.b.y <= line.b.y)  {
         return true;
       }
   }
