@@ -16,17 +16,21 @@ export function findBestSpot(dimens, elicitorCenter, canCtx) {
   // console.log("elicitorCenter: " + elicitorCenter.x + ", " + elicitorCenter.y);
 
   for (let i = 0; i < fSModel.lineArray.length; i++) {
-    let area = possiblePlacementZone(fSModel.lineArray[i], dimens);
+    let area = zoneToCheck(fSModel.lineArray[i], dimens);
 
     /*
       for development
     */
     drawArea(area, canCtx);
 
-    linesInArea = getLinesPassingThrough(area);
+    linesInArea = getLinesWithin(area);
     if (linesInArea.length == 0) {
       return getSpotInArea(area, dimens, elicitorCenter);
       break;
+    } else {
+      for (let j = 0; j < linesInArea.length; j++) {
+
+      }
     }
   }
 
@@ -85,7 +89,11 @@ function areaPassesPointY(area, point) {
   return false;
 }
 
-function possiblePlacementZone(line, dimens) {
+/*
+  returns area spanning furthest possible placement of new div at one end 
+  of line to fursthest possible spot at other end
+*/
+function zoneToCheck(line, dimens) {
   switch(line.side) {
     case 0:
       return new Area(new Coord(line.a.x - dimens.x, line.a.y - dimens.y), new Coord(line.b.x + dimens.x, line.b.y), 0);
@@ -102,7 +110,7 @@ function possiblePlacementZone(line, dimens) {
   }
 }
 
-function lineGoesThrough(line, area) {
+function lineGoesInto(line, area) {
   switch (line.side) {
     case 0:
     case 2:
@@ -133,10 +141,10 @@ function lineGoesThrough(line, area) {
   return false;
 }
 
-function getLinesPassingThrough(area) {
+function getLinesWithin(area) {
   let linesInArea = [];
   for (let i = 0; i < fSModel.lineArray.length; i++) {
-    if (lineGoesThrough(fSModel.lineArray[i], area)) {
+    if (lineGoesInto(fSModel.lineArray[i], area)) {
       linesInArea.push(fSModel.lineArray[i]);
     } 
   }
