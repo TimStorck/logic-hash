@@ -16,25 +16,20 @@ export function findBestSpot(dimens, elicitorCenter, canCtx) {
   // console.log("elicitorCenter: " + elicitorCenter.x + ", " + elicitorCenter.y);
 
   for (let i = 0; i < fSModel.lineArray.length; i++) {
-    let area = zoneToCheck(fSModel.lineArray[i], dimens);
+    let area = getAreaToCheck(fSModel.lineArray[i], dimens);
 
     /*
       for development
     */
     drawArea(area, canCtx);
 
-    linesInArea = getLinesWithin(area);
-    if (linesInArea.length == 0) {
+    areaUsable = checkAndRefineArea(area, dimens);
+    if (areaUsable) {
       return getSpotInArea(area, dimens, elicitorCenter);
       break;
-    } else {
-      for (let j = 0; j < linesInArea.length; j++) {
-
-      }
-    }
+    } 
   }
-
-  return new Coord(0,0);
+  console.log("failed to find best spot");
 }
 
 function sortFSMLinesByCloseness(centerPoint) {
@@ -93,7 +88,7 @@ function areaPassesPointY(area, point) {
   returns area spanning furthest possible placement of new div at one end 
   of line to fursthest possible spot at other end
 */
-function zoneToCheck(line, dimens) {
+function getAreaToCheck(line, dimens) {
   switch(line.side) {
     case 0:
       return new Area(new Coord(line.a.x - dimens.x, line.a.y - dimens.y), new Coord(line.b.x + dimens.x, line.b.y), 0);
@@ -116,12 +111,10 @@ function lineGoesInto(line, area) {
     case 2:
       if (
         //if line y is above area bottom and below area top
-        line.a.y < area.b.y && 
-        line.a.y > area.a.y && (
-          //and either end is inside area or they straddle it
-          (line.a.x > area.a.x && line.a.x < area.b.x) || 
-          (line.b.x > area.a.x && line.b.x < area.b.x) || 
-          (line.a.x < area.a.x && line.b.x > area.b.x)) ) {
+        line.a.y < area.b.y && area.a.y < line.a.y && (
+          //and either end is inside area
+          (area.a.x < line.a.x && line.a.x < area.b.x) || 
+          (area.a.x < line.b.x && line.b.x < area.b.x)) ) {
         return true;
       }
       break;
@@ -129,26 +122,48 @@ function lineGoesInto(line, area) {
     case 3:
       if (
         //if line x is right of area left edge and left of area right edge
-        line.a.x > area.a.x && 
-        line.a.x < area.b.x && (
-          //and either end is inside area or they straddle it
-          (line.a.y > area.a.y && line.a.y < area.b.y) || 
-          (line.b.y > area.a.y && line.b.y < area.b.y) || 
-          (line.a.y < area.a.y && line.b.y > area.b.y)) ) {
+        area.a.x < line.a.x && line.a.x < area.b.x && (
+          //and either end is inside area
+          (area.a.y < line.a.y && line.a.y < area.b.y) || 
+          (area.a.y < line.b.y && line.b.y < area.b.y)) ) {
         return true;
       }
   }
   return false;
 }
 
-function getLinesWithin(area) {
-  let linesInArea = [];
+//line traverses parallel to orientation of area
+function lineTraversesArea(line, area) {
+  switch (line.side) {
+    case 0:
+    case 2:
+      //if line y is above area bottom and below area top and points straddle area
+      if (line.a.y < area.b.y && area.a.y < line.a.y && 
+          line.a.x < area.a.x && area.b.x < line.b.x)  {
+        return true;
+      }
+      break;
+    case 1:
+    case 3:
+      //if line x is right of area left edge and left of area right edge and points straddle area
+      if (area.a.x < line.a.x && line.a.x < area.b.x && 
+          line.a.y < area.a.y && area.b.y < line.b.y)  {
+        return true;
+      }
+  }
+  return false;
+}
+
+function checkAndRefineArea(area, dimens) {
   for (let i = 0; i < fSModel.lineArray.length; i++) {
+    if (lineTraversesArea(fSModel.lineArray[i], area)) {
+      return false;
+    }
     if (lineGoesInto(fSModel.lineArray[i], area)) {
-      linesInArea.push(fSModel.lineArray[i]);
+      return false;
     } 
   }
-  return linesInArea;
+  return true;
 }
 
 function getSpotInArea(area, dimens, elicitorCenter) {
