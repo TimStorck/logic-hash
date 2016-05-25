@@ -193,7 +193,7 @@ function checkAndRefineArea(area, dimens) {
                 return [];
               }
             }
-            //if line splits area into two spaces that could find post-box
+            //if line splits area into two spaces that could fit post-box
             if (fSModel.lineArray[i].a.x > area.a.x + dimens.x && fSModel.lineArray[i].b.x < area.b.x - dimens.x) {
               area.b.x = fSModel.lineArray[i].a.x;
               let newAreas = checkAndRefineArea(new Area(new Coord(fSModel.lineArray.b.x, area.a.y), new Coord(area.b.x, area.b.y), area.side), dimens);
@@ -218,7 +218,47 @@ function checkAndRefineArea(area, dimens) {
           break;
         case 1:
           if (lineGoesInto(fSModel.lineArray[i], area)) {
-            
+            //if top end of line is within post-box height of bottom of area
+            if (fSModel.lineArray[i].a.y > area.b.y - dimens.y) {
+              //if there is room for new post div in the area, above the line
+              if (fSModel.lineArray[i].a.y > area.a.y + dimens.y) {
+                area.b.y = fSModel.lineArray[i].a.y;
+                continue;
+              } else {
+                return [];
+              }
+            }
+            //if bottom end of line is within post-box height of top of area
+            if (fSModel.lineArray[i].b.y < area.a.y + dimens.y) {
+              //if there is room for new post div in the area, below the line
+              if (fSModel.lineArray[i].b.y < area.b.y - dimens.y) {
+                area.a.y = fSModel.lineArray[i].b.y;
+                continue;
+              } else {
+                return [];
+              }
+            }
+            //if line splits area into two spaces that could fit post-box
+            if (fSModel.lineArray[i].a.y > area.a.y + dimens.y && fSModel.lineArray[i].b.y < area.b.y - dimens.y) {
+              area.b.y = fSModel.lineArray[i].a.y;
+              let newAreas = checkAndRefineArea(new Area(new Coord(area.a.x, fSModel.lineArray.b.y), new Coord(area.b.x, area.b.y), area.side), dimens);
+              for (let j = 0; j < newAreas.length; j++) {
+                usableAreas.push(newAreas[j]);
+              }
+              continue;
+            }
+            //if top end of line is more than the post div's height from the top of the area
+            if (fSModel.lineArray[i].a.y > area.a.y + dimens.y) {
+              area.b.y = fSModel.lineArray[i].a.y;
+              continue;
+            }
+            //if bottom end of line is more than the post div's height from the bottom of the area
+            if (fSModel.lineArray[i].b.y < area.b.y - dimens.y) {
+              area.a.y = fSModel.lineArray[i].b.y;
+              continue;
+            }
+            //must be line starting within new-post-height of top of area and ending within new-post-height of bottom of area
+            return [];
           }
           break;
         case 2:
@@ -268,7 +308,47 @@ function checkAndRefineArea(area, dimens) {
           break;
         case 3:
           if (lineGoesInto(fSModel.lineArray[i], area)) {
-            
+            //if top end of line is within post-box height of bottom of area
+            if (fSModel.lineArray[i].a.y > area.b.y - dimens.y) {
+              //if there is room for new post div in the area, above the line
+              if (fSModel.lineArray[i].a.y > area.a.y + dimens.y) {
+                area.b.y = fSModel.lineArray[i].a.y;
+                continue;
+              } else {
+                return [];
+              }
+            }
+            //if bottom end of line is within post-box height of top of area
+            if (fSModel.lineArray[i].b.y < area.a.y + dimens.y) {
+              //if there is room for new post div in the area, below the line
+              if (fSModel.lineArray[i].b.y < area.b.y - dimens.y) {
+                area.a.y = fSModel.lineArray[i].b.y;
+                continue;
+              } else {
+                return [];
+              }
+            }
+            //if line splits area into two spaces that could fit post-box
+            if (fSModel.lineArray[i].a.y > area.a.y + dimens.y && fSModel.lineArray[i].b.y < area.b.y - dimens.y) {
+              area.b.y = fSModel.lineArray[i].a.y;
+              let newAreas = checkAndRefineArea(new Area(new Coord(area.a.x, fSModel.lineArray.b.y), new Coord(area.b.x, area.b.y), area.side), dimens);
+              for (let j = 0; j < newAreas.length; j++) {
+                usableAreas.push(newAreas[j]);
+              }
+              continue;
+            }
+            //if top end of line is more than the post div's height from the top of the area
+            if (fSModel.lineArray[i].a.y > area.a.y + dimens.y) {
+              area.b.y = fSModel.lineArray[i].a.y;
+              continue;
+            }
+            //if bottom end of line is more than the post div's height from the bottom of the area
+            if (fSModel.lineArray[i].b.y < area.b.y - dimens.y) {
+              area.a.y = fSModel.lineArray[i].b.y;
+              continue;
+            }
+            //must be line starting within new-post-height of top of area and ending within new-post-height of bottom of area
+            return [];
           }
           break;
       }
