@@ -283,35 +283,72 @@ function checkAndRefineArea(area, dimens) {
   return usableAreas;
 }
 
-function getSpotInArea(area, dimens, elicitorCenter) {
+function getSpotInArea(area, dimens, eliCent) {
+  let halfDimens = centerOf(dimens);
   switch(area.side) {
     case 0:
-      if (areaPassesPointX(area, elicitorCenter)) {
-        return new Coord(elicitorCenter.x, area.b.y - centerOf(dimens).y);
+      if (areaPassesPointX(area, eliCent)) {
+        if (area.a.x < eliCent.x - halfDimens.x && eliCent.x + halfDimens.x < area.b.x) {
+          return new Coord(eliCent.x, area.b.y - halfDimens.y);
+        }
+      }
+      if (isCloserToThanX(area.a, eliCent, area.b)) {
+        return new Coord(area.a.x + halfDimens.x, area.b.y + halfDimens.y);
       } else {
-        console.log("you didnt code what to do if the area doesnt line up with elicitorCenter yet");
+        return new Coord(area.b.x - halfDimens.x, area.b.y + halfDimens.y);
       }
       break;
     case 1:
-      if (areaPassesPointY(area, elicitorCenter)) {
-        return new Coord(area.a.x + centerOf(dimens).x, elicitorCenter.y);
+      if (areaPassesPointY(area, eliCent)) {
+        if (area.a.y < eliCent.y - halfDimens.y && eliCent.y + halfDimens.y < area.b.y) {
+          return new Coord(area.a.x + halfDimens.x, eliCent.y);
+        }
+      } 
+      if (isCloserToThanY(area.a, eliCent, area.b)) {
+        return new Coord(area.a.x + halfDimens.x, area.a.y + halfDimens.y);
       } else {
-        console.log("you didnt code what to do if the area doesnt line up with elicitorCenter yet");
+        return new Coord(area.a.x + halfDimens.x, area.b.y - halfDimens.y);
       }
       break;
     case 2:
-      if (areaPassesPointX(area, elicitorCenter)) {
-        return new Coord(elicitorCenter.x, area.a.y + centerOf(dimens).y);
+      if (areaPassesPointX(area, eliCent)) {
+        if (area.a.x < eliCent.x - halfDimens.x && eliCent.x + halfDimens.x < area.b.x) {
+          return new Coord(eliCent.x, area.a.y + halfDimens.y);
+        }
+      }
+      if (isCloserToThanX(area.a, eliCent, area.b)) {
+        return new Coord(area.a.x + halfDimens.x, area.a.y + halfDimens.y);
       } else {
-        console.log("you didnt code what to do if the area doesnt line up with elicitorCenter yet");
+        return new Coord(area.b.x - halfDimens.x, area.a.y + halfDimens.y);
       }
       break;
     case 3:
-      if (areaPassesPointY(area, elicitorCenter)) {
-        return new Coord(area.b.x - centerOf(dimens).x, elicitorCenter.y);
+      if (areaPassesPointY(area, eliCent)) {
+        if (area.a.y < eliCent.y - halfDimens.y && eliCent.y + halfDimens.y < area.b.y) {
+          return new Coord(area.b.x - halfDimens.x, eliCent.y);
+        }
+      } 
+      if (isCloserToThanY(area.a, eliCent, area.b)) {
+        return new Coord(area.b.x - halfDimens.x, area.a.y + halfDimens.y);
       } else {
-        console.log("you didnt code what to do if the area doesnt line up with elicitorCenter yet");
+        return new Coord(area.b.x - halfDimens.x, area.b.y - halfDimens.y);
       }
       break;
   }
+}
+
+//if comparePtA is closer to refPt along X axis than comparePtB
+function isCloserToThanX(comparePtA, refPt, comparePtB) {
+  if (Math.abs(refPt.x - comparePtA.x) < Math.abs(refPt.x - comparePtB.x)) {
+    return true;
+  }
+  return false;
+}
+
+//if comparePtA is closer to refPt along Y axis than comparePtB
+function isCloserToThanY(comparePtA, refPt, comparePtB) {
+  if (Math.abs(refPt.y - comparePtA.y) < Math.abs(refPt.y - comparePtB.y)) {
+    return true;
+  }
+  return false;
 }
