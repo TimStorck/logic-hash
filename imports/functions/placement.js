@@ -23,11 +23,25 @@ export function findBestSpot(dimens, elicitorCenter, canCtx) {
     */
     drawArea(area, canCtx);
 
-    usableAreas = checkAndRefineArea(area, dimens);
+    let usableAreas = checkAndRefineArea(area, dimens);
     if (usableAreas.length > 0) {
-      return getSpotInArea(area, dimens, elicitorCenter);
-      break;
-    } 
+      let spotsFromAreas = [];
+      let closestDistance;
+      let closestIndex;
+      for (let j = 0; j < usableAreas.length; j++) {
+        spotsFromAreas.push(getSpotInArea(usableAreas[j], dimens, elicitorCenter));
+        if (j === 0) {
+          closestDistance = radialDistance(spotsFromAreas[0], elicitorCenter);
+          closestIndex = 0;
+        } else {
+          if (radialDistance(spotsFromAreas[j], elicitorCenter) < closestDistance) {
+            closestDistance = radialDistance(spotsFromAreas[j], elicitorCenter);
+            closestIndex = j;
+          }
+        }
+      }
+      return spotsFromAreas[closestIndex];
+    }
   }
   console.log("failed to find best spot");
 }
@@ -172,95 +186,6 @@ function checkAndRefineArea(area, dimens) {
     if (lineGoesInto(fSModel.lineArray[i], area)) {
       switch (area.side) {
         case 0:
-          if (lineGoesInto(fSModel.lineArray[i], area)) {
-            //if left end of line is within post-box width of right side
-            if (fSModel.lineArray[i].a.x > area.b.x - dimens.x) {
-              //if there is room for new post div in the area, left of the line
-              if (fSModel.lineArray[i].a.x > area.a.x + dimens.x) {
-                area.b.x = fSModel.lineArray[i].a.x;
-                continue;
-              } else {
-                return [];
-              }
-            }
-            //if right end of line is within post-box width of left side
-            if (fSModel.lineArray[i].b.x < area.a.x + dimens.x) {
-              //if there is room for new post div in the area, right of the line
-              if (fSModel.lineArray[i].b.x < area.b.x - dimens.x) {
-                area.a.x = fSModel.lineArray[i].b.x;
-                continue;
-              } else {
-                return [];
-              }
-            }
-            //if line splits area into two spaces that could fit post-box
-            if (fSModel.lineArray[i].a.x > area.a.x + dimens.x && fSModel.lineArray[i].b.x < area.b.x - dimens.x) {
-              area.b.x = fSModel.lineArray[i].a.x;
-              let newAreas = checkAndRefineArea(new Area(new Coord(fSModel.lineArray.b.x, area.a.y), new Coord(area.b.x, area.b.y), area.side), dimens);
-              for (let j = 0; j < newAreas.length; j++) {
-                usableAreas.push(newAreas[j]);
-              }
-              continue;
-            }
-            //if left side of line is more than the post div's width from the left side of the area
-            if (fSModel.lineArray[i].a.x > area.a.x + dimens.x) {
-              area.b.x = fSModel.lineArray[i].a.x;
-              continue;
-            }
-            //if right side of line is more than the post div's width from the right side of the area
-            if (fSModel.lineArray[i].b.x < area.b.x - dimens.x) {
-              area.a.x = fSModel.lineArray[i].b.x;
-              continue;
-            }
-            //must be line starting within new-post-width distance of left side and ending within new-post-width distance of right side
-            return [];
-          }
-          break;
-        case 1:
-          if (lineGoesInto(fSModel.lineArray[i], area)) {
-            //if top end of line is within post-box height of bottom of area
-            if (fSModel.lineArray[i].a.y > area.b.y - dimens.y) {
-              //if there is room for new post div in the area, above the line
-              if (fSModel.lineArray[i].a.y > area.a.y + dimens.y) {
-                area.b.y = fSModel.lineArray[i].a.y;
-                continue;
-              } else {
-                return [];
-              }
-            }
-            //if bottom end of line is within post-box height of top of area
-            if (fSModel.lineArray[i].b.y < area.a.y + dimens.y) {
-              //if there is room for new post div in the area, below the line
-              if (fSModel.lineArray[i].b.y < area.b.y - dimens.y) {
-                area.a.y = fSModel.lineArray[i].b.y;
-                continue;
-              } else {
-                return [];
-              }
-            }
-            //if line splits area into two spaces that could fit post-box
-            if (fSModel.lineArray[i].a.y > area.a.y + dimens.y && fSModel.lineArray[i].b.y < area.b.y - dimens.y) {
-              area.b.y = fSModel.lineArray[i].a.y;
-              let newAreas = checkAndRefineArea(new Area(new Coord(area.a.x, fSModel.lineArray.b.y), new Coord(area.b.x, area.b.y), area.side), dimens);
-              for (let j = 0; j < newAreas.length; j++) {
-                usableAreas.push(newAreas[j]);
-              }
-              continue;
-            }
-            //if top end of line is more than the post div's height from the top of the area
-            if (fSModel.lineArray[i].a.y > area.a.y + dimens.y) {
-              area.b.y = fSModel.lineArray[i].a.y;
-              continue;
-            }
-            //if bottom end of line is more than the post div's height from the bottom of the area
-            if (fSModel.lineArray[i].b.y < area.b.y - dimens.y) {
-              area.a.y = fSModel.lineArray[i].b.y;
-              continue;
-            }
-            //must be line starting within new-post-height of top of area and ending within new-post-height of bottom of area
-            return [];
-          }
-          break;
         case 2:
           if (lineGoesInto(fSModel.lineArray[i], area)) {
             //if left end of line is within post-box width of right side
@@ -306,6 +231,7 @@ function checkAndRefineArea(area, dimens) {
             return [];
           }
           break;
+        case 1:
         case 3:
           if (lineGoesInto(fSModel.lineArray[i], area)) {
             //if top end of line is within post-box height of bottom of area
