@@ -134,7 +134,7 @@ function lineGoesInto(line, area) {
   return false;
 }
 
-//line traverses parallel to orientation of area
+//line traverses parallel to side of area
 function lineTraversesArea(line, area) {
   switch (area.side) {
     case 0:
@@ -156,6 +156,12 @@ function lineTraversesArea(line, area) {
   return false;
 }
 
+/*
+  takes an areaToCheck and the dimensions of the new post div, checks for lines spanning whole area along the 
+  dimension that renders it unusable, and checks for other lines entering the area that would cause the area
+  to be narrowed, shortened or split. returns empty array if the area cannot hold the new post div, 
+  or a an area that has no lines entering it, or multiple such areas
+*/
 function checkAndRefineArea(area, dimens) {
   let usableAreas = [];
   usableAreas.push(area);
@@ -164,7 +170,108 @@ function checkAndRefineArea(area, dimens) {
       return [];
     }
     if (lineGoesInto(fSModel.lineArray[i], area)) {
-      return [];
+      switch (area.side) {
+        case 0:
+          if (lineGoesInto(fSModel.lineArray[i], area)) {
+            //if left end of line is within post-box width of right side
+            if (fSModel.lineArray[i].a.x > area.b.x - dimens.x) {
+              //if there is room for new post div in the area, left of the line
+              if (fSModel.lineArray[i].a.x > area.a.x + dimens.x) {
+                area.b.x = fSModel.lineArray[i].a.x;
+                continue;
+              } else {
+                return [];
+              }
+            }
+            //if right end of line is within post-box width of left side
+            if (fSModel.lineArray[i].b.x < area.a.x + dimens.x) {
+              //if there is room for new post div in the area, right of the line
+              if (fSModel.lineArray[i].b.x < area.b.x - dimens.x) {
+                area.a.x = fSModel.lineArray[i].b.x;
+                continue;
+              } else {
+                return [];
+              }
+            }
+            //if line splits area into two spaces that could find post-box
+            if (fSModel.lineArray[i].a.x > area.a.x + dimens.x && fSModel.lineArray[i].b.x < area.b.x - dimens.x) {
+              area.b.x = fSModel.lineArray[i].a.x;
+              let newAreas = checkAndRefineArea(new Area(new Coord(fSModel.lineArray.b.x, area.a.y), new Coord(area.b.x, area.b.y), area.side), dimens);
+              for (let j = 0; j < newAreas.length; j++) {
+                usableAreas.push(newAreas[j]);
+              }
+              continue;
+            }
+            //if left side of line is more than the post div's width from the left side of the area
+            if (fSModel.lineArray[i].a.x > area.a.x + dimens.x) {
+              area.b.x = fSModel.lineArray[i].a.x;
+              continue;
+            }
+            //if right side of line is more than the post div's width from the right side of the area
+            if (fSModel.lineArray[i].b.x < area.b.x - dimens.x) {
+              area.a.x = fSModel.lineArray[i].b.x;
+              continue;
+            }
+            //must be line starting within new-post-width distance of left side and ending within new-post-width distance of right side
+            return [];
+          }
+          break;
+        case 1:
+          if (lineGoesInto(fSModel.lineArray[i], area)) {
+            
+          }
+          break;
+        case 2:
+          if (lineGoesInto(fSModel.lineArray[i], area)) {
+            //if left end of line is within post-box width of right side
+            if (fSModel.lineArray[i].a.x > area.b.x - dimens.x) {
+              //if there is room for new post div in the area, left of the line
+              if (fSModel.lineArray[i].a.x > area.a.x + dimens.x) {
+                area.b.x = fSModel.lineArray[i].a.x;
+                continue;
+              } else {
+                return [];
+              }
+            }
+            //if right end of line is within post-box width of left side
+            if (fSModel.lineArray[i].b.x < area.a.x + dimens.x) {
+              //if there is room for new post div in the area, right of the line
+              if (fSModel.lineArray[i].b.x < area.b.x - dimens.x) {
+                area.a.x = fSModel.lineArray[i].b.x;
+                continue;
+              } else {
+                return [];
+              }
+            }
+            //if line splits area into two spaces that could fit post-box
+            if (fSModel.lineArray[i].a.x > area.a.x + dimens.x && fSModel.lineArray[i].b.x < area.b.x - dimens.x) {
+              area.b.x = fSModel.lineArray[i].a.x;
+              let newAreas = checkAndRefineArea(new Area(new Coord(fSModel.lineArray.b.x, area.a.y), new Coord(area.b.x, area.b.y), area.side), dimens);
+              for (let j = 0; j < newAreas.length; j++) {
+                usableAreas.push(newAreas[j]);
+              }
+              continue;
+            }
+            //if left side of line is more than the post div's width from the left side of the area
+            if (fSModel.lineArray[i].a.x > area.a.x + dimens.x) {
+              area.b.x = fSModel.lineArray[i].a.x;
+              continue;
+            }
+            //if right side of line is more than the post div's width from the right side of the area
+            if (fSModel.lineArray[i].b.x < area.b.x - dimens.x) {
+              area.a.x = fSModel.lineArray[i].b.x;
+              continue;
+            }
+            //must be line starting within new-post-width distance of left side and ending within new-post-width distance of right side
+            return [];
+          }
+          break;
+        case 3:
+          if (lineGoesInto(fSModel.lineArray[i], area)) {
+            
+          }
+          break;
+      }
     } 
   }
   return usableAreas;
