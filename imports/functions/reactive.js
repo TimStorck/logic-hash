@@ -15,6 +15,7 @@ export const fSModel = new filledSpaceModel();
 
 export function debateTreeChanged(motionId, bucket, canvas) {
   Meteor.subscribe('posts');  
+  Meteor.subscribe('settings');  
 
   canvas.height = window.innerHeight - 50;
   canvas.width = window.innerWidth - 50;
@@ -57,7 +58,9 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     /*
       for development
     */
-    drawFSModel(canvas);
+    if (Settings.findOne({name: "drawOutline"}).value) {
+      drawFSModel(canvas);
+    }
   }
 }
 
