@@ -19,15 +19,18 @@ export function findBestSpot(dimens, elicitorCenter, canCtx, canvas) {
     /*
       for development
     */
-    if (Settings.findOne({name: "drawLineBeingChecked"}).value) {
-      clearCanvas(canvas, canCtx);
-      if (Settings.findOne({name: "drawOutlineEachBox"}).value) {
-        drawFSModel(canCtx);
+    try {
+      if (Settings.findOne({name: "drawLineBeingChecked"}).value) {
+        clearCanvas(canvas, canCtx);
+        if (Settings.findOne({name: "drawOutlineEachBox"}).value) {
+          drawFSModel(canCtx);
+        }
+        if (Settings.findOne({name: "drawAreaToCheck"}).value) {
+          drawArea(area, canCtx);
+        }
+        drawLineThick(fSModel.lineArray[i], canCtx);
       }
-      if (Settings.findOne({name: "drawAreaToCheck"}).value) {
-        drawArea(area, canCtx);
-      }
-      drawLineThick(fSModel.lineArray[i], canCtx);
+    } catch (e) {
     }
 
     let usableAreas = checkAndRefineArea(area, dimens);
@@ -39,11 +42,14 @@ export function findBestSpot(dimens, elicitorCenter, canCtx, canvas) {
         /*
           for development
         */
-        if (Settings.findOne({name: "drawAreaToCheck"}).value) {
-          if (!Settings.findOne({name: "drawLineBeingChecked"}).value) {
-            clearCanvas(canvas, canCtx);
+        try {
+          if (Settings.findOne({name: "drawAreaToCheck"}).value) {
+            if (!Settings.findOne({name: "drawLineBeingChecked"}).value) {
+              clearCanvas(canvas, canCtx);
+            }
+            drawArea(usableAreas[j], canCtx);
           }
-          drawArea(usableAreas[j], canCtx);
+        } catch (e) {
         }
         
         spotsFromAreas.push(getSpotInArea(usableAreas[j], dimens, elicitorCenter));
@@ -83,7 +89,7 @@ function closestDistance(refPoint, line) {
       return Math.abs(refPoint.x - line.a.x);
     }
   }
-  console.log(radialDistance(refPoint, line.a) + " - " + radialDistance(refPoint, line.b));
+  // console.log(radialDistance(refPoint, line.a) + " - " + radialDistance(refPoint, line.b));
   return Math.min(radialDistance(refPoint, line.a), radialDistance(refPoint, line.b));
 }
 
