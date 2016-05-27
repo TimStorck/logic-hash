@@ -9,6 +9,7 @@ import { drawMotionTextBox } from './drawing.js';
 import { drawResponseTextBox } from './drawing.js';
 import { drawRadial } from './drawing.js';
 import { drawFSModel } from './drawing.js';
+import { clearCanvas } from './drawing.js';
 import { centerOf } from './measurements.js';
 
 export const fSModel = new filledSpaceModel();
@@ -53,18 +54,25 @@ export function debateTreeChanged(motionId, bucket, canvas) {
 
     drawMotionTextBox(motion, bucket, motionCenter);
 
-    drawResponses(motionId, motionCenter, true, canCtx);
+    /*
+      for development
+    */
+    if (Settings.findOne({name: "drawOutlineEachBox"}).value) {
+      drawFSModel(canCtx);
+    }
+
+    drawResponses(motionId, motionCenter, true, canCtx, canvas, Settings);
 
     /*
       for development
     */
     if (Settings.findOne({name: "drawOutline"}).value) {
-      drawFSModel(canvas);
+      drawFSModel(canCtx);
     }
   }
 }
 
-function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx) {
+function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx, canvas) {
   let fetchArray = Posts.find({"elicitor": elicitorId}).fetch();
   if (fetchArray.length > 0) {
     let responseArray = [];
@@ -80,11 +88,24 @@ function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx) {
     }
     let responseCenter;
     for (let i = 0; i < responseArray.length; i++) {
-      responseCenter = drawResponseTextBox(responseArray[i], bucket, elicitorCenter, canCtx);
+      responseCenter = drawResponseTextBox(responseArray[i], bucket, elicitorCenter, canCtx, canvas);
       drawRadial(elicitorCenter, responseCenter, canCtx);
 
+      /*
+        for development
+      */
+      try {
+        if (Settings.findOne({name: "drawOutlineEachBox"}).value) {
+          if (!Settings.findOne({name: "drawAreaToCheck"}).value) {
+            clearCanvas(canvas, canCtx);
+          }
+          drawFSModel(canCtx);
+        }
+      } catch (e) {
+      }
+
       if (responseArray[i].responseNo > 0) {
-        drawResponses(responseArray[i]._id, responseCenter, false, canCtx);
+        drawResponses(responseArray[i]._id, responseCenter, false, canCtx, canvas);
       }
     }
   }

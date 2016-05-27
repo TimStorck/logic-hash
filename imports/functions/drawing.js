@@ -24,7 +24,7 @@ export function drawMotionTextBox(post, butcket, centerPos) {
   fSModel.addBox(topLeftPos, topLeftPos.plus(dimens));
 }
 
-export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx) {
+export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx, canvas) {
   let newElem = createTextBoxElement(post, bucket);
   let dimens = dimensOf(newElem);
 
@@ -33,7 +33,7 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx) {
 */
   // drawCircle(elicitorCenter, canCtx);
 
-  let centerPos = findBestSpot(dimens, elicitorCenter, canCtx);
+  let centerPos = findBestSpot(dimens, elicitorCenter, canCtx, canvas);
   let topLeftPos = centerPos.minus(centerOf(dimens))
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
@@ -124,8 +124,7 @@ function updateFSM(topLeftPos, dimens, sideOscillator) {
 /*
   for development
 */
-export function drawFSModel(canvas) {
-  let canCtx = canvas.getContext("2d");
+export function drawFSModel(canCtx) {
 
   for (let i=0;i<fSModel.lineArray.length;i++) {
     drawLine(fSModel.lineArray[i], canCtx, "red");
@@ -133,6 +132,13 @@ export function drawFSModel(canvas) {
   }
 }
 
+/*
+  for development
+*/
+export function clearCanvas(canvas, canCtx) {
+  canCtx.fillStyle = "white";
+  canCtx.fillRect(0,0,canvas.width, canvas.height);
+}
 
 /*
   for development

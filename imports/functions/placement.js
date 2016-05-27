@@ -6,8 +6,10 @@ import { radialDistance } from './measurements';
 import { centerOf } from './measurements.js';
 import { drawArea } from './drawing.js';
 import { drawCircle } from './drawing.js';
+import { clearCanvas } from './drawing.js';
+import { Settings } from '../api/collections/settings.js';
 
-export function findBestSpot(dimens, elicitorCenter, canCtx) {
+export function findBestSpot(dimens, elicitorCenter, canCtx, canvas) {
   sortFSMLinesByCloseness(elicitorCenter);
   /*
     for development
@@ -18,17 +20,20 @@ export function findBestSpot(dimens, elicitorCenter, canCtx) {
   for (let i = 0; i < fSModel.lineArray.length; i++) {
     let area = getAreaToCheck(fSModel.lineArray[i], dimens);
 
-    /*
-      for development
-    */
-    drawArea(area, canCtx);
-
     let usableAreas = checkAndRefineArea(area, dimens);
     if (usableAreas.length > 0) {
       let spotsFromAreas = [];
       let closestDistance;
       let closestIndex;
       for (let j = 0; j < usableAreas.length; j++) {
+        /*
+          for development
+        */
+        if (Settings.findOne({name: "drawAreaToCheck"}).value) {
+          clearCanvas(canvas, canCtx);
+          drawArea(usableAreas[j], canCtx);
+        }
+        
         spotsFromAreas.push(getSpotInArea(usableAreas[j], dimens, elicitorCenter));
         if (j === 0) {
           closestDistance = radialDistance(spotsFromAreas[0], elicitorCenter);

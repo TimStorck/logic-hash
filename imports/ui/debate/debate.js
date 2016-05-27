@@ -22,7 +22,7 @@ Template.debate.onRendered(function() {
       FlowRouter.getParam("mId"), 
       document.getElementById("bucket"), 
       document.getElementById("debateCanvas")
-    ); 
+    );
   });
 });
 
