@@ -102,7 +102,7 @@ function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx, can
       */
       try {
         if (Settings.findOne({name: "drawOutlineEachBox"}).value) {
-          if (!Settings.findOne({name: "drawAreaToCheck"}).value) {
+          if (!Settings.findOne({name: "drawAreaToCheck"}).value && !Settings.findOne({name: "drawLineBeingChecked"}).value) {
             clearCanvas(canvas, canCtx);
           }
           drawFSModel(canCtx);

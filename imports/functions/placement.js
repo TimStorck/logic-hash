@@ -8,17 +8,27 @@ import { drawArea } from './drawing.js';
 import { drawCircle } from './drawing.js';
 import { clearCanvas } from './drawing.js';
 import { Settings } from '../api/collections/settings.js';
+import { drawLineThick } from './drawing.js';
+import { drawFSModel } from './drawing.js';
 
 export function findBestSpot(dimens, elicitorCenter, canCtx, canvas) {
   sortFSMLinesByCloseness(elicitorCenter);
-  /*
-    for development
-  */
-  // drawCircle(elicitorCenter, canCtx);
-  // console.log("elicitorCenter: " + elicitorCenter.x + ", " + elicitorCenter.y);
 
   for (let i = 0; i < fSModel.lineArray.length; i++) {
     let area = getAreaToCheck(fSModel.lineArray[i], dimens);
+    /*
+      for development
+    */
+    if (Settings.findOne({name: "drawLineBeingChecked"}).value) {
+      clearCanvas(canvas, canCtx);
+      if (Settings.findOne({name: "drawOutlineEachBox"}).value) {
+        drawFSModel(canCtx);
+      }
+      if (Settings.findOne({name: "drawAreaToCheck"}).value) {
+        drawArea(area, canCtx);
+      }
+      drawLineThick(fSModel.lineArray[i], canCtx);
+    }
 
     let usableAreas = checkAndRefineArea(area, dimens);
     if (usableAreas.length > 0) {
@@ -30,7 +40,9 @@ export function findBestSpot(dimens, elicitorCenter, canCtx, canvas) {
           for development
         */
         if (Settings.findOne({name: "drawAreaToCheck"}).value) {
-          clearCanvas(canvas, canCtx);
+          if (!Settings.findOne({name: "drawLineBeingChecked"}).value) {
+            clearCanvas(canvas, canCtx);
+          }
           drawArea(usableAreas[j], canCtx);
         }
         

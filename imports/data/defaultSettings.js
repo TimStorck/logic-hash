@@ -10,5 +10,9 @@ export const defaultSettings = [
   {
     name: "drawAreaToCheck",
     value: false
+  },
+  {
+    name: "drawLineBeingChecked",
+    value: false
   }
 ];

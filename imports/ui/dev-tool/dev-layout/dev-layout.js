@@ -26,6 +26,9 @@ Template.placementNav.events ({
   },
   "click #btn-area": function() {
     Meteor.call('settings.toggleArea');
+  },
+  "click #btn-lines": function() {
+    Meteor.call('settings.toggleLine');
   }
 });
 
@@ -62,11 +65,23 @@ Template.placementNav.helpers({
     } catch(e) {
       //throws an exception when first loading page
     }
+  },
+  showLine: function () {
+    try {
+      if (Settings.findOne({name: "drawLineBeingChecked"}).value) {
+        return "selected";
+      } else {
+        return "";
+      }
+    } catch(e) {
+      //throws an exception when first loading page
+    }
   }
 });
 
 Template.devLayout.events ({
-  "click #btn-tst": function() {
+  "click #btn-sett": function() {
+    Meteor.call("settings.loadDefault");
   },
 });
 

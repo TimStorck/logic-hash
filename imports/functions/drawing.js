@@ -49,6 +49,7 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx, canvas
 export function drawRadial(motionCenter, responseCenter, canCtx) {
   canCtx.beginPath();
   canCtx.strokeStyle = "black";
+  canCtx.lineWidth  = 1;
   canCtx.moveTo(motionCenter.x, motionCenter.y);
   canCtx.lineTo(responseCenter.x, responseCenter.y);
   canCtx.stroke();
@@ -146,12 +147,25 @@ export function clearCanvas(canvas, canCtx) {
 export function drawLine(line, canCtx, color) {
   canCtx.beginPath();
   canCtx.strokeStyle = color;
+  canCtx.lineWidth  = 1;
   canCtx.moveTo(line.a.x,line.a.y);
   canCtx.lineTo(line.b.x,line.b.y);
   canCtx.stroke();
   canCtx.closePath();
 }
 
+/*
+  for development
+*/
+export function drawLineThick(line, canCtx) {
+  canCtx.beginPath();
+  canCtx.strokeStyle = "green";
+  canCtx.lineWidth  = 4;
+  canCtx.moveTo(line.a.x,line.a.y);
+  canCtx.lineTo(line.b.x,line.b.y);
+  canCtx.stroke();
+  canCtx.closePath();
+}
 
 /*
   for development

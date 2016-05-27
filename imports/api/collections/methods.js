@@ -78,5 +78,12 @@ Meteor.methods({
     } else {
       Settings.update({name: "drawAreaToCheck"}, {$set: {value: true}});
     }
+  },
+  'settings.toggleLine': function() {
+    if (Settings.findOne({name: "drawLineBeingChecked"}).value) {
+      Settings.update({name: "drawLineBeingChecked"}, {$set: {value: false}});
+    } else {
+      Settings.update({name: "drawLineBeingChecked"}, {$set: {value: true}});
+    }
   }
 })
