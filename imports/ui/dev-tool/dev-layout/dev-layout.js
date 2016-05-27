@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { Settings } from '../../../api/collections/settings.js';
 
 import './dev-layout.html';
 import '../../../api/collections/methods.js';
@@ -6,20 +7,70 @@ import '../../../api/tabular/tbl-posts.js';
 
 import { sandCtx } from '../dev-sandbox/dev-sandbox.js';
 
+Template.devLayout.onCreated(function() {
+  if (FlowRouter.subsReady()) {
+    Meteor.subscribe('settings'); 
+  }
+});
+
 Template.devLayout.onRendered(function() {
   document.body.style.backgroundColor = "rgb(200,200,200)";
+});
+
+Template.placementNav.events ({
+  "click #btn-outline": function() {
+    Meteor.call('settings.toggleOutline');
+  },
+  "click #btn-outline-debug": function() {
+    Meteor.call('settings.toggleOutlineDebug');
+  },
+  "click #btn-area": function() {
+    Meteor.call('settings.toggleArea');
+  }
+});
+
+Template.placementNav.helpers({
+  showOutline: function () {
+    try {
+      if (Settings.findOne({name: "drawOutline"}).value) {
+        return "selected";
+      } else {
+        return "";
+      }
+    } catch(e) {
+      //throws an exception when first loading page
+    }
+  },
+  showOutlineDebug: function () {
+    try {
+      if (Settings.findOne({name: "drawOutlineEachBox"}).value) {
+        return "selected";
+      } else {
+        return "";
+      }
+    } catch(e) {
+      //throws an exception when first loading page
+    }
+  },
+  showArea: function () {
+    try {
+      if (Settings.findOne({name: "drawAreaToCheck"}).value) {
+        return "selected";
+      } else {
+        return "";
+      }
+    } catch(e) {
+      //throws an exception when first loading page
+    }
+  }
 });
 
 Template.devLayout.events ({
   "click #btn-tst": function() {
   },
-  "click #btn-flag-load": function() {
-    Meteor.call('flags.loadData');
-  },
-  "click #btn-flag-dump": function() {
-    Meteor.call('flags.removeAll');
-  },
-  /* table events begin */
+});
+
+Template.tableNav.events ({
   "click #btn-tbl": function() {
     FlowRouter.go("dev");
   },
@@ -40,10 +91,10 @@ Template.devLayout.events ({
   },
   "click #btn-dum": function() {
     Meteor.call('posts.loadDummy');
-  },
-  /* table events end */
+  }
+});
 
-  /* sandbox events begin */
+Template.sandNav.events ({
   "click #btn-cvs": function() {
     FlowRouter.go("sandbox");
   },
@@ -63,5 +114,4 @@ Template.devLayout.events ({
     sandCtx.fillStyle = "rgb(210,210,210)";
     sandCtx.fillRect(-1000,-1000,2000,2000);
   }
-  /* sandbox events end */
 });

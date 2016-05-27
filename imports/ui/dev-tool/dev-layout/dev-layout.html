@@ -44,12 +44,11 @@
   <div id="btn-tst" class="butn">
     test
   </div>
-  <div id="btn-flag-load" class="butn">
-    load flag data
-  </div>
-  <div id="btn-flag-dump" class="butn">
-    delete flag data
-  </div>
+
+  <br>
+  <br>
+
+  {{> placementNav }}
 
   <br>
   <br>
@@ -67,12 +66,41 @@
 
 
 
+<template name="placementNav">
+  <div class="sub-nav">
+
+    <div id="" class="">
+      placement
+    </div>
+
+    <div class="indent">
+      <div id="btn-outline" class="butn {{showOutline}}">
+        draw outline once
+      </div>
+    </div>
+
+    <div class="sub-nav">
+      <div id="" class="">
+        debugging
+      </div>
+      <div class="indent">
+        <div id="btn-outline-debug" class="butn {{showOutlineDebug}}">
+          draw outline after each box
+        </div>
+        <div id="btn-area" class="butn {{showArea}}">
+          draw areaToCheck
+        </div>
+      </div>
+    </div>
+
+  </div>
+</template>
 
 <template name="sandNav">
   <div class="sub-nav">
 
     <div id="btn-cvs" class="butn">
-      sandbox
+      test canvas
     </div>
 
     <div class="indent">
@@ -86,7 +114,6 @@
 
   </div>
 </template>
-
 
 <template name="tableNav">
   <div class="sub-nav">

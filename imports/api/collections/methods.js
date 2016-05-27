@@ -1,6 +1,8 @@
 import { Posts } from './posts.js';
+import { Settings } from './settings.js';
 import { Meteor } from 'meteor/meteor';
 import { postsArray } from '../../data/dummy-posts.js';
+import { defaultSettings } from '../../data/defaultSettings.js';
 import { globalWarmingResponses } from '../../data/dummy-posts.js';
 import { nukesResponses } from '../../data/dummy-posts.js';
 import { defeatistResponses } from '../../data/dummy-posts.js';
@@ -47,6 +49,34 @@ Meteor.methods({
     for (let i = 0; i < defeatistLength; i++) {
       defeatistResponses[i].elicitor = defeatistId;
       Posts.insert(defeatistResponses[i]);
+    }
+  },
+  'settings.loadDefault': function() {
+    Settings.remove({});
+    for (let i = 0; i < defaultSettings.length; i++) {
+      Settings.insert(defaultSettings[i]);
+    }
+    console.log("default settings loaded");
+  },
+  'settings.toggleOutline': function() {
+    if (Settings.findOne({name: "drawOutline"}).value) {
+      Settings.update({name: "drawOutline"}, {$set: {value: false}});
+    } else {
+      Settings.update({name: "drawOutline"}, {$set: {value: true}});
+    }
+  },
+  'settings.toggleOutlineDebug': function() {
+    if (Settings.findOne({name: "drawOutlineEachBox"}).value) {
+      Settings.update({name: "drawOutlineEachBox"}, {$set: {value: false}});
+    } else {
+      Settings.update({name: "drawOutlineEachBox"}, {$set: {value: true}});
+    }
+  },
+  'settings.toggleArea': function() {
+    if (Settings.findOne({name: "drawAreaToCheck"}).value) {
+      Settings.update({name: "drawAreaToCheck"}, {$set: {value: false}});
+    } else {
+      Settings.update({name: "drawAreaToCheck"}, {$set: {value: true}});
     }
   }
 })

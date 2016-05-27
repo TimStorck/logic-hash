@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import { Posts } from '../api/collections/posts.js';
+import { Settings } from '../api/collections/settings.js';
 import { PostOb } from './objects.js';
 import { Coord } from './objects.js';
 import { filledSpaceModel } from './fsm.js';
