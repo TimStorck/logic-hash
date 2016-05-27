@@ -8,6 +8,7 @@ import { widthFromChars } from './measurements.js';
 import { flagData } from '../data/flag-data.js';
 import { fSModel } from './reactive.js';
 import { findBestSpot } from './placement.js';
+import { Settings } from '../api/collections/settings.js';
 
 export function drawMotionTextBox(post, butcket, centerPos) {
   let newElem = createTextBoxElement(post, bucket);
@@ -16,10 +17,16 @@ export function drawMotionTextBox(post, butcket, centerPos) {
   let topLeftPos = centerPos.minus(centerOf(dimens));
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
-/*
-  for development
-*/
-  // newElem.style.display = "none";
+
+  /*
+    for development
+  */
+  try {
+    if (Settings.findOne({name: "hidePostBoxes"}).value) {
+      newElem.style.display = "none";
+    }
+  } catch(e) {
+  }
 
   fSModel.addBox(topLeftPos, topLeftPos.plus(dimens));
 }
@@ -28,19 +35,25 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx, canvas
   let newElem = createTextBoxElement(post, bucket);
   let dimens = dimensOf(newElem);
 
-/*
-  for development
-*/
+  /*
+    for development
+  */
   // drawCircle(elicitorCenter, canCtx);
 
   let centerPos = findBestSpot(dimens, elicitorCenter, canCtx, canvas);
   let topLeftPos = centerPos.minus(centerOf(dimens))
   newElem.style.top = topLeftPos.yPx();
   newElem.style.left = topLeftPos.xPx();
-/*
-  for development
-*/
-  // newElem.style.display = "none";
+  
+  /*
+    for development
+  */
+  try {
+    if (Settings.findOne({name: "hidePostBoxes"}).value) {
+      newElem.style.display = "none";
+    }
+  } catch(e) {
+  }
 
   fSModel.addResponse(topLeftPos, topLeftPos.plus(dimens));
   return centerPos;

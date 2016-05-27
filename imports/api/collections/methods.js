@@ -85,5 +85,12 @@ Meteor.methods({
     } else {
       Settings.update({name: "drawLineBeingChecked"}, {$set: {value: true}});
     }
+  },
+  'settings.togglePosts': function() {
+    if (Settings.findOne({name: "hidePostBoxes"}).value) {
+      Settings.update({name: "hidePostBoxes"}, {$set: {value: false}});
+    } else {
+      Settings.update({name: "hidePostBoxes"}, {$set: {value: true}});
+    }
   }
 })

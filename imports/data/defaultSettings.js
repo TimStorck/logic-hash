@@ -14,5 +14,9 @@ export const defaultSettings = [
   {
     name: "drawLineBeingChecked",
     value: false
+  },
+  {
+    name: "hidePostBoxes",
+    value: false
   }
 ];

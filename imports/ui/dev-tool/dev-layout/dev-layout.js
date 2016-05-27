@@ -29,6 +29,9 @@ Template.placementNav.events ({
   },
   "click #btn-lines": function() {
     Meteor.call('settings.toggleLine');
+  },
+  "click #btn-posts": function() {
+    Meteor.call('settings.togglePosts');
   }
 });
 
@@ -69,6 +72,17 @@ Template.placementNav.helpers({
   showLine: function () {
     try {
       if (Settings.findOne({name: "drawLineBeingChecked"}).value) {
+        return "selected";
+      } else {
+        return "";
+      }
+    } catch(e) {
+      //throws an exception when first loading page
+    }
+  },
+  hidePosts: function () {
+    try {
+      if (Settings.findOne({name: "hidePostBoxes"}).value) {
         return "selected";
       } else {
         return "";
