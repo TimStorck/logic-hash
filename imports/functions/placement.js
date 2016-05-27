@@ -310,9 +310,9 @@ function getSpotInArea(area, dimens, eliCent) {
         }
       }
       if (isCloserToThanX(area.a, eliCent, area.b)) {
-        return new Coord(area.a.x + halfDimens.x, area.b.y + halfDimens.y);
+        return new Coord(area.a.x + halfDimens.x, area.b.y - halfDimens.y);
       } else {
-        return new Coord(area.b.x - halfDimens.x, area.b.y + halfDimens.y);
+        return new Coord(area.b.x - halfDimens.x, area.b.y - halfDimens.y);
       }
       break;
     case 1:
