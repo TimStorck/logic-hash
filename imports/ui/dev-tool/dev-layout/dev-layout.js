@@ -1,8 +1,8 @@
 import { Template } from 'meteor/templating';
 
 import './dev-layout.html';
-import '../../api/collections/methods.js';
-import '../../api/tabular/tbl-posts.js';
+import '../../../api/collections/methods.js';
+import '../../../api/tabular/tbl-posts.js';
 
 import { sandCtx } from '../dev-sandbox/dev-sandbox.js';
 

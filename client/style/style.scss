@@ -1,13 +1,13 @@
 @import '../../imports/ui/home/_home.scss';
-@import '../../imports/ui/dev-layout/_dev-layout.scss';
-@import '../../imports/ui/dev-table/_dev-table.scss';
-@import '../../imports/ui/dev-add/_dev-add.scss';
-@import '../../imports/ui/dev-test/_dev-test.scss';
-@import '../../imports/ui/dev-sandbox/_dev-sandbox.scss';
+@import '../../imports/ui/dev-tool/dev-layout/_dev-layout.scss';
+@import '../../imports/ui/dev-tool/dev-table/_dev-table.scss';
+@import '../../imports/ui/dev-tool/dev-add/_dev-add.scss';
+@import '../../imports/ui/dev-tool/dev-test/_dev-test.scss';
+@import '../../imports/ui/dev-tool/dev-sandbox/_dev-sandbox.scss';
 @import '../../imports/ui/signup/_signup.scss';
 @import '../../imports/ui/new-motion/_new-motion.scss';
 @import '../../imports/ui/debate/_debate.scss';
-@import '../../imports/ui/_dev-styles.scss';
+@import '../../imports/ui/dev-tool/_dev-styles.scss';
 @import './_mixins.scss';
 
 body {
