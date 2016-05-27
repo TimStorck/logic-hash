@@ -83,7 +83,7 @@ function closestDistance(refPoint, line) {
       return Math.abs(refPoint.x - line.a.x);
     }
   }
-  // console.log("doesnt cross refPoint, closest distance: " + Math.min(radialDistance(refPoint, line.a), radialDistance(refPoint, line.b)));
+  console.log(radialDistance(refPoint, line.a) + " - " + radialDistance(refPoint, line.b));
   return Math.min(radialDistance(refPoint, line.a), radialDistance(refPoint, line.b));
 }
 

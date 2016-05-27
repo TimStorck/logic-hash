@@ -219,10 +219,10 @@ function markLineSide(line, canCtx) {
   for development
 */
 export function drawArea(area, canCtx) {
-  drawLine(new Line(new Coord(area.a.x, area.a.y), new Coord(area.b.x, area.a.y)), canCtx, "yellow");
-  drawLine(new Line(new Coord(area.b.x, area.a.y), new Coord(area.b.x, area.b.y)), canCtx, "yellow");
-  drawLine(new Line(new Coord(area.b.x, area.b.y), new Coord(area.a.x, area.b.y)), canCtx, "yellow");
-  drawLine(new Line(new Coord(area.a.x, area.b.y), new Coord(area.a.x, area.a.y)), canCtx, "yellow");
+  drawLine(new Line(new Coord(area.a.x, area.a.y), new Coord(area.b.x, area.a.y)), canCtx, "blue");
+  drawLine(new Line(new Coord(area.b.x, area.a.y), new Coord(area.b.x, area.b.y)), canCtx, "blue");
+  drawLine(new Line(new Coord(area.b.x, area.b.y), new Coord(area.a.x, area.b.y)), canCtx, "blue");
+  drawLine(new Line(new Coord(area.a.x, area.b.y), new Coord(area.a.x, area.a.y)), canCtx, "blue");
 }
 
 /*
