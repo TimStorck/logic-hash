@@ -96,27 +96,49 @@ export function filledSpaceModel() {
     for (let i = 0; i < 4; i++) {
       //if nothing intersects this side of the marginBox
       if (linesInter[i].length === 0) {
-        //if this side's adjacent sides are intersected
-        if (linesInter[adjCCW(i)].length > 0 && linesInter[adjCW(i)].length > 0) {
-          //if the adjacent sides' closest intersecting lines face away
+        if (linesInter[adjCCW(i)].length > 0) {
           switch(i) {
             case 0:
-              if (firstFacesOthers(linesInter[adjCCW(i)][0]) && firstFacesOthers(linesInter[adjCW(i)][0])) {
+              if (firstFacesOthers(linesInter[adjCCW(i)][0])) {
                 findAndRemoveLine(this.lineArray, marginBox[i]);
               }
               break;
             case 1:
-              if (lastFacesOthers(linesInter[adjCCW(i)][linesInter[adjCCW(i)].length - 1]) && lastFacesOthers(linesInter[adjCW(i)][linesInter[adjCW(i)].length - 1])) {
+              if (lastFacesOthers(linesInter[adjCCW(i)][linesInter[adjCCW(i)].length - 1])) {
                 findAndRemoveLine(this.lineArray, marginBox[i]);
               }
               break;
             case 2:
-              if (lastFacesOthers(linesInter[adjCCW(i)][linesInter[adjCCW(i)].length - 1]) && lastFacesOthers(linesInter[adjCW(i)][linesInter[adjCW(i)].length - 1])) {
+              if (lastFacesOthers(linesInter[adjCCW(i)][linesInter[adjCCW(i)].length - 1])) {
                 findAndRemoveLine(this.lineArray, marginBox[i]);
               }
               break;
             case 3:
-              if (firstFacesOthers(linesInter[adjCCW(i)][0]) && firstFacesOthers(linesInter[adjCW(i)][0])) {
+              if (firstFacesOthers(linesInter[adjCCW(i)][0])) {
+                findAndRemoveLine(this.lineArray, marginBox[i]);
+              }
+              break;
+          }
+        }
+        if (linesInter[adjCW(i)].length > 0) {
+          switch(i) {
+            case 0:
+              if (firstFacesOthers(linesInter[adjCW(i)][0])) {
+                findAndRemoveLine(this.lineArray, marginBox[i]);
+              }
+              break;
+            case 1:
+              if (lastFacesOthers(linesInter[adjCW(i)][linesInter[adjCW(i)].length - 1])) {
+                findAndRemoveLine(this.lineArray, marginBox[i]);
+              }
+              break;
+            case 2:
+              if (lastFacesOthers(linesInter[adjCW(i)][linesInter[adjCW(i)].length - 1])) {
+                findAndRemoveLine(this.lineArray, marginBox[i]);
+              }
+              break;
+            case 3:
+              if (firstFacesOthers(linesInter[adjCW(i)][0])) {
                 findAndRemoveLine(this.lineArray, marginBox[i]);
               }
               break;
