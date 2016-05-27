@@ -96,7 +96,7 @@ export function filledSpaceModel() {
     for (let i = 0; i < 4; i++) {
       //if nothing intersects this side of the marginBox
       if (linesInter[i].length === 0) {
-        //if that sides adjacent sides are intersected
+        //if this side's adjacent sides are intersected
         if (linesInter[adjCCW(i)].length > 0 && linesInter[adjCW(i)].length > 0) {
           //if the adjacent sides' closest intersecting lines face away
           switch(i) {
@@ -139,53 +139,108 @@ export function filledSpaceModel() {
         //for each lineArray line
         for (let j = 0; j < this.lineArray.length; j++) {
           //dont compare line to itself
-          if (marginBox[i] != this.lineArray[j]) {
+          if (marginBox[i] !== this.lineArray[j]) {
             //if lines overlap
             if (linesOverlap(marginBox[i], this.lineArray[j])) {
               //if lineArray line coordinate A comes first
               if (this.lineArray[j].a.x < marginBox[i].a.x || this.lineArray[j].a.y < marginBox[i].a.y) {
-                //mark the points being cut out so they can be used to check for lines that should be removed
-                lolArray[i] = {
-                  "mBPtRemd": new Coord(marginBox[i].a.x, marginBox[i].a.y), 
-                  "lAPtRemd": new Coord(this.lineArray[j].b.x, this.lineArray[j].b.y)
-                };
                 //stretch marginBox line to begin at lineArray line coordinate A
                 marginBox[i].a.x = this.lineArray[j].a.x;
                 marginBox[i].a.y = this.lineArray[j].a.y;
+                //get index of lineArray line that was connected to the lineArray line being removed at the point that overlapped
+                let connectingLALineIndex = connectingLALine(this.lineArray, this.lineArray[j], this.lineArray[j].b);
+                let oppSide = oppositeSide(i);
+                //if lineArray line connected to consolidated lineArray line wasn't removed already
+                if (connectingLALineIndex >= 0) {
+                  //if lineArray line connected to consolidated lineArray line doesn't cross marginBox line opposite the consolidated marginbox line
+                  if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
+                    this.lineArray.splice(connectingLALineIndex, 1);
+                    j--;
+                  }
+                }
+                //get index of mb line that was connected to the point that was removed
+                let connectingMBLineIndex = connectingMBLine(marginBox[i], false);
+                //if connecting marginBox line not already removed
+                if (typeof marginBox[connectingMBLineIndex] != "undefined") {
+                  //remove if not intersected
+                  if (linesInter[connectingMBLineIndex].length === 0) {
+                    findAndRemoveLine(this.lineArray, marginBox[connectingMBLineIndex]);
+                  }
+                }
               //if marginBox line coordinate A comes first
               } else {
                 //if lineArray coordinate B comes last
                 if (marginBox[i].b.x < this.lineArray[j].b.x || marginBox[i].b.y < this.lineArray[j].b.y) {
-                  lolArray[i] = {
-                    "mBPtRemd": new Coord(marginBox[i].b.x, marginBox[i].b.y), 
-                    "lAPtRemd": new Coord(this.lineArray[j].a.x, this.lineArray[j].a.y)
-                  };
                   //stretch marginBox line to end at lineArray line coordinate B
                   marginBox[i].b.x = this.lineArray[j].b.x;
                   marginBox[i].b.y = this.lineArray[j].b.y;
-                //if marginBox line coordinate B comes last, i.e. lineArray line is short little line
+                  //get index of lineArray line that was connected to the lineArray line being removed at the point that overlapped
+                  let connectingLALineIndex = connectingLALine(this.lineArray, this.lineArray[j], this.lineArray[j].a);
+                  let oppSide = oppositeSide(i);
+                  //if lineArray line connected to consolidated lineArray line wasn't removed already
+                  if (connectingLALineIndex >= 0) {
+                    //if lineArray line connected to consolidated lineArray line doesn't cross marginBox line opposite the consolidated marginbox line
+                    if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
+                      this.lineArray.splice(connectingLALineIndex, 1);
+                      j--;
+                    }
+                  }
+                  //get index of mb line that was connected to the point that was removed
+                  let connectingMBLineIndex = connectingMBLine(marginBox[i], true);
+                  //if connecting marginBox line not already removed
+                  if (typeof marginBox[connectingMBLineIndex] != "undefined") {
+                    //remove if not intersected
+                    if (linesInter[connectingMBLineIndex].length === 0) {
+                      findAndRemoveLine(this.lineArray, marginBox[connectingMBLineIndex]);
+                    }
+                  }
+                //if marginBox line coordinate B comes last, so lineArray line is contained within, i.e. lineArray line is short little line
                 } else {
                   //if overlapping lineArray line is within margin's length from right edge or bottom edge
                   if (marginBox[i].a.x !== marginBox[i].b.x && marginBox[i].b.x - this.lineArray[j].a.x <= margin ||
                     marginBox[i].a.y !== marginBox[i].b.y && marginBox[i].b.y - this.lineArray[j].a.y <= margin) {
-                      //mark the points being cut out so they can be used to check for lines that should be removed
-                      lolArray[i] = {
-                        "mBPtRemd": new Coord(marginBox[i].b.x, marginBox[i].b.y), 
-                        "lAPtRemd": new Coord(this.lineArray[j].a.x, this.lineArray[j].a.y)
-                      };
-                      //stretch marginBox line to end at lineArray line coordinate B
-                      marginBox[i].b.x = this.lineArray[j].b.x;
-                      marginBox[i].b.y = this.lineArray[j].b.y;
+                      //get index of lineArray line that was connected to the lineArray line being removed at the point that overlapped
+                      let connectingLALineIndex = connectingLALine(this.lineArray, this.lineArray[j], this.lineArray[j].a);
+                      let oppSide = oppositeSide(i);
+                      //if lineArray line connected to consolidated lineArray line wasn't removed already
+                      if (connectingLALineIndex >= 0) {
+                        //if lineArray line connected to consolidated lineArray line doesn't cross marginBox line opposite the consolidated marginbox line
+                        if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
+                          this.lineArray.splice(connectingLALineIndex, 1);
+                          j--;
+                        }
+                      }
+                      //get index of mb line that was connected to the point that was removed
+                      let connectingMBLineIndex = connectingMBLine(marginBox[i], true);
+                      //if connecting marginBox line not already removed
+                      if (typeof marginBox[connectingMBLineIndex] != "undefined") {
+                        //remove if not intersected
+                        if (linesInter[connectingMBLineIndex].length === 0) {
+                          findAndRemoveLine(this.lineArray, marginBox[connectingMBLineIndex]);
+                        }
+                      }
                   //overlapping lineArray line must be within margin's length from left or top edge
                   } else {
-                    //mark the points being cut out so they can be used to check for lines that should be removed
-                    lolArray[i] = {
-                      "mBPtRemd": new Coord(marginBox[i].a.x, marginBox[i].a.y), 
-                      "lAPtRemd": new Coord(this.lineArray[j].b.x, this.lineArray[j].b.y)
-                    };
-                    //stretch marginBox line to begin at lineArray line coordinate A
-                    marginBox[i].a.x = this.lineArray[j].a.x;
-                    marginBox[i].a.y = this.lineArray[j].a.y;
+                    //get index of lineArray line that was connected to the lineArray line being removed at the point that overlapped
+                    let connectingLALineIndex = connectingLALine(this.lineArray, this.lineArray[j], this.lineArray[j].b);
+                    let oppSide = oppositeSide(i);
+                    //if lineArray line connected to consolidated lineArray line wasn't removed already
+                    if (connectingLALineIndex >= 0) {
+                      //if lineArray line connected to consolidated lineArray line doesn't cross marginBox line opposite the consolidated marginbox line
+                      if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
+                        this.lineArray.splice(connectingLALineIndex, 1);
+                        j--;
+                      }
+                    }
+                    //get index of mb line that was connected to the point that was removed
+                    let connectingMBLineIndex = connectingMBLine(marginBox[i], false);
+                    //if connecting marginBox line not already removed
+                    if (typeof marginBox[connectingMBLineIndex] != "undefined") {
+                      //remove if not intersected
+                      if (linesInter[connectingMBLineIndex].length === 0) {
+                        findAndRemoveLine(this.lineArray, marginBox[connectingMBLineIndex]);
+                      }
+                    }
                   }
                 }
               }
@@ -193,32 +248,6 @@ export function filledSpaceModel() {
               this.lineArray.splice(j, 1);
               j--;
             }
-          }
-        }
-      }
-    }
-    //check for lines orphaned by overlapping line consolidation
-    //for each side of line overlap Array
-    for (let i = 0; i < 4; i++) {
-      //check if object is not empty and object of opposite side is also not empty
-      if (typeof lolArray[i].mBPtRemd != "undefined" && typeof lolArray[oppositeSide(i)].mBPtRemd != "undefined") {
-        //for each side of marginBox
-        for (let j = 0; j < 4; j++) {
-          //find marginBox line that matches points removed from marginBox overlapping lines
-          if (marginBox[j].a.equals(lolArray[i].mBPtRemd) && marginBox[j].b.equals(lolArray[oppositeSide(i)].mBPtRemd)  || 
-            marginBox[j].b.equals(lolArray[i].mBPtRemd) && marginBox[j].a.equals(lolArray[oppositeSide(i)].mBPtRemd) ) {
-            //remove orphaned line
-            findAndRemoveLine(this.lineArray, marginBox[j]);
-            break;
-          }
-        }
-        //find lineArray line that maches points removed from lineArray overlapping lines
-        for (let j = 0; j < this.lineArray.length; j++) {
-          if (this.lineArray[j].a.equals(lolArray[i].lAPtRemd) && this.lineArray[j].b.equals(lolArray[oppositeSide(i)].lAPtRemd) ||
-            this.lineArray[j].b.equals(lolArray[i].lAPtRemd) && this.lineArray[j].a.equals(lolArray[oppositeSide(i)].lAPtRemd) ) {
-            //remove orphaned line
-            this.lineArray.splice(j, 1);
-            break;
           }
         }
       }
@@ -385,6 +414,51 @@ export function filledSpaceModel() {
         }
       }
     }
+  }
+}
+
+function connectingLALine(lineArray, line, point) {
+  for (let i = 0; i < lineArray.length; i++) {
+    if (lineArray[i] !== line) {
+      if (lineArray[i].a.equals(point) || lineArray[i].b.equals(point)) {
+        return i;
+      }
+    }
+  }
+  return -1;
+}
+ 
+//returns adjacent line of marginBox. bSide is a boolean indicating if you want the side connecting at the original side's b coordinate
+function connectingMBLine(line, bSide) {
+  switch (line.side) {
+    case 0:
+      if (bSide) {
+        return 1;
+      } else {
+        return 3;
+      }
+      break;
+    case 1:
+      if (bSide) {
+        return 2;
+      } else {
+        return 0;
+      }
+      break;
+    case 2:
+      if (bSide) {
+        return 1;
+      } else {
+        return 3;
+      }
+      break;
+    case 3:
+      if (bSide) {
+        return 2;
+      } else {
+        return 0;
+      }
+      break;
   }
 }
 

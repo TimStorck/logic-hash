@@ -211,7 +211,7 @@ function checkAndRefineArea(area, dimens) {
             //if line splits area into two spaces that could fit post-box
             if (fSModel.lineArray[i].a.x > area.a.x + dimens.x && fSModel.lineArray[i].b.x < area.b.x - dimens.x) {
               area.b.x = fSModel.lineArray[i].a.x;
-              let newAreas = checkAndRefineArea(new Area(new Coord(fSModel.lineArray.b.x, area.a.y), new Coord(area.b.x, area.b.y), area.side), dimens);
+              let newAreas = checkAndRefineArea(new Area(new Coord(fSModel.lineArray[i].b.x, area.a.y), new Coord(area.b.x, area.b.y), area.side), dimens);
               for (let j = 0; j < newAreas.length; j++) {
                 usableAreas.push(newAreas[j]);
               }
@@ -257,7 +257,7 @@ function checkAndRefineArea(area, dimens) {
             //if line splits area into two spaces that could fit post-box
             if (fSModel.lineArray[i].a.y > area.a.y + dimens.y && fSModel.lineArray[i].b.y < area.b.y - dimens.y) {
               area.b.y = fSModel.lineArray[i].a.y;
-              let newAreas = checkAndRefineArea(new Area(new Coord(area.a.x, fSModel.lineArray.b.y), new Coord(area.b.x, area.b.y), area.side), dimens);
+              let newAreas = checkAndRefineArea(new Area(new Coord(area.a.x, fSModel.lineArray[i].b.y), new Coord(area.b.x, area.b.y), area.side), dimens);
               for (let j = 0; j < newAreas.length; j++) {
                 usableAreas.push(newAreas[j]);
               }
