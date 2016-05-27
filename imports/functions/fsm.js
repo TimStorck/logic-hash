@@ -96,6 +96,7 @@ export function filledSpaceModel() {
     for (let i = 0; i < 4; i++) {
       //if nothing intersects this side of the marginBox
       if (linesInter[i].length === 0) {
+        //if adjacent counter clockwise is intersected
         if (linesInter[adjCCW(i)].length > 0) {
           switch(i) {
             case 0:
@@ -120,6 +121,7 @@ export function filledSpaceModel() {
               break;
           }
         }
+        //if adjacent clockwise is intersected
         if (linesInter[adjCW(i)].length > 0) {
           switch(i) {
             case 0:
@@ -142,6 +144,14 @@ export function filledSpaceModel() {
                 findAndRemoveLine(this.lineArray, marginBox[i]);
               }
               break;
+          }
+        }
+        //if opposite side is intersected and is intersected an even number of times
+        if (linesInter[oppositeSide(i)].length > 0 && linesInter[oppositeSide(i)].length % 2 === 0) {
+          //if 3 lines of marginBox are within prior outline, i.e. new post fit into a nook
+          if (linesInter[adjCCW(i)].length === 0 && linesInter[adjCW(i)].length === 0 && firstFacesOthers(linesInter[oppositeSide(i)][0])) {
+            //remove
+            findAndRemoveLine(this.lineArray, marginBox[i]);
           }
         }
       }
