@@ -57,8 +57,11 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     /*
       for development
     */
-    if (Settings.findOne({name: "drawOutlineEachBox"}).value) {
-      drawFSModel(canCtx);
+    try {
+      if (Settings.findOne({name: "drawOutlineEachBox"}).value) {
+        drawFSModel(canCtx);
+      }
+    } catch (e) {
     }
 
     drawResponses(motionId, motionCenter, true, canCtx, canvas, Settings);
@@ -66,8 +69,11 @@ export function debateTreeChanged(motionId, bucket, canvas) {
     /*
       for development
     */
-    if (Settings.findOne({name: "drawOutline"}).value) {
-      drawFSModel(canCtx);
+    try {
+      if (Settings.findOne({name: "drawOutline"}).value) {
+        drawFSModel(canCtx);
+      }
+    } catch (e) {
     }
   }
 }
