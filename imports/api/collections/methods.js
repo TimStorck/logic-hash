@@ -92,5 +92,12 @@ Meteor.methods({
     } else {
       Settings.update({name: "hidePostBoxes"}, {$set: {value: true}});
     }
+  },
+  'settings.toggleOutlineTrim': function() {
+    if (Settings.findOne({name: "showOutlineWhileTrimming"}).value) {
+      Settings.update({name: "showOutlineWhileTrimming"}, {$set: {value: false}});
+    } else {
+      Settings.update({name: "showOutlineWhileTrimming"}, {$set: {value: true}});
+    }
   }
 })

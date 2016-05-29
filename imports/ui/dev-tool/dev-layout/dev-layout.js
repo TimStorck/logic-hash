@@ -32,6 +32,9 @@ Template.placementNav.events ({
   },
   "click #btn-posts": function() {
     Meteor.call('settings.togglePosts');
+  },
+  "click #btn-trim": function() {
+    Meteor.call('settings.toggleOutlineTrim');
   }
 });
 
@@ -83,6 +86,17 @@ Template.placementNav.helpers({
   hidePosts: function () {
     try {
       if (Settings.findOne({name: "hidePostBoxes"}).value) {
+        return "selected";
+      } else {
+        return "";
+      }
+    } catch(e) {
+      //throws an exception when first loading page
+    }
+  },
+  showOutlineTrim: function () {
+    try {
+      if (Settings.findOne({name: "showOutlineWhileTrimming"}).value) {
         return "selected";
       } else {
         return "";

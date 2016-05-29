@@ -18,5 +18,9 @@ export const defaultSettings = [
   {
     name: "hidePostBoxes",
     value: false
+  },
+  {
+    name: "showOutlineWhileTrimming",
+    value: false
   }
 ];

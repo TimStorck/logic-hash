@@ -12,7 +12,7 @@ import { drawFSModel } from './drawing.js';
 import { clearCanvas } from './drawing.js';
 import { centerOf } from './measurements.js';
 
-export const fSModel = new filledSpaceModel();
+export const fSModel = new filledSpaceModel(null, null);
 
 export function debateTreeChanged(motionId, bucket, canvas) {
   Meteor.subscribe('posts');  

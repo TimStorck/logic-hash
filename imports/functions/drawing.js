@@ -35,11 +35,6 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx, canvas
   let newElem = createTextBoxElement(post, bucket);
   let dimens = dimensOf(newElem);
 
-  /*
-    for development
-  */
-  // drawCircle(elicitorCenter, canCtx);
-
   let centerPos = findBestSpot(dimens, elicitorCenter, canCtx, canvas);
   let topLeftPos = centerPos.minus(centerOf(dimens))
   newElem.style.top = topLeftPos.yPx();
@@ -53,6 +48,20 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx, canvas
       newElem.style.display = "none";
     }
   } catch(e) {
+  }
+
+  /*
+    for development
+  */
+  try {
+    if (Settings.findOne({name: "showOutlineWhileTrimming"}).value) {
+      if (fSModel.canCtx == null) {
+        //fsm instantiated before canvas exists in dom, so fsm gets canvas later [for debugging purposes]
+        fSModel.setCanCtx(canCtx);
+        fSModel.setCanvas(canvas);
+      }
+    }
+  } catch (e) {
   }
 
   fSModel.addResponse(topLeftPos, topLeftPos.plus(dimens));
@@ -139,7 +148,6 @@ function updateFSM(topLeftPos, dimens, sideOscillator) {
   for development
 */
 export function drawFSModel(canCtx) {
-
   for (let i=0;i<fSModel.lineArray.length;i++) {
     drawLine(fSModel.lineArray[i], canCtx, "red");
     markLineSide(fSModel.lineArray[i], canCtx);

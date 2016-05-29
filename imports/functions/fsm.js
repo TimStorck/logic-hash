@@ -1,11 +1,16 @@
 import { Coord } from './objects.js';
 import { Line } from './objects.js';
+import { drawFSModel } from './drawing.js';
+import { Settings } from '../api/collections/settings.js';
+import { clearCanvas } from './drawing.js';
 
 
-export function filledSpaceModel() {
+export function filledSpaceModel(canvas, canCtx) {
   const margin = 17;
   //this is the outline of the filled space
   this.lineArray = [];
+  this.canCtx = canCtx;
+  this.canvas = canvas;
 
   this.reset = function() {
     this.lineArray = [];
@@ -24,6 +29,16 @@ export function filledSpaceModel() {
   this.addResponse = function(topLeft,bottomRight) {
     let marginBox = this.addBox(topLeft,bottomRight);
     this.trimOverlap(marginBox);
+  }
+
+  //fsm instantiated before canvas exists in dom, so fsm gets canvas later [for debugging purposes]
+  this.setCanCtx = function(canCtx) {
+    this.canCtx = canCtx;
+  }
+
+  //fsm instantiated before canvas exists in dom, so fsm gets canvas later [for debugging purposes]
+  this.setCanvas = function(canvas) {
+    this.canvas = canvas;
   }
 
   /*
@@ -49,6 +64,19 @@ export function filledSpaceModel() {
       if (sideCrossed >=0) {
         truncateOrSplit(this.lineArray[i], sideCrossed, marginBox, this.lineArray, linesInter);
       }
+    }
+
+    /*
+      for development
+    */
+    try {
+      if (Settings.findOne({name: "showOutlineWhileTrimming"}).value) {
+        if (this.canCtx != null) {
+          clearCanvas(this.canvas, this.canCtx);
+          drawFSModel(this.canCtx);
+        }
+      }
+    } catch (e) {
     }
     /*
         SORTING
@@ -155,6 +183,19 @@ export function filledSpaceModel() {
           }
         }
       }
+    }
+
+    /*
+      for development
+    */
+    try {
+      if (Settings.findOne({name: "showOutlineWhileTrimming"}).value) {
+        if (this.canCtx != null) {
+          clearCanvas(this.canvas, this.canCtx);
+          drawFSModel(this.canCtx);
+        }
+      }
+    } catch (e) {
     }
     /*
         LINE OVERLAP
@@ -282,6 +323,19 @@ export function filledSpaceModel() {
         }
       }
     }
+
+    /*
+      for development
+    */
+    try {
+      if (Settings.findOne({name: "showOutlineWhileTrimming"}).value) {
+        if (this.canCtx != null) {
+          clearCanvas(this.canvas, this.canCtx);
+          drawFSModel(this.canCtx);
+        }
+      }
+    } catch (e) {
+    }
     /*
         SEGMENTING
 
@@ -294,6 +348,7 @@ export function filledSpaceModel() {
         marginBox line.
         this algorithm allows for any number of intersecting lines.
     */
+
     //if side 0 of marginBox has lines intersecting it from lineArray
     if (linesInter[0].length > 0) {
       //record second coordinate of marginBox side 0
