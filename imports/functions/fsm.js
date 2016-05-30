@@ -264,6 +264,9 @@ export function filledSpaceModel(canvas, canCtx) {
                   //if overlapping lineArray line is within margin's length from right edge or bottom edge
                   if (marginBox[i].a.x !== marginBox[i].b.x && marginBox[i].b.x - this.lineArray[j].a.x <= margin ||
                     marginBox[i].a.y !== marginBox[i].b.y && marginBox[i].b.y - this.lineArray[j].a.y <= margin) {
+                      //stretch marginBox line to end at lineArray line coordinate B
+                      marginBox[i].b.x = this.lineArray[j].b.x;
+                      marginBox[i].b.y = this.lineArray[j].b.y;
                       //get index of lineArray line that was connected to the lineArray line being removed at the point that overlapped
                       let connectingLALineIndex = connectingLALine(this.lineArray, this.lineArray[j], this.lineArray[j].a);
                       let oppSide = oppositeSide(i);
@@ -291,6 +294,9 @@ export function filledSpaceModel(canvas, canCtx) {
                       }
                   //overlapping lineArray line must be within margin's length from left or top edge
                   } else {
+                    //stretch marginBox line to end at lineArray line coordinate B
+                    marginBox[i].a.x = this.lineArray[j].a.x;
+                    marginBox[i].a.y = this.lineArray[j].a.y;
                     //get index of lineArray line that was connected to the lineArray line being removed at the point that overlapped
                     let connectingLALineIndex = connectingLALine(this.lineArray, this.lineArray[j], this.lineArray[j].b);
                     let oppSide = oppositeSide(i);
