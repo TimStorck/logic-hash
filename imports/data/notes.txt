@@ -28,3 +28,6 @@ box sliding right along top skyline
 todo
   make meteor method part that updates last discussed recursive
   add block to fsm outline updater that takes care of the unlikely case of a post box being fit perfectly into a hole within the outer outline [remove all sides of marginBox]
+  see if this part is needed in fsm:
+    //if lineArray line connected to consolidated lineArray line doesn't cross marginBox line opposite the consolidated marginbox line
+    

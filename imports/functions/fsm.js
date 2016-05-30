@@ -86,30 +86,8 @@ export function filledSpaceModel(canvas, canCtx) {
     
         sort arrays of lines intersecting margin box sides from left to right or top to bottom
     */
-    linesInter[0].sort(function(first, second) {
-      if (first.b.x > second.b.x) {
-        return 1;
-      } 
-      return -1;
-    });
-    linesInter[1].sort(function(first, second) {
-      if (first.b.y > second.b.y) {
-        return 1;
-      } 
-      return -1;
-    });
-    linesInter[2].sort(function(first, second) {
-      if (first.b.x > second.b.x) {
-        return 1;
-      } 
-      return -1;
-    });
-    linesInter[3].sort(function(first, second) {
-      if (first.b.y > second.b.y) {
-        return 1;
-      } 
-      return -1;
-    });
+
+    sortLinesInter(linesInter, true);
 
     /*
         REMOVAL
@@ -205,9 +183,10 @@ export function filledSpaceModel(canvas, canCtx) {
     /*
         LINE OVERLAP
 
-        consolidate overlapping lines and remove lines orphaned by line overlap consolidation
+        consolidate overlapping lines and remove lines severed by line overlap consolidation
         (removal section doesn't test for lines that intersect edges, only lines within)
     */
+
     //for each marginBox side
     for (let i = 0; i < 4; i++) {
       //skip removed sides
@@ -230,8 +209,13 @@ export function filledSpaceModel(canvas, canCtx) {
                 if (connectingLALineIndex >= 0) {
                   //if lineArray line connected to consolidated lineArray line doesn't cross marginBox line opposite the consolidated marginbox line
                   if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
-                    this.lineArray.splice(connectingLALineIndex, 1);
-                    j--;
+                    if (lineIsInside(this.lineArray[connectingLALineIndex], marginBox[i])) {
+                      this.lineArray.splice(connectingLALineIndex, 1);
+                      j--;
+                    } else {
+                      linesInter[i].push(this.lineArray[connectingLALineIndex]);
+                      sortLinesInter(linesInter, false, i);
+                    }
                   }
                 }
                 //get index of mb line that was connected to the point that was removed
@@ -257,8 +241,13 @@ export function filledSpaceModel(canvas, canCtx) {
                   if (connectingLALineIndex >= 0) {
                     //if lineArray line connected to consolidated lineArray line doesn't cross marginBox line opposite the consolidated marginbox line
                     if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
-                      this.lineArray.splice(connectingLALineIndex, 1);
-                      j--;
+                      if (lineIsInside(this.lineArray[connectingLALineIndex], marginBox[i])) {
+                        this.lineArray.splice(connectingLALineIndex, 1);
+                        j--;
+                      } else {
+                        linesInter[i].push(this.lineArray[connectingLALineIndex]);
+                        sortLinesInter(linesInter, false, i);
+                      }
                     }
                   }
                   //get index of mb line that was connected to the point that was removed
@@ -282,8 +271,13 @@ export function filledSpaceModel(canvas, canCtx) {
                       if (connectingLALineIndex >= 0) {
                         //if lineArray line connected to consolidated lineArray line doesn't cross marginBox line opposite the consolidated marginbox line
                         if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
-                          this.lineArray.splice(connectingLALineIndex, 1);
-                          j--;
+                          if (lineIsInside(this.lineArray[connectingLALineIndex], marginBox[i])) {
+                            this.lineArray.splice(connectingLALineIndex, 1);
+                            j--;
+                          } else {
+                            linesInter[i].push(this.lineArray[connectingLALineIndex]);
+                            sortLinesInter(linesInter, false, i);
+                          }
                         }
                       }
                       //get index of mb line that was connected to the point that was removed
@@ -304,8 +298,13 @@ export function filledSpaceModel(canvas, canCtx) {
                     if (connectingLALineIndex >= 0) {
                       //if lineArray line connected to consolidated lineArray line doesn't cross marginBox line opposite the consolidated marginbox line
                       if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
-                        this.lineArray.splice(connectingLALineIndex, 1);
-                        j--;
+                        if (lineIsInside(this.lineArray[connectingLALineIndex], marginBox[i])) {
+                          this.lineArray.splice(connectingLALineIndex, 1);
+                          j--;
+                        } else {
+                          linesInter[i].push(this.lineArray[connectingLALineIndex]);
+                          sortLinesInter(linesInter, false, i);
+                        }
                       }
                     }
                     //get index of mb line that was connected to the point that was removed
@@ -506,6 +505,96 @@ export function filledSpaceModel(canvas, canCtx) {
       }
     }
   }
+}
+
+function sortLinesInter(linesInter, sortAll, side) {
+  if(sortAll) {
+    linesInter[0].sort(function(first, second) {
+      if (first.b.x > second.b.x) {
+        return 1;
+      } 
+      return -1;
+    });
+    linesInter[1].sort(function(first, second) {
+      if (first.b.y > second.b.y) {
+        return 1;
+      } 
+      return -1;
+    });
+    linesInter[2].sort(function(first, second) {
+      if (first.b.x > second.b.x) {
+        return 1;
+      } 
+      return -1;
+    });
+    linesInter[3].sort(function(first, second) {
+      if (first.b.y > second.b.y) {
+        return 1;
+      } 
+      return -1;
+    });
+  } else {
+    switch (side) {
+      case 0:
+        linesInter[0].sort(function(first, second) {
+          if (first.b.x > second.b.x) {
+            return 1;
+          } 
+          return -1;
+        });
+        break;
+      case 1:
+        linesInter[1].sort(function(first, second) {
+          if (first.b.y > second.b.y) {
+            return 1;
+          } 
+          return -1;
+        });
+        break;
+      case 2:
+        linesInter[2].sort(function(first, second) {
+          if (first.b.x > second.b.x) {
+            return 1;
+          } 
+          return -1;
+        });
+        break;
+      case 3:
+        linesInter[3].sort(function(first, second) {
+          if (first.b.y > second.b.y) {
+            return 1;
+          } 
+          return -1;
+        });
+        break;
+    }
+  }
+}
+
+function lineIsInside(laLine, mbLine) {
+  switch (mbLine.side) {
+    case 0:
+      if (laLine.b.y > mbLine.b.y) {
+        return true;
+      }
+      break;
+    case 1:
+      if (laLine.a.x < mbLine.b.x) {
+        return true;
+      }
+      break;
+    case 2:
+      if (laLine.a.y < mbLine.b.y) {
+        return true;
+      }
+      break;
+    case 3:
+      if (laLine.b.x > mbLine.b.x) {
+        return true;
+      }
+      break;
+  }
+  return false;
 }
 
 //used in line overlap section of trimOverlap. returms index of connecting lineArray line
