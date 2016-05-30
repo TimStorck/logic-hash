@@ -4,11 +4,13 @@ import { drawFSModel } from './drawing.js';
 import { Settings } from '../api/collections/settings.js';
 import { clearCanvas } from './drawing.js';
 
-
+//maintains outline of filled space plus specified margin distance
 export function filledSpaceModel(canvas, canCtx) {
   const margin = 17;
+
   //this is the outline of the filled space
   this.lineArray = [];
+
   this.canCtx = canCtx;
   this.canvas = canvas;
 
@@ -31,12 +33,12 @@ export function filledSpaceModel(canvas, canCtx) {
     this.trimOverlap(marginBox);
   }
 
-  //fsm instantiated before canvas exists in dom, so fsm gets canvas later [for debugging purposes]
+  //fsm instantiated before canvas exists in dom, so fsm gets canvas later [used only when debugging setting applied]
   this.setCanCtx = function(canCtx) {
     this.canCtx = canCtx;
   }
 
-  //fsm instantiated before canvas exists in dom, so fsm gets canvas later [for debugging purposes]
+  //fsm instantiated before canvas exists in dom, so fsm gets canvas later [used only when debugging setting applied]
   this.setCanvas = function(canvas) {
     this.canvas = canvas;
   }
@@ -78,6 +80,7 @@ export function filledSpaceModel(canvas, canCtx) {
       }
     } catch (e) {
     }
+
     /*
         SORTING
     
@@ -107,6 +110,7 @@ export function filledSpaceModel(canvas, canCtx) {
       } 
       return -1;
     });
+
     /*
         REMOVAL
 
@@ -197,6 +201,7 @@ export function filledSpaceModel(canvas, canCtx) {
       }
     } catch (e) {
     }
+
     /*
         LINE OVERLAP
 
@@ -336,6 +341,7 @@ export function filledSpaceModel(canvas, canCtx) {
       }
     } catch (e) {
     }
+
     /*
         SEGMENTING
 
@@ -502,6 +508,7 @@ export function filledSpaceModel(canvas, canCtx) {
   }
 }
 
+//used in line overlap section of trimOverlap. returms index of connecting lineArray line
 function connectingLALine(lineArray, line, point) {
   for (let i = 0; i < lineArray.length; i++) {
     if (lineArray[i] !== line) {
@@ -551,6 +558,7 @@ function oppositeSide(side) {
   return (side + 2) % 4;
 }
 
+//the line objects in the marginBox array are put in the lineArray array, this finds the line object instance
 function findAndRemoveLine(lineArray, line) {
   for (let j = lineArray.length-1; j >= 0; j--) {
     if (lineArray[j] == line) {
@@ -570,7 +578,7 @@ function adjCW(side) {
   return (side + 1) % 4;
 }
 
-//to test last intersecting line in array of intersecting lines sorted from left to right or top to bottom
+//to test last intersecting line in array of lines intersecting marginBox side, sorted from left to right or top to bottom
 function lastFacesOthers(intersectingLine) {
   if (intersectingLine.side === 3 || intersectingLine.side === 0) {
     return true;
@@ -578,7 +586,7 @@ function lastFacesOthers(intersectingLine) {
   return false;
 }
 
-//to test first intersecting line in array of intersecting lines sorted from left to right or top to bottom
+//to test first intersecting line in array of lines intersecting marginBox side, sorted from left to right or top to bottom
 function firstFacesOthers(intersectingLine) {
   if (intersectingLine.side === 1 || intersectingLine.side === 2) {
     return true;
@@ -586,6 +594,7 @@ function firstFacesOthers(intersectingLine) {
   return false;
 }
 
+//cuts off any line from prior lineArray outline that enters new marginBox, or splits it if it traverses the whole marginBox
 function truncateOrSplit(line, sideCrossed, marginBox, lineArray, linesIntersecting) {
   switch(sideCrossed) {
     case 0:
