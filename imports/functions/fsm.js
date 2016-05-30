@@ -139,6 +139,7 @@ export function filledSpaceModel(canvas, canCtx) {
         if (marginBox[i] !== this.lineArray[j]) {
           //if lines overlap
           if (linesOverlap(marginBox[i], this.lineArray[j])) {
+            let overlappingLALine = this.lineArray[j];
             //if lineArray line coordinate A comes first
             if (this.lineArray[j].a.x < marginBox[i].a.x || this.lineArray[j].a.y < marginBox[i].a.y) {
               //stretch marginBox line to begin at lineArray line coordinate A
@@ -260,7 +261,7 @@ export function filledSpaceModel(canvas, canCtx) {
               }
             }
             //remove lineArray line
-            this.lineArray.splice(j, 1);
+            findAndRemoveLine(this.lineArray, overlappingLALine);
             j--;
           }
         }
