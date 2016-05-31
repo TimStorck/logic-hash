@@ -132,6 +132,7 @@ export function filledSpaceModel(canvas, canCtx) {
       {"bChanged": false, "aChanged": false}
     ];
     //for each marginBox side
+    mbLoop:
     for (let i = 0; i < 4; i++) {
       //for each lineArray line
       for (let j = 0; j < this.lineArray.length; j++) {
@@ -140,6 +141,79 @@ export function filledSpaceModel(canvas, canCtx) {
           //if lines overlap
           if (linesOverlap(marginBox[i], this.lineArray[j])) {
             let oppSide = oppositeSide(i);
+            //if overlapping lines face each-other
+            if (this.lineArray[j].side === marginBox[oppSide].side) {
+              //if marginBox line is within lineArray line
+              if ((this.lineArray[j].a.y === this.lineArray[j].b.y && 
+                this.lineArray[j].a.x < marginBox[i].a.x && marginBox[i].b.x < this.lineArray[j].b.x) ||
+                (this.lineArray[j].a.x === this.lineArray[j].b.x && 
+                this.lineArray[j].a.y < marginBox[i].a.y && marginBox[i].b.y < this.lineArray[j].b.y)) {
+                  //segment lineArray line
+                  this.lineArray.push(new Line(marginBox[i].b, this.lineArray.b, this.lineArray[j].side));
+                  this.lineArray[j].b = marginBox[i].a;
+                  //remove mb line
+                  findAndRemoveLine(this.lineArray, marginBox[i]);
+                  //continue to next mb line
+                  continue mbLoop;
+              } else {
+                //if lineArray line is within marginBox line
+                if ((this.lineArray[j].a.y === this.lineArray[j].b.y &&
+                  marginBox[i].a.x < this.lineArray[j].a.x && this.lineArray[j].b.x < marginBox[i].b.x) ||
+                  (this.lineArray[j].a.x === this.lineArray[j].b.x &&
+                  marginBox[i].a.y < this.lineArray[j].a.y && this.lineArray[j].b.y < marginBox[i].b.y)) {
+                    //get lineArray lines connecting to loverlapping lineArray line
+                    let connectingLALine1 = this.lineArray[connectingLALine(this.lineArray, this.lineArray[j], this.lineArray[j].a)];
+                    let connectingLALine2 = this.lineArray[connectingLALine(this.lineArray, this.lineArray[j], this.lineArray[j].b)];
+                    //remove overlapping lineArray line
+                    this.lineArray.splice(j, 1);
+                    j--;
+                    //if connecting line is inside marginBox and doesn't protrude opposite marginBox side
+                    if (lineIsInside(connectingLALine1, marginBox[i])) {
+                      if (linesInter[oppSide].indexOf(connectingLALine1) === -1) {
+                        findAndRemoveLine(this.lineArray, connectingLALine1);
+                      }
+                    } else {
+                      linesInter[i].push(connectingLALine1);
+                      sortLinesInter(linesInter, false, i);
+                    }
+                    //if connecting line is inside marginBox and doesn't protrude opposite marginBox side
+                    if (lineIsInside(connectingLALine2, marginBox[i])) {
+                      if (linesInter[oppSide].indexOf(connectingLALine2) === -1) {
+                        findAndRemoveLine(this.lineArray, connectingLALine2);
+                      }
+                    } else {
+                      linesInter[i].push(connectingLALine2);
+                      sortLinesInter(linesInter, false, i);
+                    }
+                    continue;
+                }
+              }
+              //overlapping lines must be staggered
+              //if lineArray line comes first
+              if ((this.lineArray[j].a.y === this.lineArray[j].b.y && 
+                this.lineArray[j].a.x < marginBox[i].a.x) ||
+                (this.lineArray[j].a.x === this.lineArray[j].b.x && 
+                this.lineArray[j].a.y < marginBox[i].a.y)) {
+                  //adjust coordinates that cross
+                  let lineArrayLineEnd = this.lineArray[j].b;
+                  this.lineArray[j].b = marginBox[i].a;
+                  marginBox[i].a = lineArrayLineEnd;
+                  //take care of connecting lineArray line
+                  let connectingLALineIndex = connectingLALine(this.lineArray, marginBox[i], lineArrayLineEnd);
+                  //if connecting line is inside marginBox and doesn't protrude opposite marginBox side
+                  if (lineIsInside(this.lineArray[connectingLALineIndex], marginBox[i])) {
+                    if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
+                      this.lineArray.splice(connectingLALineIndex, 1);
+                      j--;
+                    }
+                  } else {
+                    linesInter[i].push(this.lineArray[connectingLALineIndex]);
+                    sortLinesInter(linesInter, false, i);
+                  }
+              }
+              continue;
+            }
+            //end of overlapping-lines-face-each-other section
             let overlappingLALine = this.lineArray[j];
             let connectingLALineIndex;
             let connectingMBLineIndex;
@@ -608,7 +682,7 @@ function lineIsInside(laLine, mbLine) {
   return false;
 }
 
-//used in line overlap section of trimOverlap. returms index of connecting lineArray line
+//used in line overlap section of trimOverlap. returns index of connecting lineArray line
 function connectingLALine(lineArray, line, point) {
   for (let i = 0; i < lineArray.length; i++) {
     if (lineArray[i] !== line) {
