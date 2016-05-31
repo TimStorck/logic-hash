@@ -298,6 +298,23 @@ export function filledSpaceModel(canvas, canCtx) {
       if (typeof marginBox[i] != "undefined") {
         //if nothing intersects this side of the marginBox
         if (linesInter[i].length === 0) {
+          //if no sides intersected
+          if (linesInter[opp].length === 0 &&
+            linesInter[indexCW].length === 0 &&
+            linesInter[indexCCW].length === 0) {
+            //if no side consolidated for line overlap
+            if (!(lolArray[0].aChanged || lolArray[0].bChanged ||
+              lolArray[1].aChanged || lolArray[1].bChanged ||
+              lolArray[2].aChanged || lolArray[2].bChanged ||
+              lolArray[3].aChanged || lolArray[3].bChanged)) {
+              //remove all marginBox lines
+              findAndRemoveLine(this.lineArray, marginBox[0]);
+              findAndRemoveLine(this.lineArray, marginBox[1]);
+              findAndRemoveLine(this.lineArray, marginBox[2]);
+              findAndRemoveLine(this.lineArray, marginBox[3]);
+              break;
+            }
+          }
           //if adjacent counter clockwise is intersected
           if (linesInter[indexCCW].length > 0) {
             switch(i) {
