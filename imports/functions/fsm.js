@@ -337,6 +337,7 @@ export function filledSpaceModel(canvas, canCtx) {
           }
           //if adjacent counter clockwise is intersected
           if (linesInter[indexCCW].length > 0) {
+            //if intersecting line faces away
             if ( ( (i===0||i===3) && firstFacesOthers(linesInter[indexCCW][0] ) ) ||
               ( (i===1||i===2) && lastFacesOthers(linesInter[indexCCW][linesInter[indexCCW].length - 1]) ) ) {
                 findAndRemoveLine(this.lineArray, marginBox[i]);
@@ -349,10 +350,21 @@ export function filledSpaceModel(canvas, canCtx) {
               ( (i===2||i===3) && lolArray[opp].bChanged) ) {
                 findAndRemoveLine(this.lineArray, marginBox[i]);
                 continue;
+            } else {
+              //if opposite side is intersected
+              if (linesInter[opp].length > 0) {
+                //if intersecting line at that end faces others
+                if ( ( (i===0||i===1) && firstFacesOthers(linesInter[opp][0]) ) ||
+                  ( (i===2||i===3) && lastFacesOthers(linesInter[opp][linesInter[opp].length - 1]) ) ) {
+                    findAndRemoveLine(this.lineArray, marginBox[i]);
+                    continue;
+                }
+              }
             }
           }
           //if adjacent clockwise is intersected
           if (linesInter[indexCW].length > 0) {
+            //if intersecting line faces away
             if ( ( (i===0||i===3) && firstFacesOthers(linesInter[indexCW][0] ) ) ||
               ( (i===1||i===2) && lastFacesOthers(linesInter[indexCW][linesInter[indexCW].length - 1]) ) ) {
                 findAndRemoveLine(this.lineArray, marginBox[i]);
@@ -365,6 +377,16 @@ export function filledSpaceModel(canvas, canCtx) {
               ( (i===2||i===3) && lolArray[opp].aChanged) ) {
                 findAndRemoveLine(this.lineArray, marginBox[i]);
                 continue;
+            } else {
+              //if opposite side is intersected
+              if (linesInter[opp].length > 0) {
+                //if intersecting line at that end faces others
+                if ( ( (i===0||i===1) && lastFacesOthers(linesInter[opp][linesInter[opp].length - 1]) ) ||
+                  ( (i===2||i===3) && firstFacesOthers(linesInter[opp][0]) ) ) {
+                    findAndRemoveLine(this.lineArray, marginBox[i]);
+                    continue;
+                }
+              }
             }
           }
         }
