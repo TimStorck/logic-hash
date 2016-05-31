@@ -315,8 +315,8 @@ export function filledSpaceModel(canvas, canCtx) {
       let indexCCW = adjCCW(i);
       //skip removed sides
       if (typeof marginBox[i] != "undefined") {
-        //if nothing intersects this side of the marginBox
-        if (linesInter[i].length === 0) {
+        //if nothing intersects this side of the marginBox and no line overlap consolidation was done on it
+        if (linesInter[i].length === 0 && !lolArray[i].aChanged && !lolArray[i].bChanged) {
           //if no sides intersected
           if (linesInter[opp].length === 0 &&
             linesInter[indexCW].length === 0 &&
@@ -331,82 +331,40 @@ export function filledSpaceModel(canvas, canCtx) {
               findAndRemoveLine(this.lineArray, marginBox[1]);
               findAndRemoveLine(this.lineArray, marginBox[2]);
               findAndRemoveLine(this.lineArray, marginBox[3]);
+              //end this section
               break;
             }
           }
           //if adjacent counter clockwise is intersected
           if (linesInter[indexCCW].length > 0) {
-            switch(i) {
-              case 0:
-              case 3:
-                if (firstFacesOthers(linesInter[indexCCW][0])) {
-                  findAndRemoveLine(this.lineArray, marginBox[i]);
-                  continue;
-                }
-                break;
-              case 1:
-              case 2:
-                if (lastFacesOthers(linesInter[indexCCW][linesInter[indexCCW].length - 1])) {
-                  findAndRemoveLine(this.lineArray, marginBox[i]);
-                  continue;
-                }
-                break;
+            if ( ( (i===0||i===3) && firstFacesOthers(linesInter[indexCCW][0] ) ) ||
+              ( (i===1||i===2) && lastFacesOthers(linesInter[indexCCW][linesInter[indexCCW].length - 1]) ) ) {
+                findAndRemoveLine(this.lineArray, marginBox[i]);
+                continue;
             }
-          //adjacent counter clockwise is not intersected
+          //if adjacent counter clockwise is not intersected
           } else {
-            switch(i) {
-              case 0:
-              case 1:
-                if (lolArray[opp].aChanged === true && lolArray[i].aChanged === false) {
-                  findAndRemoveLine(this.lineArray, marginBox[i]);
-                  continue;
-                }
-                break;
-              case 2:
-              case 3:
-                if (lolArray[opp].bChanged === true && lolArray[i].bChanged === false) {
-                  findAndRemoveLine(this.lineArray, marginBox[i]);
-                  continue;
-                }
-                break;
+            //if line overlap consolidation was done on opposite side at that end
+            if ( ( (i===0||i===1) && lolArray[opp].aChanged) ||
+              ( (i===2||i===3) && lolArray[opp].bChanged) ) {
+                findAndRemoveLine(this.lineArray, marginBox[i]);
+                continue;
             }
           }
-
           //if adjacent clockwise is intersected
           if (linesInter[indexCW].length > 0) {
-            switch(i) {
-              case 0:
-              case 3:
-                if (firstFacesOthers(linesInter[indexCW][0])) {
-                  findAndRemoveLine(this.lineArray, marginBox[i]);
-                  continue;
-                }
-                break;
-              case 1:
-              case 2:
-                if (lastFacesOthers(linesInter[indexCW][linesInter[indexCW].length - 1])) {
-                  findAndRemoveLine(this.lineArray, marginBox[i]);
-                  continue;
-                }
-                break;
+            if ( ( (i===0||i===3) && firstFacesOthers(linesInter[indexCW][0] ) ) ||
+              ( (i===1||i===2) && lastFacesOthers(linesInter[indexCW][linesInter[indexCW].length - 1]) ) ) {
+                findAndRemoveLine(this.lineArray, marginBox[i]);
+                continue;
             }
-          //adjacent clockwise is not intersected
+          //if adjacent clockwise is not intersected
           } else {
-            switch(i) {
-              case 0:
-              case 1:
-                if (lolArray[opp].bChanged === true && lolArray[i].bChanged === false) {
-                  findAndRemoveLine(this.lineArray, marginBox[i]);
-                  continue;
-                }
-                break;
-              case 2:
-              case 3:
-                if (lolArray[opp].aChanged === true && lolArray[i].aChanged === false) {
-                  findAndRemoveLine(this.lineArray, marginBox[i]);
-                  continue;
-                }
-                break;
+            //if line overlap consolidation was done on opposite side at that end
+            if ( ( (i===0||i===1) && lolArray[opp].bChanged) ||
+              ( (i===2||i===3) && lolArray[opp].aChanged) ) {
+                findAndRemoveLine(this.lineArray, marginBox[i]);
+                continue;
             }
           }
         }
