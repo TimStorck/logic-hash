@@ -9,7 +9,6 @@ import { flagData } from '../data/flag-data.js';
 import { fSModel } from './reactive.js';
 import { findBestSpot } from './placement.js';
 import { Settings } from '../api/collections/settings.js';
-import { checkGrow } from './grow.js';
 
 export function drawMotionTextBox(post, butcket, centerPos) {
   let newElem = createTextBoxElement(post, bucket);
@@ -66,8 +65,6 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx, canvas
   }
 
   let marginBox = fSModel.addResponse(topLeft, topLeft.plus(dimens));
-
-  checkGrow(canvas, canCtx, marginBox);
 
   return centerPos;
 }

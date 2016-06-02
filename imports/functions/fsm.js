@@ -20,19 +20,19 @@ export function filledSpaceModel(canvas, canCtx) {
 
   //marginBox is perimeter coordinates of post div with margin space added
   this.addBox = function(topLeft, bottomRight) {
-    let marginBox = getMarginBox(topLeft, bottomRight, margin);
+    this.marginBox = getMarginBox(topLeft, bottomRight, margin);
 
-    for (let i = 0; i < marginBox.length; i++) {
-      this.lineArray.push(marginBox[i]);
+    for (let i = 0; i < this.marginBox.length; i++) {
+      this.lineArray.push(this.marginBox[i]);
     }
-    return marginBox;
+    return this.marginBox;
   };
 
   this.addResponse = function(topLeft,bottomRight) {
-    let marginBox = this.addBox(topLeft,bottomRight);
-    this.trimOverlap(marginBox);
+    this.addBox(topLeft,bottomRight);
+    this.trimOverlap(this.marginBox);
 
-    return marginBox;
+    return this.marginBox;
   }
 
   //fsm instantiated before canvas exists in dom, so fsm gets canvas later [used only when debugging setting applied]

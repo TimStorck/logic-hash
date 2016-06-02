@@ -11,6 +11,7 @@ import { drawRadial } from './drawing.js';
 import { drawFSModel } from './drawing.js';
 import { clearCanvas } from './drawing.js';
 import { centerOf } from './measurements.js';
+import { checkGrow } from './grow.js';
 
 export const fSModel = new filledSpaceModel(null, null);
 
@@ -64,7 +65,13 @@ export function debateTreeChanged(motionId, bucket, canvas, debateWidth, debateH
     } catch (e) {
     }
 
-    drawResponses(motionId, motionCenter, true, canCtx, canvas, Settings);
+    let newDebateSize = drawResponses(motionId, motionCenter, true, canCtx, canvas, Settings);
+
+    if (newDebateSize != null) {
+      if (newDebateSize.x > debateWidth || newDebateSize > debateHeight) {
+        //
+      }
+    }
 
     /*
       for development
@@ -80,6 +87,7 @@ export function debateTreeChanged(motionId, bucket, canvas, debateWidth, debateH
 
 function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx, canvas) {
   let fetchArray = Posts.find({"elicitor": elicitorId}).fetch();
+  let newDebateSize = null;
   if (fetchArray.length > 0) {
     let responseArray = [];
     for(let i = 0; i < fetchArray.length; i++) {
@@ -95,6 +103,7 @@ function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx, can
     let responseCenter;
     for (let i = 0; i < responseArray.length; i++) {
       responseCenter = drawResponseTextBox(responseArray[i], bucket, elicitorCenter, canCtx, canvas);
+      checkGrow(canvas, canCtx, fSModel.marginBox, newDebateSize);
       drawRadial(elicitorCenter, responseCenter, canCtx);
 
       /*
@@ -111,9 +120,10 @@ function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx, can
       }
 
       if (responseArray[i].responseNo > 0) {
-        drawResponses(responseArray[i]._id, responseCenter, false, canCtx, canvas);
+        newDebateSize = drawResponses(responseArray[i]._id, responseCenter, false, canCtx, canvas);
       }
     }
   }
+  return newDebateSize;
 }
 

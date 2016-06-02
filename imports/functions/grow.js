@@ -1,4 +1,4 @@
-export function checkGrow(canvas, canCtx, marginBox) {
+export function checkGrow(canvas, canCtx, marginBox, newDebateSize) {
   if (marginBox[0] != "undefined" && marginBox[0].a.x < 0) {
     //subtract negative to add absolute value
     // canvas.width = canvas.width - marginBox[0].a.x;
