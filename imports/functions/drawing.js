@@ -9,6 +9,7 @@ import { flagData } from '../data/flag-data.js';
 import { fSModel } from './reactive.js';
 import { findBestSpot } from './placement.js';
 import { Settings } from '../api/collections/settings.js';
+import { checkGrow } from './grow.js';
 
 export function drawMotionTextBox(post, butcket, centerPos) {
   let newElem = createTextBoxElement(post, bucket);
@@ -36,9 +37,10 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx, canvas
   let dimens = dimensOf(newElem);
 
   let centerPos = findBestSpot(dimens, elicitorCenter, canCtx, canvas);
-  let topLeftPos = centerPos.minus(centerOf(dimens))
-  newElem.style.top = topLeftPos.yPx();
-  newElem.style.left = topLeftPos.xPx();
+  let topLeft = centerPos.minus(centerOf(dimens))
+  let bottomRight = topLeft.plus(dimens);
+  newElem.style.top = topLeft.yPx();
+  newElem.style.left = topLeft.xPx();
   
   /*
     for development
@@ -64,7 +66,9 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx, canvas
   } catch (e) {
   }
 
-  fSModel.addResponse(topLeftPos, topLeftPos.plus(dimens));
+  checkGrow(topLeft, bottomRight, canvas, fSModel);
+
+  fSModel.addResponse(topLeft, bottomRight);
   return centerPos;
 }
 
