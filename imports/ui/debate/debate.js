@@ -28,6 +28,7 @@ Template.debate.onRendered(function() {
   draggableDiv.draggable({
     handle: $('#debateCanvas', draggableDiv)
   });
+  $("body").css("overflow", "hidden");
 });
 
 Template.debate.events({

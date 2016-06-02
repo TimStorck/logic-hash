@@ -37,8 +37,7 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx, canvas
   let dimens = dimensOf(newElem);
 
   let centerPos = findBestSpot(dimens, elicitorCenter, canCtx, canvas);
-  let topLeft = centerPos.minus(centerOf(dimens))
-  let bottomRight = topLeft.plus(dimens);
+  let topLeft = centerPos.minus(centerOf(dimens));
   newElem.style.top = topLeft.yPx();
   newElem.style.left = topLeft.xPx();
   
@@ -66,9 +65,9 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx, canvas
   } catch (e) {
   }
 
-  let marginBox = fSModel.addResponse(topLeft, bottomRight);
+  let marginBox = fSModel.addResponse(topLeft, topLeft.plus(dimens));
 
-  checkGrow(topLeft, bottomRight, canvas, marginBox);
+  checkGrow(canvas, canCtx, marginBox);
 
   return centerPos;
 }
