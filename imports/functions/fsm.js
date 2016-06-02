@@ -194,22 +194,42 @@ export function filledSpaceModel(canvas, canCtx) {
                 this.lineArray[j].a.x < marginBox[i].a.x) ||
                 (this.lineArray[j].a.x === this.lineArray[j].b.x && 
                 this.lineArray[j].a.y < marginBox[i].a.y)) {
-                  //adjust coordinates that cross
-                  let lineArrayLineEnd = this.lineArray[j].b;
+                  let oldLineArrayB = this.lineArray[j].b;
+                  //change lineArray line coordinate
                   this.lineArray[j].b = marginBox[i].a;
-                  marginBox[i].a = lineArrayLineEnd;
                   //take care of connecting lineArray line
-                  let connectingLALineIndex = connectingLALine(this.lineArray, marginBox[i], lineArrayLineEnd);
+                  let connectingLALineIndex = connectingLALine(this.lineArray, this.lineArray[j], oldLineArrayB);
                   //if connecting line is inside marginBox and doesn't protrude opposite marginBox side
                   if (lineIsInside(this.lineArray[connectingLALineIndex], marginBox[i])) {
                     if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
                       this.lineArray.splice(connectingLALineIndex, 1);
                       j--;
                     }
+                    findAndRemoveLine(this.lineArray, marginBox[i]);
                   } else {
                     linesInter[i].push(this.lineArray[connectingLALineIndex]);
                     sortLinesInter(linesInter, false, i);
+                    marginBox[i].a = oldLineArrayB;
                   }
+              //marginBox line comes first
+              } else {
+                let oldLineArrayA = this.lineArray[j].a;
+                //get handle for connecting lineArray line
+                let connectingLALineIndex = connectingLALine(this.lineArray, this.lineArray[j], this.lineArray[j].a);
+                // change lineArray line coordinate
+                this.lineArray[j].a = marginBox[i].b;
+                //if connecting line is inside marginBox and doesn't protrude opposite marginBox side
+                if (lineIsInside(this.lineArray[connectingLALineIndex], marginBox[i])) {
+                  if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
+                    this.lineArray.splice(connectingLALineIndex, 1);
+                    j--;
+                  }
+                  findAndRemoveLine(this.lineArray, marginBox[i]);
+                } else {
+                  linesInter[i].push(this.lineArray[connectingLALineIndex]);
+                  sortLinesInter(linesInter, false, i);
+                  marginBox[i].b = oldLineArrayA;
+                }
               }
               continue;
             }
