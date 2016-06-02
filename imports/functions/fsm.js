@@ -31,6 +31,8 @@ export function filledSpaceModel(canvas, canCtx) {
   this.addResponse = function(topLeft,bottomRight) {
     let marginBox = this.addBox(topLeft,bottomRight);
     this.trimOverlap(marginBox);
+
+    return marginBox;
   }
 
   //fsm instantiated before canvas exists in dom, so fsm gets canvas later [used only when debugging setting applied]

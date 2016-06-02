@@ -1,3 +1,3 @@
-export function checkGrow(topLeft, bottomRight, canvas, fSModel) {
+export function checkGrow(topLeft, bottomRight, canvas, marginBox) {
   //
 }

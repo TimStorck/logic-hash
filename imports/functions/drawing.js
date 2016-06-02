@@ -66,9 +66,10 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx, canvas
   } catch (e) {
   }
 
-  checkGrow(topLeft, bottomRight, canvas, fSModel);
+  let marginBox = fSModel.addResponse(topLeft, bottomRight);
 
-  fSModel.addResponse(topLeft, bottomRight);
+  checkGrow(topLeft, bottomRight, canvas, marginBox);
+
   return centerPos;
 }
 
