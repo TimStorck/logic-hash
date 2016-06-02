@@ -24,6 +24,7 @@ Template.debate.onRendered(function() {
       document.getElementById("debateCanvas")
     );
   });
+  $('#canvasWrapper').draggable();
 });
 
 Template.debate.events({
