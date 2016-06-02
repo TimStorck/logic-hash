@@ -21,7 +21,9 @@ Template.debate.onRendered(function() {
     debateTreeChanged(
       FlowRouter.getParam("mId"), 
       document.getElementById("bucket"), 
-      document.getElementById("debateCanvas")
+      document.getElementById("debateCanvas"),
+      window.innerWidth - 50,
+      window.innerHeight - 50
     );
   });
   let draggableDiv = $('#canvasWrapper');

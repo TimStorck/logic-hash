@@ -14,12 +14,12 @@ import { centerOf } from './measurements.js';
 
 export const fSModel = new filledSpaceModel(null, null);
 
-export function debateTreeChanged(motionId, bucket, canvas) {
+export function debateTreeChanged(motionId, bucket, canvas, debateWidth, debateHeight) {
   Meteor.subscribe('posts');  
   Meteor.subscribe('settings');  
 
-  canvas.height = window.innerHeight - 50;
-  canvas.width = window.innerWidth - 50;
+  canvas.width = debateWidth;
+  canvas.height = debateHeight;
 
   let motionCenter = centerOf(new Coord(canvas.width, canvas.height));
   let canCtx = canvas.getContext("2d");
