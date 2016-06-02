@@ -24,7 +24,10 @@ Template.debate.onRendered(function() {
       document.getElementById("debateCanvas")
     );
   });
-  $('#canvasWrapper').draggable();
+  let draggableDiv = $('#canvasWrapper');
+  draggableDiv.draggable({
+    handle: $('#debateCanvas', draggableDiv)
+  });
 });
 
 Template.debate.events({
