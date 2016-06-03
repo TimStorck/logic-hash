@@ -66,7 +66,7 @@ export function debateTreeChanged(motionId, bucket, canvas, debateWidth, debateH
     }
 
     let canvasExpansion = [0,0,0,0];
-    canvasExpansion = drawResponses(motionId, motionCenter, canCtx, canvas, canvasExpansion);
+    drawResponses(motionId, motionCenter, canCtx, canvas, canvasExpansion);
 
     if (canvasExpansion[0] > 0 || canvasExpansion[1] > 0 || canvasExpansion[2] > 0 || canvasExpansion[3] > 0) {
       console.log("top expansion   " + canvasExpansion[0]);
@@ -121,10 +121,9 @@ function drawResponses(elicitorId, elicitorCenter, canCtx, canvas, canvasExpansi
       }
 
       if (responseArray[i].responseNo > 0) {
-        canvasExpansion = drawResponses(responseArray[i]._id, responseCenter, canCtx, canvas, canvasExpansion);
+        drawResponses(responseArray[i]._id, responseCenter, canCtx, canvas, canvasExpansion);
       }
     }
   }
-  return canvasExpansion;
 }
 
