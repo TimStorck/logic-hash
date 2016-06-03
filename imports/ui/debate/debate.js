@@ -26,11 +26,6 @@ Template.debate.onRendered(function() {
       window.innerHeight - 50
     );
   });
-  let draggableDiv = $('#canvasWrapper');
-  draggableDiv.draggable({
-    handle: $('#debateCanvas', draggableDiv)
-  });
-  $("body").css("overflow", "hidden");
 });
 
 Template.debate.events({
