@@ -24,3 +24,4 @@ todo
   see if you can get the respond button floating at the bottom right within the text by nesting it in a div
   mouseover postbox highlights elicitor textbox ?
   clean out measurements file
+  remove jquery ui draggable package

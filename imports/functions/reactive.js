@@ -79,10 +79,10 @@ export function debateTreeChanged(motionId, bucket, canvas, debateWidth, debateH
       newCenter.y = newCenter.y + Math.floor((canvasExpansion[0] - canvasExpansion[2]) / 2);
       debateTreeChanged(motionId, bucket, canvas, newWidth, newHeight, newCenter);
 
-      console.log("top expansion   " + canvasExpansion[0]);
-      console.log("right expansion   " + canvasExpansion[1]);
-      console.log("bottom expansion   " + canvasExpansion[2]);
-      console.log("left expansion   " + canvasExpansion[3]);
+      // console.log("top expansion   " + canvasExpansion[0]);
+      // console.log("right expansion   " + canvasExpansion[1]);
+      // console.log("bottom expansion   " + canvasExpansion[2]);
+      // console.log("left expansion   " + canvasExpansion[3]);
     }
 
     /*

@@ -8,10 +8,18 @@ import { findFlagObject } from '../../functions/drawing.js'
 import './debate.html';
 
 let flagSelected = "";
+let curYPos = 0,
+    curXPos = 0,
+    curDown = false;
 
 Template.debate.onCreated(function() {
   this.elicitor = new ReactiveVar( "initialized, unassigned elicitor reactive var" );
   this.responseResponse = new ReactiveVar( false );
+  $(window).on('mouseup', mouseUpHandler);
+});
+
+Template.debate.onDestroyed(function() {
+  $(window).off('mouseup', mouseUpHandler);
 });
 
 Template.debate.onRendered(function() {
@@ -29,6 +37,19 @@ Template.debate.onRendered(function() {
 });
 
 Template.debate.events({
+  'mousedown #debateCanvas': function(event) {
+    console.log("mdown ");
+    curDown = true; 
+    curYPos = event.pageY; 
+    curXPos = event.pageX;
+  },
+  'mousemove #debateCanvas': function(event) {
+    if(curDown === true){
+    console.log("m move ");
+      window.scrollTo(document.body.scrollLeft + (curXPos - event.pageX), 
+        document.body.scrollTop + (curYPos - event.pageY));
+    }
+  },
   'click .post': function(event) {
     // console.log("click post " + event.target.id);
   },
@@ -175,4 +196,9 @@ function drawFlagInResponseBox(flagName) {
 function clearFlagInResponseBox() {
   document.getElementById("responseBoxFlag").style.border = "none";
   document.getElementById("responseBoxFlag").style.backgroundColor = "transparent";
+}
+
+function mouseUpHandler() {
+  console.log("mup ");
+  curDown = false;
 }
