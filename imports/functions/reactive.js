@@ -11,7 +11,7 @@ import { drawRadial } from './drawing.js';
 import { drawFSModel } from './drawing.js';
 import { clearCanvas } from './drawing.js';
 import { centerOf } from './measurements.js';
-import { checkGrow } from './grow.js';
+import { checkIfOverEdge } from './grow.js';
 
 export const fSModel = new filledSpaceModel(null, null);
 
@@ -65,12 +65,14 @@ export function debateTreeChanged(motionId, bucket, canvas, debateWidth, debateH
     } catch (e) {
     }
 
-    let newDebateSize = drawResponses(motionId, motionCenter, true, canCtx, canvas, Settings);
+    let canvasExpansion = [0,0,0,0];
+    canvasExpansion = drawResponses(motionId, motionCenter, canCtx, canvas, canvasExpansion);
 
-    if (newDebateSize != null) {
-      if (newDebateSize.x > debateWidth || newDebateSize > debateHeight) {
-        //
-      }
+    if (canvasExpansion[0] > 0 || canvasExpansion[1] > 0 || canvasExpansion[2] > 0 || canvasExpansion[3] > 0) {
+      console.log("top expansion   " + canvasExpansion[0]);
+      console.log("right expansion   " + canvasExpansion[1]);
+      console.log("bottom expansion   " + canvasExpansion[2]);
+      console.log("left expansion   " + canvasExpansion[3]);
     }
 
     /*
@@ -85,9 +87,8 @@ export function debateTreeChanged(motionId, bucket, canvas, debateWidth, debateH
   }
 }
 
-function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx, canvas) {
+function drawResponses(elicitorId, elicitorCenter, canCtx, canvas, canvasExpansion) {
   let fetchArray = Posts.find({"elicitor": elicitorId}).fetch();
-  let newDebateSize = null;
   if (fetchArray.length > 0) {
     let responseArray = [];
     for(let i = 0; i < fetchArray.length; i++) {
@@ -103,7 +104,7 @@ function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx, can
     let responseCenter;
     for (let i = 0; i < responseArray.length; i++) {
       responseCenter = drawResponseTextBox(responseArray[i], bucket, elicitorCenter, canCtx, canvas);
-      checkGrow(canvas, canCtx, fSModel.marginBox, newDebateSize);
+      checkIfOverEdge(canvas, fSModel.marginBox, canvasExpansion);
       drawRadial(elicitorCenter, responseCenter, canCtx);
 
       /*
@@ -120,10 +121,10 @@ function drawResponses(elicitorId, elicitorCenter, elicitorIsMotion, canCtx, can
       }
 
       if (responseArray[i].responseNo > 0) {
-        newDebateSize = drawResponses(responseArray[i]._id, responseCenter, false, canCtx, canvas);
+        canvasExpansion = drawResponses(responseArray[i]._id, responseCenter, canCtx, canvas, canvasExpansion);
       }
     }
   }
-  return newDebateSize;
+  return canvasExpansion;
 }
 
