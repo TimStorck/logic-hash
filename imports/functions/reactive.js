@@ -15,14 +15,17 @@ import { checkIfOverEdge } from './grow.js';
 
 export const fSModel = new filledSpaceModel(null, null);
 
-export function debateTreeChanged(motionId, bucket, canvas, debateWidth, debateHeight) {
+export function debateTreeChanged(motionId, bucket, canvas, debateWidth, debateHeight, motionCenter) {
   Meteor.subscribe('posts');  
   Meteor.subscribe('settings');  
 
   canvas.width = debateWidth;
   canvas.height = debateHeight;
 
-  let motionCenter = centerOf(new Coord(canvas.width, canvas.height));
+  if (motionCenter == null) {
+    motionCenter = centerOf(new Coord(canvas.width, canvas.height));
+  }
+
   let canCtx = canvas.getContext("2d");
 
   let motion;
@@ -69,6 +72,13 @@ export function debateTreeChanged(motionId, bucket, canvas, debateWidth, debateH
     drawResponses(motionId, motionCenter, canCtx, canvas, canvasExpansion);
 
     if (canvasExpansion[0] > 0 || canvasExpansion[1] > 0 || canvasExpansion[2] > 0 || canvasExpansion[3] > 0) {
+      let newWidth = canvas.width + canvasExpansion[1] + canvasExpansion[3];
+      let newHeight = canvas.height + canvasExpansion[0] + canvasExpansion[2];
+      let newCenter = new Coord(canvas.width / 2, canvas.height / 2);
+      newCenter.x = newCenter.x + Math.floor((canvasExpansion[3] - canvasExpansion[1]) / 2);
+      newCenter.y = newCenter.y + Math.floor((canvasExpansion[0] - canvasExpansion[2]) / 2);
+      debateTreeChanged(motionId, bucket, canvas, newWidth, newHeight, newCenter);
+
       console.log("top expansion   " + canvasExpansion[0]);
       console.log("right expansion   " + canvasExpansion[1]);
       console.log("bottom expansion   " + canvasExpansion[2]);
