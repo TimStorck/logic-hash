@@ -46,8 +46,8 @@ Template.debate.events({
   'mousemove #debateCanvas': function(event) {
     if(curDown === true){
     console.log("m move ");
-      window.scrollTo(document.body.scrollLeft + (curXPos - event.pageX), 
-        document.body.scrollTop + (curYPos - event.pageY));
+     $(window).scrollTop($(window).scrollTop() + (curYPos - event.pageY)); 
+     $(window).scrollLeft($(window).scrollLeft() + (curXPos - event.pageX));
     }
   },
   'click .post': function(event) {
