@@ -170,22 +170,26 @@ export function filledSpaceModel(canvas, canCtx) {
                     this.lineArray.splice(j, 1);
                     j--;
                     //if connecting line is inside marginBox and doesn't protrude opposite marginBox side
-                    if (lineIsInside(connectingLALine1, marginBox[i])) {
-                      if (linesInter[oppSide].indexOf(connectingLALine1) === -1) {
-                        findAndRemoveLine(this.lineArray, connectingLALine1);
+                    if (typeof connectingLALine1 != "undefined") {
+                      if (lineIsInside(connectingLALine1, marginBox[i])) {
+                        if (linesInter[oppSide].indexOf(connectingLALine1) === -1) {
+                          findAndRemoveLine(this.lineArray, connectingLALine1);
+                        }
+                      } else {
+                        linesInter[i].push(connectingLALine1);
+                        sortLinesInter(linesInter, false, i);
                       }
-                    } else {
-                      linesInter[i].push(connectingLALine1);
-                      sortLinesInter(linesInter, false, i);
                     }
                     //if connecting line is inside marginBox and doesn't protrude opposite marginBox side
-                    if (lineIsInside(connectingLALine2, marginBox[i])) {
-                      if (linesInter[oppSide].indexOf(connectingLALine2) === -1) {
-                        findAndRemoveLine(this.lineArray, connectingLALine2);
+                    if (typeof connectingLALine2 != "undefined") {
+                      if (lineIsInside(connectingLALine2, marginBox[i])) {
+                        if (linesInter[oppSide].indexOf(connectingLALine2) === -1) {
+                          findAndRemoveLine(this.lineArray, connectingLALine2);
+                        }
+                      } else {
+                        linesInter[i].push(connectingLALine2);
+                        sortLinesInter(linesInter, false, i);
                       }
-                    } else {
-                      linesInter[i].push(connectingLALine2);
-                      sortLinesInter(linesInter, false, i);
                     }
                     continue;
                 }
@@ -202,16 +206,18 @@ export function filledSpaceModel(canvas, canCtx) {
                   //take care of connecting lineArray line
                   let connectingLALineIndex = connectingLALine(this.lineArray, this.lineArray[j], oldLineArrayB);
                   //if connecting line is inside marginBox and doesn't protrude opposite marginBox side
-                  if (lineIsInside(this.lineArray[connectingLALineIndex], marginBox[i])) {
-                    if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
-                      this.lineArray.splice(connectingLALineIndex, 1);
-                      j--;
+                  if (typeof this.lineArray[connectingLALineIndex] != "undefined") {
+                    if (lineIsInside(this.lineArray[connectingLALineIndex], marginBox[i])) {
+                      if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
+                        this.lineArray.splice(connectingLALineIndex, 1);
+                        j--;
+                      }
+                      findAndRemoveLine(this.lineArray, marginBox[i]);
+                    } else {
+                      linesInter[i].push(this.lineArray[connectingLALineIndex]);
+                      sortLinesInter(linesInter, false, i);
+                      marginBox[i].a = oldLineArrayB;
                     }
-                    findAndRemoveLine(this.lineArray, marginBox[i]);
-                  } else {
-                    linesInter[i].push(this.lineArray[connectingLALineIndex]);
-                    sortLinesInter(linesInter, false, i);
-                    marginBox[i].a = oldLineArrayB;
                   }
               //marginBox line comes first
               } else {
@@ -221,16 +227,18 @@ export function filledSpaceModel(canvas, canCtx) {
                 // change lineArray line coordinate
                 this.lineArray[j].a = marginBox[i].b;
                 //if connecting line is inside marginBox and doesn't protrude opposite marginBox side
-                if (lineIsInside(this.lineArray[connectingLALineIndex], marginBox[i])) {
-                  if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
-                    this.lineArray.splice(connectingLALineIndex, 1);
-                    j--;
+                if (typeof this.lineArray[connectingLALineIndex] != "undefined") {
+                  if (lineIsInside(this.lineArray[connectingLALineIndex], marginBox[i])) {
+                    if (linesInter[oppSide].indexOf(this.lineArray[connectingLALineIndex]) === -1) {
+                      this.lineArray.splice(connectingLALineIndex, 1);
+                      j--;
+                    }
+                    findAndRemoveLine(this.lineArray, marginBox[i]);
+                  } else {
+                    linesInter[i].push(this.lineArray[connectingLALineIndex]);
+                    sortLinesInter(linesInter, false, i);
+                    marginBox[i].b = oldLineArrayA;
                   }
-                  findAndRemoveLine(this.lineArray, marginBox[i]);
-                } else {
-                  linesInter[i].push(this.lineArray[connectingLALineIndex]);
-                  sortLinesInter(linesInter, false, i);
-                  marginBox[i].b = oldLineArrayA;
                 }
               }
               continue;
