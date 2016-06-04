@@ -95,7 +95,7 @@ Template.sandNav.events ({
 
 Template.devNav.helpers({
   showCanvasBorder: function () {
-    try
+    try {
       if (Settings.findOne({name: "showCanvasOutline"}).value) {
         return "selected";
       } else {
