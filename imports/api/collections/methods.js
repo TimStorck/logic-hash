@@ -13,8 +13,7 @@ Meteor.methods({
       postParam.dateDiscussed = Date.parse(Date());
       postParam.dateMade = Date.parse(Date());
     } else {
-      //TODO make below coniditonal update recursive
-      Posts.update({_id: postParam.elicitor}, {$set: {dateDiscussed: Date.parse(Date())} } );
+      Posts.update({_id: postParam.motion}, {$set: {dateDiscussed: Date.parse(Date())} } );
     }
     Posts.insert(postParam);
   },
@@ -34,6 +33,7 @@ Meteor.methods({
     globalResponsesLength = globalWarmingResponses.length;
     for (let i = 0; i < globalResponsesLength; i++) {
       globalWarmingResponses[i].elicitor = globalWarmingId;
+      globalWarmingResponses[i].motion = globalWarmingId;
       Posts.insert(globalWarmingResponses[i]);
     }
 
@@ -41,6 +41,7 @@ Meteor.methods({
     nukesLength = nukesResponses.length;
     for (let i = 0; i < nukesLength; i++) {
       nukesResponses[i].elicitor = nukesId;
+      nukesResponses[i].motion = globalWarmingId;
       Posts.insert(nukesResponses[i]);
     }
 
@@ -48,6 +49,7 @@ Meteor.methods({
     defeatistLength = defeatistResponses.length;
     for (let i = 0; i < defeatistLength; i++) {
       defeatistResponses[i].elicitor = defeatistId;
+      defeatistResponses[i].motion = globalWarmingId;
       Posts.insert(defeatistResponses[i]);
     }
   },

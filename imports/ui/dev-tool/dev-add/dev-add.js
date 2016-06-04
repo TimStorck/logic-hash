@@ -1,25 +1,11 @@
 import { Template } from 'meteor/templating';
+import { Meteor } from 'meteor/meteor';
+import { Posts } from '../../../api/collections/posts.js';
 
 import './dev-add.html';
 
-Template.devAdd.events({
-  'submit #add-form' : function(event, template) {
-
-    event.preventDefault();
-
-    const content = template.find('#content').value;
-    const author = template.find('#author').value;
-    const elicitor = template.find('#elicitor').value;
-
-    const newPost = {
-      content: content,
-      author: author,
-      elicitor: elicitor,
-    }
-
-    Meteor.call('posts.insert', newPost);
-    // FlowRouter.go("dev");
-  }
+Template.devAddTen.onRendered(function (){
+  Meteor.subscribe('posts');
 });
 
 Template.devAddTen.events({
@@ -30,11 +16,20 @@ Template.devAddTen.events({
     const content = "add-ten content";
     const author = "add-ten author";
     const elicitor = template.find('#elicitor').value;
+    
+    let elicitorMotion = Posts.findOne({_id: elicitor}).motion;
+    let motion;
+    if (elicitorMotion != null && elicitorMotion != "") {
+      motion = elicitorMotion
+    } else {
+      motion = elicitor;
+    }
 
     const newPost = {
       content: content,
       author: author,
       elicitor: elicitor,
+      motion: motion
     }
     
     for (var i = 0; i < 10; i++) {

@@ -11,6 +11,7 @@ optimizations in filled space model
   if a short text box spawns next to a tall one it trims the overhanging platform a little
   fsm doesnt always center 
   fsm doesnt seek closest spot by radius
+  replace findone with find...[0]
 
 
 

@@ -109,14 +109,16 @@ Template.debate.events({
         content: content,
         author: author,
         elicitor: Template.instance().elicitor.get(),
-        flag: flagSelected
+        flag: flagSelected,
+        motion: Posts.findOne({"_id": Template.instance().elicitor.get()}).motion
       }
     } else {
       newPost = {
         content: content,
         author: author,
         elicitor: FlowRouter.getParam("mId"),
-        flag: flagSelected
+        flag: flagSelected,
+        motion: FlowRouter.getParam("mId")
       }
     }
     Meteor.call('posts.insert', newPost);

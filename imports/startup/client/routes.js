@@ -50,13 +50,6 @@ FlowRouter.route('/dev/', {
     }
 });
 
-FlowRouter.route('/dev/add', {
-    name: 'dev_add',
-    action: function() {
-        BlazeLayout.render("devLayout", {content: "devAdd"});
-    }
-});
-
 FlowRouter.route('/dev/rem', {
     name: 'dev_rem',
     action: function() {

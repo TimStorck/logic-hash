@@ -51,12 +51,6 @@ Template.tableNav.events ({
   "click #btn-tbl": function() {
     FlowRouter.go("dev");
   },
-  "click #btn-add": function() {
-    FlowRouter.go("dev_add");
-  },
-  "click #btn-add-doc": function() {
-    Meteor.call('posts.insert', {content: "test content", author: "test author"});
-  },
   "click #btn-add-10": function() {
     FlowRouter.go("dev_add_ten");
   },
