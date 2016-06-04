@@ -99,5 +99,12 @@ Meteor.methods({
     } else {
       Settings.update({name: "showOutlineWhileTrimming"}, {$set: {value: true}});
     }
-  }
+  },
+  'settings.toggleCanvasBorder': function() {
+    if (Settings.findOne({name: "showCanvasOutline"}).value) {
+      Settings.update({name: "showCanvasOutline"}, {$set: {value: false}});
+    } else {
+      Settings.update({name: "showCanvasOutline"}, {$set: {value: true}});
+    }
+  },
 })

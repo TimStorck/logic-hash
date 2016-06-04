@@ -22,5 +22,9 @@ export const defaultSettings = [
   {
     name: "showOutlineWhileTrimming",
     value: false
+  },
+  {
+    name: "showCanvasOutline",
+    value: false
   }
 ];

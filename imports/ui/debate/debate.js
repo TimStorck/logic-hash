@@ -3,7 +3,8 @@ import { Posts } from '../../api/collections/posts.js';
 import { Meteor } from 'meteor/meteor';
 import { debateTreeChanged } from '../../functions/reactive.js';
 import { flagData } from '../../data/flag-data.js';
-import { findFlagObject } from '../../functions/drawing.js'
+import { findFlagObject } from '../../functions/drawing.js';
+import { Settings } from '../../api/collections/settings.js';
 
 import './debate.html';
 
@@ -33,6 +34,20 @@ Template.debate.onRendered(function() {
       window.innerWidth - 50,
       window.innerHeight - 50
     );
+  });
+
+  /*
+    for development
+  */
+  this.autorun(function() {
+    try {
+      if (Settings.findOne({name: "showCanvasOutline"}).value) {
+        document.getElementById("canvasShell").style.padding="1px";
+      } else {
+        document.getElementById("canvasShell").style.padding="0";
+      }
+    } catch (e) {
+    }
   });
 });
 
