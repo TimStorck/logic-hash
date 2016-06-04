@@ -69,7 +69,7 @@ export function debateTreeChanged(motionId, bucket, canvas, debateWidth, debateH
     }
 
     let canvasExpansion = [0,0,0,0];
-    drawResponses(motionId, motionCenter, canCtx, canvas, canvasExpansion);
+    drawResponses(motionId, motionCenter, canCtx, canvas, canvasExpansion, true);
 
     if (canvasExpansion[0] > 0 || canvasExpansion[1] > 0 || canvasExpansion[2] > 0 || canvasExpansion[3] > 0) {
       //get required canvas size
@@ -100,7 +100,7 @@ export function debateTreeChanged(motionId, bucket, canvas, debateWidth, debateH
   }
 }
 
-function drawResponses(elicitorId, elicitorCenter, canCtx, canvas, canvasExpansion) {
+function drawResponses(elicitorId, elicitorCenter, canCtx, canvas, canvasExpansion, elicitorIsMotion) {
   let fetchArray = Posts.find({"elicitor": elicitorId}).fetch();
   if (fetchArray.length > 0) {
     let responseArray = [];
@@ -118,7 +118,11 @@ function drawResponses(elicitorId, elicitorCenter, canCtx, canvas, canvasExpansi
     for (let i = 0; i < responseArray.length; i++) {
       responseCenter = drawResponseTextBox(responseArray[i], bucket, elicitorCenter, canCtx, canvas);
       checkIfOverEdge(canvas, fSModel.marginBox, canvasExpansion);
-      drawRadial(elicitorCenter, responseCenter, canCtx);
+      if (elicitorIsMotion) {
+        drawRadial(elicitorCenter, responseCenter, canCtx, "blue");
+      } else {
+        drawRadial(elicitorCenter, responseCenter, canCtx, "black");
+      }
 
       /*
         for development
@@ -134,7 +138,7 @@ function drawResponses(elicitorId, elicitorCenter, canCtx, canvas, canvasExpansi
       }
 
       if (responseArray[i].responseNo > 0) {
-        drawResponses(responseArray[i]._id, responseCenter, canCtx, canvas, canvasExpansion);
+        drawResponses(responseArray[i]._id, responseCenter, canCtx, canvas, canvasExpansion, false);
       }
     }
   }

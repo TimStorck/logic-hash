@@ -69,9 +69,9 @@ export function drawResponseTextBox(post, bucket, elicitorCenter, canCtx, canvas
   return centerPos;
 }
 
-export function drawRadial(motionCenter, responseCenter, canCtx) {
+export function drawRadial(motionCenter, responseCenter, canCtx, color) {
   canCtx.beginPath();
-  canCtx.strokeStyle = "black";
+  canCtx.strokeStyle = color;
   canCtx.lineWidth  = 1;
   canCtx.moveTo(motionCenter.x, motionCenter.y);
   canCtx.lineTo(responseCenter.x, responseCenter.y);
