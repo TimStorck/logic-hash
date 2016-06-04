@@ -53,14 +53,12 @@ Template.debate.onRendered(function() {
 
 Template.debate.events({
   'mousedown #debateCanvas': function(event) {
-    console.log("mdown ");
     curDown = true; 
     curYPos = event.pageY; 
     curXPos = event.pageX;
   },
   'mousemove #debateCanvas': function(event) {
     if(curDown === true){
-    console.log("m move ");
      $(window).scrollTop($(window).scrollTop() + (curYPos - event.pageY)); 
      $(window).scrollLeft($(window).scrollLeft() + (curXPos - event.pageX));
     }
@@ -214,6 +212,5 @@ function clearFlagInResponseBox() {
 }
 
 function mouseUpHandler() {
-  console.log("mup ");
   curDown = false;
 }
