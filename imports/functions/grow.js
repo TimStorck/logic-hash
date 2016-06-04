@@ -1,3 +1,8 @@
+/*
+  debate space, i.e. canvas size, initially set to window.innerwidth x window.innerheight
+  this checks, as debate is being drawn, if the debate expands beyond that, so that 
+  the canvas can be resized and the debate redrawn if so
+*/
 export function checkIfOverEdge(canvas, marginBox, canvasExpansion) {
   if (marginBox[0] != "undefined" && marginBox[0].a.y < 0) {
     if (marginBox[0].a.y * -1 > canvasExpansion[0]) {

@@ -72,17 +72,20 @@ export function debateTreeChanged(motionId, bucket, canvas, debateWidth, debateH
     drawResponses(motionId, motionCenter, canCtx, canvas, canvasExpansion);
 
     if (canvasExpansion[0] > 0 || canvasExpansion[1] > 0 || canvasExpansion[2] > 0 || canvasExpansion[3] > 0) {
+      //get required canvas size
       let newWidth = canvas.width + canvasExpansion[1] + canvasExpansion[3];
       let newHeight = canvas.height + canvasExpansion[0] + canvasExpansion[2];
-      let newCenter = new Coord(canvas.width / 2, canvas.height / 2);
+      //determine center for motion so that debate fits in new debate area
+      let newCenter = new Coord(newWidth / 2, newHeight / 2);
       newCenter.x = newCenter.x + Math.floor((canvasExpansion[3] - canvasExpansion[1]) / 2);
       newCenter.y = newCenter.y + Math.floor((canvasExpansion[0] - canvasExpansion[2]) / 2);
+      //redraw debate
       debateTreeChanged(motionId, bucket, canvas, newWidth, newHeight, newCenter);
 
-      // console.log("top expansion   " + canvasExpansion[0]);
-      // console.log("right expansion   " + canvasExpansion[1]);
-      // console.log("bottom expansion   " + canvasExpansion[2]);
-      // console.log("left expansion   " + canvasExpansion[3]);
+      //center motion if debate space expanded at top or left
+      if (canvasExpansion[0] > 0 || canvasExpansion[3] > 0) {
+        window.scrollTo(canvasExpansion[3], canvasExpansion[0]);
+      }
     }
 
     /*
