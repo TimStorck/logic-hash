@@ -7,6 +7,12 @@ import { clearCanvas } from './drawing.js';
 //maintains outline of filled space plus specified margin distance
 export function filledSpaceModel(canvas, canCtx) {
   const margin = 17;
+  /*
+    when zoom level is less than 100%, rounding of decimals can result in line overlap 
+    section needing some leeway in identifying if a very short overlapped lineArray line 
+    is within the margin's distance from the right (or left). that's what marginSafe is for
+  */
+  const marginSafe = 30;
 
   //this is the outline of the filled space
   this.lineArray = [];
@@ -272,8 +278,8 @@ export function filledSpaceModel(canvas, canCtx) {
               //if marginBox line coordinate B comes last, so lineArray line is contained within, i.e. lineArray line is short little line
               } else {
                 //if overlapping lineArray line is within margin's length from right edge or bottom edge
-                if (marginBox[i].a.x !== marginBox[i].b.x && marginBox[i].b.x - this.lineArray[j].a.x <= margin ||
-                  marginBox[i].a.y !== marginBox[i].b.y && marginBox[i].b.y - this.lineArray[j].a.y <= margin) {
+                if (marginBox[i].a.x !== marginBox[i].b.x && marginBox[i].b.x - this.lineArray[j].a.x <= marginSafe ||
+                  marginBox[i].a.y !== marginBox[i].b.y && marginBox[i].b.y - this.lineArray[j].a.y <= marginSafe) {
                     //stretch marginBox line to end at lineArray line coordinate B
                     marginBox[i].b.x = this.lineArray[j].b.x;
                     marginBox[i].b.y = this.lineArray[j].b.y;
