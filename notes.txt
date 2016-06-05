@@ -16,11 +16,6 @@ optimizations in filled space model
 
 
 todo
-  make meteor method part that updates last discussed recursive
-  add block to fsm outline updater that takes care of the unlikely case of a post box being fit perfectly into a hole within the outer outline [remove all sides of marginBox]
-  see if this part is needed in fsm:
-    //if lineArray line connected to consolidated lineArray line doesn't cross marginBox line opposite the consolidated marginbox line
-  make flag box modal position adapt to screen boundaries adjusted for draggable debate  
   make respond button not highlightable
   see if you can get the respond button floating at the bottom right within the text by nesting it in a div
   mouseover postbox highlights elicitor textbox ?
